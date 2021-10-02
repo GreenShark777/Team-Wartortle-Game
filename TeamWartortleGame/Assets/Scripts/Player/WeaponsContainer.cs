@@ -172,8 +172,9 @@ public class WeaponsContainer : MonoBehaviour
         bullet.SetActive(true);
         //azzera ogni forza che agisce sul rigidbody del proiettile
         rbBullet.velocity = Vector2.zero;
-        //da una spinta al proiettile facendolo andare verso la direzione in cui il proiettile è direzionato
-        rbBullet.AddForce(bullet.transform.forward * bulletSpeed);
+        //da una spinta al proiettile facendolo andare verso la direzione in cui la pistola è direzionata
+        rbBullet.AddForce((gun.transform.position - transform.parent.position) * bulletSpeed);
+        //Debug.Log("Bullet Added Force: " + (gun.transform.position - transform.parent.position) * bulletSpeed);
         //aspetta che finisca il countdown dello sparo
         yield return new WaitForSeconds(gunAttackCD);
         //il giocatore potrà attaccare di nuovo
