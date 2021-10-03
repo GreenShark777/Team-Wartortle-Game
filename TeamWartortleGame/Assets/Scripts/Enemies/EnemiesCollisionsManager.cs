@@ -1,28 +1,34 @@
+//Si occupa delle collisioni tra il nemico e qualsiasi altro oggetto
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemiesCollisionsManager : MonoBehaviour
 {
-
+    //riferimento al Rigidbody2D di questo nemico
     private Rigidbody2D enemyRb;
-
+    //riferimento allo script della vita di questo nemico
     private EnemiesHealth eh;
 
 
     private void Awake()
     {
-
+        //ottiene il riferimento al Rigidbody2D di questo nemico
         enemyRb = GetComponentInParent<Rigidbody2D>();
-
+        //ottiene il riferimento allo script della vita di questo nemico
         eh = GetComponentInParent<EnemiesHealth>();
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //se si sta collidendo con un'arma, il nemico viene colpito da quest'arma
-        if (collision.CompareTag("Weapon")) { StartCoroutine(GotHit(collision.GetComponent<WeaponStats>())); }
+        //se il nemico non è ancora stato sconfitto, controlla i tag dell'oggetto con cui collide
+        if (!eh.IsEnemyDefeated())
+        {
+            //se si sta collidendo con un'arma, il nemico viene colpito da quest'arma
+            if (collision.CompareTag("Weapon")) { StartCoroutine(GotHit(collision.GetComponent<WeaponStats>())); }
+
+        }
         //Debug.Log(collision.tag);
     }
 
