@@ -37,6 +37,9 @@ public class WeaponsContainer : MonoBehaviour
     private int maxSlashAtkSequence;
     //indica se il giocatore può attaccare o meno
     private bool canAttack = true;
+    //riferimento al manager della UI del giocatore
+    [SerializeField]
+    private PlayerUIManager playerUIManag = default;
 
 
     // Start is called before the first frame update
@@ -101,6 +104,8 @@ public class WeaponsContainer : MonoBehaviour
         sword.SetActive(!gunOut);
         //...e viceversa
         gun.SetActive(gunOut);
+        //cambia la UI in modo da indicare al giocatore l'avvenuto cambiamento d'armi
+        playerUIManag.ChangeWeaponInUse(gunOut);
 
     }
     /// <summary>

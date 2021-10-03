@@ -545,6 +545,49 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &135571414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 135571416}
+  - component: {fileID: 135571415}
+  m_Layer: 0
+  m_Name: Debugging
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &135571415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135571414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9da8c0bce3cc1f4fa571d3bd0efb047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &135571416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135571414}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &228053992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b448c4aba87eec4f84d46a19d7c7553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHp: 0
 --- !u!50 &355131688
 Rigidbody2D:
   serializedVersion: 4
@@ -1504,6 +1548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b448c4aba87eec4f84d46a19d7c7553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHp: 0
 --- !u!1 &452165762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,7 +1629,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 76331526}
   m_HandleRect: {fileID: 0}
   m_Direction: 1
-  m_MinValue: 4.5
+  m_MinValue: 0
   m_MaxValue: 200
   m_WholeNumbers: 0
   m_Value: 102.5
@@ -1916,6 +1961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b448c4aba87eec4f84d46a19d7c7553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHp: 0
 --- !u!50 &530718189
 Rigidbody2D:
   serializedVersion: 4
@@ -2575,6 +2621,7 @@ MonoBehaviour:
   swordAttackCD: 1
   gunAttackCD: 1
   slashSequenceResetCD: 0.2
+  playerUIManag: {fileID: 1222265371}
 --- !u!1 &1193925040
 GameObject:
   m_ObjectHideFlags: 0
@@ -2860,6 +2907,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maliciousnessSlider: {fileID: 452165764}
   goodwillSlider: {fileID: 1605903953}
+  minSlidersValue: 5.5
+  weaponInUseImage: {fileID: 937088066}
+  weaponNotInUseImage: {fileID: 950281094}
+  swordSprite: {fileID: 21300000, guid: 7ebb4768e2c109341af17492f14113dc, type: 3}
+  gunSprite: {fileID: 21300000, guid: 30a7af1862bf48242b15328536d2030a, type: 3}
 --- !u!1 &1306496531
 GameObject:
   m_ObjectHideFlags: 0
@@ -3211,7 +3263,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 1320588159}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
-  m_MinValue: 4.5
+  m_MinValue: 0
   m_MaxValue: 200
   m_WholeNumbers: 0
   m_Value: 102.5
