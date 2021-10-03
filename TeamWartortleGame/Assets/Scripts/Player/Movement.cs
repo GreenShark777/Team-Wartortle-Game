@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private Rigidbody2D rb;
     //Posizione da raggiungere
-    private Vector2 movePos, animValue = default;
+    private Vector2 movePos;
 
     //Riferimento all'animator
     [SerializeField]
@@ -45,9 +45,10 @@ public class Movement : MonoBehaviour
     //Metodo che imposta i valori float dell'animatore e decide la direzione, se in idle o in running
     private void SetAnimator()
     {
-
+        //Setto la velocità via animator per passare tra idle e movimento
         animator.SetFloat("Velocity", movePos.magnitude);
 
+        //Se sto correndo imposto attivo il testo running
         if (animator.GetFloat("Velocity") > 0) textGB.SetActive(true);
         else textGB.SetActive(false);
 
