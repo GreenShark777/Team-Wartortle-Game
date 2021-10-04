@@ -6,6 +6,8 @@ public class Debugging : MonoBehaviour
 {
     //riferimento allo script che si occupa della UI del giocatore
     private PlayerUIManager pUIm;
+    //riferimento allo script di comportamento di un gufo nella scena
+    private GufoBehaviour gb;
 
 
     // Start is called before the first frame update
@@ -13,11 +15,13 @@ public class Debugging : MonoBehaviour
     {
         //prende tutti i riferimenti agli script di cui deve fare debug
         pUIm = FindObjectOfType<PlayerUIManager>();
-        
+        gb = FindObjectOfType<GufoBehaviour>();
+
     }
 
     //LETTERE IN USO:
     //PlayerUIManager: K, L
+    //GufoBehaviour: G
     void Update()
     {
         //se esiste il riferimento allo script che si occupa della UI del giocatore, ne fa il debug
@@ -29,6 +33,14 @@ public class Debugging : MonoBehaviour
             if (Input.GetKey(KeyCode.L)) { pUIm.ChangeMaliciousnessBar(pUIm.GetMaliciousness() - 1); }
 
         }
+        //se esiste il riferimento allo script di comportamento di un gufo, ne fa il debug
+        if (gb)
+        {
+            //INIZIA FASE D'ATTACCO GUFO
+            if (Input.GetKeyDown(KeyCode.G)) { gb.PlayerSpotted(); }
+
+        } //altrimenti, ottiene un nuovo riferimento ad uno script di un gufo
+        else { if (Input.GetKeyDown(KeyCode.G)) { gb = FindObjectOfType<GufoBehaviour>(); } }
 
     }
 

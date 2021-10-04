@@ -6,17 +6,19 @@ using UnityEngine;
 public class EnemiesCollisionsManager : MonoBehaviour
 {
     //riferimento al Rigidbody2D di questo nemico
-    private Rigidbody2D enemyRb;
+    [SerializeField]
+    private Rigidbody2D enemyRb = default;
     //riferimento allo script della vita di questo nemico
-    private EnemiesHealth eh;
+    [SerializeField]
+    private EnemiesHealth eh = default;
 
 
     private void Awake()
     {
-        //ottiene il riferimento al Rigidbody2D di questo nemico
-        enemyRb = GetComponentInParent<Rigidbody2D>();
-        //ottiene il riferimento allo script della vita di questo nemico
-        eh = GetComponentInParent<EnemiesHealth>();
+        //ottiene il riferimento al Rigidbody2D di questo nemico, se non esiste già
+        if(!enemyRb) enemyRb = GetComponentInParent<Rigidbody2D>();
+        //ottiene il riferimento allo script della vita di questo nemico, se non esiste già
+        if (!eh) eh = GetComponentInParent<EnemiesHealth>();
 
     }
 
