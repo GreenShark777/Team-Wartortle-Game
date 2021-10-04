@@ -1,0 +1,383 @@
+fileFormatVersion: 2
+guid: b674bb820234f5c4d8fe861a07e39940
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: Occhi colore
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 320
+      y: 404
+      width: 108
+      height: 92
+    spriteID: 275a2441d6189834ab16a938512d0a3b
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -334, y: -13}
+  - name: Testa colore
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 308
+      height: 513
+    spriteID: ff6dca07d6b4f1b4b803a11829ed10a1
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -539, y: -313}
+  - name: Arto front1 colore
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 565
+      y: 254
+      width: 127
+      height: 223
+    spriteID: c1fc9cafeedf2e64a8166884ff5ddbb0
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -6, y: 148}
+  - name: Corpo colore
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 565
+      y: 4
+      width: 353
+      height: 242
+    spriteID: 445557e20be9ce1488023d33de1bf900
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 244, y: -173}
+  - name: Arto front2 colore
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 700
+      y: 254
+      width: 95
+      height: 236
+    spriteID: 52021fa074783df4da6b967019d1d1e7
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 176, y: 133}
+  - name: Arto retro1 colore
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 436
+      y: 404
+      width: 89
+      height: 81
+    spriteID: 10983e8397ce7a8439c0360fefc8982d
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 85, y: 268}
+  - name: Arto retro2 colore
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 803
+      y: 254
+      width: 89
+      height: 81
+    spriteID: 1e204d639cabd584e961de6bab35e188
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 427, y: 96}
+  - name: Coda colore
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 320
+      y: 4
+      width: 237
+      height: 392
+    spriteID: 8d5919523cbde7145be57967dc19fe8a
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 205, y: -281}
+  - name: Punta coda colore
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 926
+      y: 4
+      width: 40
+      height: 213
+    spriteID: 5a0dd07e9892152468dec39409e631a8
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 822, y: -440}
+  platformSettings: []
+  mosaicLayers: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 0
+  importedTextureWidth: 1024
+  importedTextureHeight: 1024
+  documentSize: {x: 1024, y: 1024}
+  paperDollMode: 0
+  keepDupilcateSpriteName: 0
+  spriteCategoryList:
+    categories: []
+  textureActualWidth: 1024
+  textureActualHeight: 1024
+  spritePackingTag: 
+  resliceFromLayer: 0
+  characterMode: 1
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: Occhi colore
+    spriteName: Occhi colore
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 275a2441d6189834ab16a938512d0a3b
+    layerID: 43
+    mosaicPosition: {x: 320, y: 404}
+  - name: Testa colore
+    spriteName: Testa colore
+    isGroup: 0
+    parentIndex: -1
+    spriteID: ff6dca07d6b4f1b4b803a11829ed10a1
+    layerID: 40
+    mosaicPosition: {x: 4, y: 4}
+  - name: Arto front1 colore
+    spriteName: Arto front1 colore
+    isGroup: 0
+    parentIndex: -1
+    spriteID: c1fc9cafeedf2e64a8166884ff5ddbb0
+    layerID: 46
+    mosaicPosition: {x: 565, y: 254}
+  - name: Corpo colore
+    spriteName: Corpo colore
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 445557e20be9ce1488023d33de1bf900
+    layerID: 53
+    mosaicPosition: {x: 565, y: 4}
+  - name: Arto front2 colore
+    spriteName: Arto front2 colore
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 52021fa074783df4da6b967019d1d1e7
+    layerID: 47
+    mosaicPosition: {x: 700, y: 254}
+  - name: Arto retro1 colore
+    spriteName: Arto retro1 colore
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 10983e8397ce7a8439c0360fefc8982d
+    layerID: 48
+    mosaicPosition: {x: 436, y: 404}
+  - name: Arto retro2 colore
+    spriteName: Arto retro2 colore
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 1e204d639cabd584e961de6bab35e188
+    layerID: 52
+    mosaicPosition: {x: 803, y: 254}
+  - name: Coda colore
+    spriteName: Coda colore
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 8d5919523cbde7145be57967dc19fe8a
+    layerID: 54
+    mosaicPosition: {x: 320, y: 4}
+  - name: Punta coda colore
+    spriteName: Punta coda colore
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 5a0dd07e9892152468dec39409e631a8
+    layerID: 58
+    mosaicPosition: {x: 926, y: 4}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+  generateGOHierarchy: 0
+  textureAssetName: Ratto side Texture
+  prefabAssetName: Ratto side Prefab
+  spriteLibAssetName: Ratto side Sprite Lib
+  secondarySpriteTextures: []
