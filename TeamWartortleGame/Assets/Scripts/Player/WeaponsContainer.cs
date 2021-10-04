@@ -16,11 +16,13 @@ public class WeaponsContainer : MonoBehaviour
     //array di tutti gli sprite per le sequenze di attacco
     [SerializeField]
     private Sprite[] swordAtkSequenceSprites;
+
     //riferimento al Rigidbody2D del proiettile
-    private Rigidbody2D rbBullet;
+    //private Rigidbody2D rbBullet;
     //indica quanto velocemente i proiettili della pistola vanno
-    [SerializeField]
-    private float bulletSpeed = 2;
+    //[SerializeField]
+    //private float bulletSpeed = 2;
+
     //indica quale arma è attualmente in uso
     private bool gunOut = false;
     //countdown per gli attacchi di ogni arma
@@ -49,13 +51,13 @@ public class WeaponsContainer : MonoBehaviour
         sword = transform.GetChild(0).gameObject;
         slash = sword.transform.GetChild(0).gameObject;
         gun = transform.GetChild(1).gameObject;
-        bullet = gun.transform.GetChild(0).gameObject;
+        //bullet = gun.transform.GetChild(0).gameObject;
         //ottiene il riferimento allo sprite della spada
         swordSprite = slash.GetComponent<SpriteRenderer>();
         //ottiene il numero massimo di sequenze d'attacco possibili con spada in base al numero di sprites nell'array
         maxSlashAtkSequence = swordAtkSequenceSprites.Length;
         //ottiene il riferimento al Rigidbody2D del proiettile
-        rbBullet = bullet.GetComponent<Rigidbody2D>();
+        //rbBullet = bullet.GetComponent<Rigidbody2D>();
         //disattiva all'inizio la pistola
         gun.SetActive(false);
 
@@ -172,19 +174,32 @@ public class WeaponsContainer : MonoBehaviour
         //il giocatore non potrà attaccare
         canAttack = false;
         //il proiettile torna alla posizione iniziale
-        bullet.transform.position = gun.transform.position;
+        bullet = ObjectPooling.inst.SpawnBulletFromPool("Bullets", gun.transform.position, gun.transform.rotation);
+        #region da cancellare
+        //bullet.transform.position = gun.transform.position;
         //attiva il proiettile
-        bullet.SetActive(true);
+        //bullet.SetActive(true);
         //azzera ogni forza che agisce sul rigidbody del proiettile
-        rbBullet.velocity = Vector2.zero;
+        //rbBullet = bullet.GetComponent<Rigidbody2D>();
+        //rbBullet.velocity = Vector2.zero;
         //da una spinta al proiettile facendolo andare verso la direzione in cui la pistola è direzionata
-        rbBullet.AddForce((gun.transform.position - transform.parent.position) * bulletSpeed);
+        //rbBullet.AddForce((-gun.transform.right) * bulletSpeed);
         //Debug.Log("Bullet Added Force: " + (gun.transform.position - transform.parent.position) * bulletSpeed);
+        #endregion
         //aspetta che finisca il countdown dello sparo
         yield return new WaitForSeconds(gunAttackCD);
         //il giocatore potrà attaccare di nuovo
         canAttack = true;
 
+    }
+
+    public Vector2 GetGunDirection()
+    {
+        //Se la pistola esiste ritorno la direzione
+        if (gun)
+            return -gun.transform.right;
+        //Altrimenti ritorno Vector2 default
+        else return default;
     }
 
 }

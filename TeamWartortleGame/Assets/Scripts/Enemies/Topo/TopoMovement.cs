@@ -64,11 +64,10 @@ public class TopoMovement : TopoAbstract
             //Ottengo i punti di destinazione x e y
             x = (Random.value > .5 ? 2 : -2);
             y = (Random.value > .5 ? 2 : -2);
-            checkPos = Physics2D.OverlapCircle(new Vector2(transform.position.x + x, transform.position.y + y), .1f, groundMask);
-           
+            checkPos = Physics2D.OverlapCircle(new Vector2(transform.position.x + x, transform.position.y + y), .01f, groundMask);
             yield return null;
         }
-        StartMoving(x,y);
+        StartMoving(transform.position.x + x, transform.position.y + y);
 
         yield return null;
     }
@@ -115,7 +114,7 @@ public class TopoMovement : TopoAbstract
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(targetPos, .5f);
+        Gizmos.DrawWireSphere(targetPos, 1f);
         Gizmos.color = Color.red;
     }
 }

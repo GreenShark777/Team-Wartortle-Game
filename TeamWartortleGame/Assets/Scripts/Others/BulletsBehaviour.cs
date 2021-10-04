@@ -14,24 +14,43 @@ public class BulletsBehaviour : MonoBehaviour
     [SerializeField]
     private bool goesThroughSolids = false;
 
+    private Rigidbody2D rb;
+
+    private float speed = 800;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //se non si possono oltepassare oggetti solidi e si collide con un oggetto fisico, il proiettile viene disattivato
-        if (!goesThroughSolids && !collision.isTrigger) { BulletHitSolid(); }
+        if (!goesThroughSolids && !collision.isTrigger) {
+            if (LayerMask.LayerToName(collision.gameObject.layer) != "Player")
+                BulletHitSolid(); 
+        }
 
     }
 
     private void OnEnable()
     {
-        //se esiste il riferimento al particellare di sparo...
-        if (shotPS)
-        {
+       Invoke("AddToPool",3f);
+        //Ottengo la direzione corrente dell'arma
+        Vector2 direction = default;
+        direction = GameManager.inst.GetGunDirection();
+
+       //E la applico al rigidBody
+       rb.AddForce(direction * (speed * Time.deltaTime), ForceMode2D.Impulse);
+       //se esiste il riferimento al particellare di sparo...
+       if (shotPS)
+         {
             //...lo fa partire
             shotPS.Play();
 
-        }
-        else { Debug.LogError("Al proiettile " + gameObject.name + " manca il riferimento al particellare di sparo"); }
+         }
+       else { Debug.LogError("Al proiettile " + gameObject.name + " manca il riferimento al particellare di sparo"); }
+        
 
     }
 
@@ -49,9 +68,18 @@ public class BulletsBehaviour : MonoBehaviour
 
         }
         else { Debug.LogError("Al proiettile " + gameObject.name + " manca il riferimento al particellare di oggetto colpito"); }
-        //disattiva questo proiettile
-        gameObject.SetActive(false);
+        //Riaggiungo il proiettile all'object pooling
+        AddToPool();
 
+    }
+
+    private void AddToPool()
+    {
+        //Riposiziono il particellare come figlio
+        hitPS.transform.parent = transform;
+        //Se il gameObject è attivo, quindi non è stato già inserito nell'object pooling lo inserisco
+        if (gameObject.activeSelf)
+            ObjectPooling.inst.ReAddObjectToPool("Bullets", gameObject);
     }
 
 }

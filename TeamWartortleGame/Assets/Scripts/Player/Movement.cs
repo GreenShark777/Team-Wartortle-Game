@@ -18,9 +18,6 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
-    //Text temporaneo per debug della modalità running
-    [SerializeField]
-    private GameObject textGB;
     #endregion
 
     void Update()
@@ -47,10 +44,6 @@ public class Movement : MonoBehaviour
     {
         //Setto la velocità via animator per passare tra idle e movimento
         animator.SetFloat("Velocity", movePos.magnitude);
-
-        //Se sto correndo imposto attivo il testo running
-        if (animator.GetFloat("Velocity") > 0) textGB.SetActive(true);
-        else textGB.SetActive(false);
 
         if (movePos.magnitude > 0)
             //Controllo se mi sto muovendo sulla X
