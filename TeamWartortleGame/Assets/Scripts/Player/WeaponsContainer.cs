@@ -70,36 +70,45 @@ public class WeaponsContainer : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    //Convertito in LateUpdate a causa di ritardi 
+    void LateUpdate()
     {
+     
         //se il giocatore può attaccare, potrà anche cambiare arma
         if (canAttack)
         {
             //premendo Q, le armi vengono scambiate
             if (Input.GetKeyDown(KeyCode.Q)) { SwapWeapons(); }
-            //premendo il tasto sinistro del mouse, attacca in base all'arma attualmente in uso
-            if (Input.GetKey(KeyCode.Mouse0)) { Attack(); }
-
-        } //altrimenti, se non si sta usando la pistola e il colpo di spada è disattivo, il giocatore sta continuando la sequenza di attacchi, quindi...
-        else if(!gunOut && !slash.activeSelf)
-        {
-            //...se il giocatore cerca di attaccare...
-            if (Input.GetKey(KeyCode.Mouse0))
+            //Controllo gli arrow keys orizzontali e verticali
+            float horArrow = Input.GetAxisRaw("HorizontalArrowKeys"), verArrow = Input.GetAxisRaw("VerticalArrowKeys");
+            //Se sto premendo uno dei due, attacco
+            if (Mathf.Abs(horArrow) > 0 || Mathf.Abs(verArrow) > 0)
             {
-                //... e non si è raggiunto il massimo numero di attacchi sequenziali...
-                if (slashAtkSequence < maxSlashAtkSequence)
-                {
-                    //...ferma tutte le coroutine di questo script(fermando così la coroutine dell'attacco con spada e non interrompere la sequenza)...
-                    StopAllCoroutines();
-                    //...e fa partire la coroutine dell'attacco con spada
-                    Attack();
-
-                }
-
+                Attack();
             }
+            //premendo il tasto sinistro del mouse, attacca in base all'arma attualmente in uso
+            //if (Input.GetKey(KeyCode.Mouse0)) { Attack(); }
 
         }
+        //altrimenti, se non si sta usando la pistola e il colpo di spada è disattivo, il giocatore sta continuando la sequenza di attacchi, quindi...
+        //else if(!gunOut && !slash.activeSelf)
+        //{
+        //    //...se il giocatore cerca di attaccare...
+        //    if (Input.GetKey(KeyCode.Mouse0))
+        //    {
+        //        //... e non si è raggiunto il massimo numero di attacchi sequenziali...
+        //        if (slashAtkSequence < maxSlashAtkSequence)
+        //        {
+        //            //...ferma tutte le coroutine di questo script(fermando così la coroutine dell'attacco con spada e non interrompere la sequenza)...
+        //            StopAllCoroutines();
+        //            //...e fa partire la coroutine dell'attacco con spada
+        //            Attack();
+
+        //        }
+
+        //    }
+
+        //}
 
     }
     /// <summary>
@@ -138,15 +147,15 @@ public class WeaponsContainer : MonoBehaviour
         //il giocatore non potrà attaccare
         canAttack = false;
         //Ottengo un'istanza di slash dall'object pooling
-        slash = ObjectPooling.inst.SpawnObjectFromPool("Slash", slashPos.position, transform.rotation);
+        //ObjectPooling.inst.SpawnObjectFromPool("Slash", slashPos.position, transform.rotation);
         //cambia lo sprite del colpo con spada in base alla sequenza corrente
-        ChangeSwordSequenceSprite();
+        //ChangeSwordSequenceSprite();
         //attiva il colpo della spada
-        slash.SetActive(true);
+        //slash.SetActive(true);
         //aspetta che finisca il countdown dell'attacco con spada
-        yield return new WaitForSeconds(swordAttackCD);
+        //yield return new WaitForSeconds(swordAttackCD);
         //disattiva il colpo con spada
-        slash.SetActive(false);
+        //slash.SetActive(false);
         //aspetta un po' di tempo
         yield return new WaitForSeconds(slashSequenceResetCD);
         //il giocatore potrà attaccare di nuovo
@@ -188,7 +197,7 @@ public class WeaponsContainer : MonoBehaviour
         //il giocatore non potrà attaccare
         canAttack = false;
         //il proiettile torna alla posizione iniziale
-        ObjectPooling.inst.SpawnFromPool("Bullets", shootPos.position, transform.rotation);
+        //ObjectPooling.inst.SpawnFromPool("Bullets", shootPos.position, transform.rotation);
         #region da cancellare
         //bullet.transform.position = gun.transform.position;
         //attiva il proiettile
@@ -211,6 +220,23 @@ public class WeaponsContainer : MonoBehaviour
     public Vector2 GetGunDirection()
     {
         return transform.right;
+    }
+
+    //public void SpawnSlash()
+    //{
+    //    //Ottengo un'istanza di slash dall'object pooling
+    //    slash = ObjectPooling.inst.SpawnObjectFromPool("Slash", slashPos.position, transform.rotation);
+    //}
+
+    //public void DisableSlash()
+    //{
+    //    //Ottengo un'istanza di slash dall'object pooling
+    //    ObjectPooling.inst.ReAddObjectToPool("Slash", slash);
+    //}
+
+    public void SpawnBullet()
+    {
+        ObjectPooling.inst.SpawnFromPool("Bullets", shootPos.position, transform.rotation);
     }
 
 }
