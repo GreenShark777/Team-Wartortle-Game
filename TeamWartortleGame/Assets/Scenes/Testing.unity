@@ -8193,6 +8193,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548851087}
   m_CullTransparentMesh: 1
+--- !u!58 &1575328082 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6791999278432380454, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+  m_PrefabInstance: {fileID: 700986070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1605903951
 GameObject:
   m_ObjectHideFlags: 0
@@ -13462,6 +13467,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1892945843}
+    - target: {fileID: 8653376158574841913, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
+      propertyPath: collPlayer
+      value: 
+      objectReference: {fileID: 1575328082}
     - target: {fileID: 8653376158574842308, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -13505,6 +13514,10 @@ PrefabInstance:
     - target: {fileID: 8653376158574842308, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8653376159155489941, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}

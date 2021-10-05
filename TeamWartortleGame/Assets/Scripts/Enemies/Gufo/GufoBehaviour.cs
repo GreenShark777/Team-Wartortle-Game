@@ -23,6 +23,11 @@ public class GufoBehaviour : MonoBehaviour
     //riferimento al collider del gufo
     [SerializeField]
     private Collider2D collGufo = default;
+    //riferimento al collider del giocatore
+    //[SerializeField]
+    //private Collider2D collPlayer = default;
+    //riferimento al collider del punto di volo del gufo
+    private Collider2D collFlyingPoint;
 
     [Header("Animators")]
 
@@ -57,6 +62,7 @@ public class GufoBehaviour : MonoBehaviour
     private float acceptableDistanceToPoint = 0.2f, //indica quanto vicino può essere al massimo lo sprite al punto di volo o di atterraggio per continuare
         distanceToSpot = 5; //indica quanto
 
+    //indica il punto in cui il gufo deve atterrare
     private Vector2 divingPoint;
 
 
@@ -68,6 +74,10 @@ public class GufoBehaviour : MonoBehaviour
         if (staticPlayer == null && player != null) { staticPlayer = player; }
         //ottiene il riferimento all'Animator del punto di volo
         flyingPointAnim = flyingPoint.GetComponent<Animator>();
+        //ottiene il riferimento al collider del punto di volo del gufo
+        collFlyingPoint = flyingPoint.GetComponent<Collider2D>();
+        //fa in modo che le collisioni tra il punto di volo del gufo e il giocatore vengano ignorate
+        //Physics2D.IgnoreCollision(collFlyingPoint, collPlayer);
 
         //OTTIENE IL TEMPO DI ANTICIPAZIONE AL VOLO E DELLE ALTRE ANIMAZIONI
         jumpAnticipationTimer = 2;
@@ -113,7 +123,7 @@ public class GufoBehaviour : MonoBehaviour
             //...e se il gufo è atterrato, lo ferma
             if (landed) { StartCoroutine(Landed()); }
             //Debug.Log("Calculating Diving: " + distanceToPoint);
-        } //altrimenti, se non si sta nè volando nè tuffando e non sta già attaccando...
+        } //altrimenti, se non si sta nè volando nè si sta già attaccando...
         else if (!isFlying && !isAttacking)
         {
             //...calcola se il giocatore è abbastanza vicino...
@@ -121,6 +131,16 @@ public class GufoBehaviour : MonoBehaviour
             //...se lo è, comunica che il giocatore è stato avvistato
             if (distanceToPoint < distanceToSpot) { PlayerSpotted(); }
             //Debug.Log(distanceToPoint);
+
+        } //altrimenti, se non si sta volando...
+        else if (!isFlying)
+        {
+            //...e calcolando la distanza tra lo sprite e l'ombra...
+            distanceToPoint = Mathf.Abs(spriteGufo.position.y - flyingPoint.position.y);
+            //...risulta che lo sprite è lontano dall'ombra, lo avvicina
+            if (distanceToPoint > acceptableDistanceToPoint)
+            { spriteGufo.position = Vector2.Lerp(spriteGufo.position, groundPoint.position, flyingSpeed * Time.deltaTime); }
+
         }
 
     }
@@ -183,6 +203,8 @@ public class GufoBehaviour : MonoBehaviour
         isFlying = true;
         //il punto volante andrà in cerchio
         flyingPointAnim.SetBool("FlyingAround", true);
+        //il collider del punto volante diventa solido, in modo che il gufo non vada fuori dai limiti della mappa durante il volo
+        collFlyingPoint.isTrigger = false;
         //il gufo si muove verso il giocatore in volo
         StartCoroutine(FlyAround());
         //ottiene il tempo d'aspettare entro il range dei timer minimo e massimo
@@ -190,6 +212,8 @@ public class GufoBehaviour : MonoBehaviour
         //Debug.Log("In punto di volo. Tempo per attacco: " + randWaitTime);
         //aspetta il tempo calcolato
         yield return new WaitForSeconds(randWaitTime);
+        //il collider del punto volante diventa di nuovo non solido, dato che ha finito di volare
+        collFlyingPoint.isTrigger = true;
         //il gufo si tuffa verso il giocatore
         StartCoroutine(DiveAttack());
 
@@ -216,8 +240,14 @@ public class GufoBehaviour : MonoBehaviour
 
     private IEnumerator DiveAttack()
     {
+
+        //FA PARTIRE L'ANIMAZIONE DI ANTICIPAZIONE AL TUFFO
+
         //aspetta che l'animazione di anticipazione al tuffo finisca
         yield return new WaitForSeconds(diveAnticipationTimer);
+
+        //FA PARTIRE L'ANIMAZIONE DI TUFFO
+
         //il gufo si tuffa verso il giocatore
         rbGufo.velocity = (staticPlayer.position - transform.position).normalized * diveSpeed;
         //salva il punto in cui il gufo deve tuffarsi
@@ -226,8 +256,6 @@ public class GufoBehaviour : MonoBehaviour
         isDiving = true;
         //comunica che non sta più volando
         isFlying = false;
-        //rende di nuovo solido il collider del gufo
-        collGufo.isTrigger = false;
         //Debug.Log("Dive attack");
     }
 
@@ -237,6 +265,8 @@ public class GufoBehaviour : MonoBehaviour
         rbGufo.velocity = Vector2.zero;
         //comunica che ha smesso di tuffarsi
         isDiving = false;
+        //rende di nuovo solido il collider del gufo
+        collGufo.isTrigger = false;
         Debug.Log("Landed");
         //aspetta del tempo e...
         yield return new WaitForSeconds(afterLandingCD);
