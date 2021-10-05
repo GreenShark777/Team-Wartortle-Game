@@ -16,7 +16,7 @@ public class BulletsBehaviour : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    private float speed = 800;
+    private float speed = 1600;
 
     private void Awake()
     {
@@ -35,21 +35,22 @@ public class BulletsBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
-       Invoke("AddToPool",3f);
+        Invoke("AddToPool",3f);
         //Ottengo la direzione corrente dell'arma
         Vector2 direction = default;
-        direction = GameManager.inst.GetGunDirection();
+        if (GameManager.inst)
+            direction = GameManager.inst.GetGunDirection();
 
-       //E la applico al rigidBody
-       rb.AddForce(direction * (speed * Time.deltaTime), ForceMode2D.Impulse);
-       //se esiste il riferimento al particellare di sparo...
-       if (shotPS)
-         {
-            //...lo fa partire
-            shotPS.Play();
+        //E la applico al rigidBody
+        rb.AddForce(direction * (speed * Time.deltaTime), ForceMode2D.Impulse);
+        //se esiste il riferimento al particellare di sparo...
+        if (shotPS)
+          {
+             //...lo fa partire
+             shotPS.Play();
 
-         }
-       else { Debug.LogError("Al proiettile " + gameObject.name + " manca il riferimento al particellare di sparo"); }
+          }
+        else { Debug.LogError("Al proiettile " + gameObject.name + " manca il riferimento al particellare di sparo"); }
         
 
     }

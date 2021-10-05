@@ -77,8 +77,8 @@ public class ObjectPooling : MonoBehaviour
         else return null;
     }
 
-    //Metodo overload per lo sparo dei proiettili
-    public GameObject SpawnBulletFromPool(string tag, Vector3 pos, Quaternion rot)
+    //Metodo overload
+    public GameObject SpawnFromPool(string tag, Vector3 pos, Quaternion rot)
     {
         //Se è presente il tag inserito
         if (dict_pool.ContainsKey(tag))

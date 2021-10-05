@@ -25,6 +25,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
         //se il nemico non è ancora stato sconfitto, controlla i tag dell'oggetto con cui collide
         if (!eh.IsEnemyDefeated())
         {
+
             //se si sta collidendo con un'arma, il nemico viene colpito da quest'arma
             if (collision.CompareTag("Weapon")) { StartCoroutine(GotHit(collision.GetComponent<WeaponStats>())); }
 
@@ -34,6 +35,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
 
     private IEnumerator GotHit(WeaponStats ws)
     {
+
         //Debug.Log("Enemy Hit: " + transform.parent.name);
         //il nemico subisce danni in base alla potenza dell'arma da cui è stato colpito
         eh.TakeDmg(ws.GetAttack());
@@ -45,7 +47,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
         //calcola come spingere il nemico in base alla potenza di spinta dell'arma
         Vector2 calculatedPush = -(ws.transform.position - transform.position).normalized * ws.GetPushForce();
         //il nemico viene spinto via, in base alla potenza di spinta calcolata
-        enemyRb.AddForce(calculatedPush);
+        enemyRb.velocity = calculatedPush;
         //Debug.Log("POtenza spinta calcolata: " + calculatedPush);
         //aspetta un po' di tempo, in base al tempo di stordimento inflitto dall'arma
         yield return new WaitForSeconds(ws.GetStunTime());

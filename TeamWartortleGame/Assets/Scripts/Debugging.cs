@@ -7,6 +7,10 @@ public class Debugging : MonoBehaviour
     //riferimento allo script che si occupa della UI del giocatore
     private PlayerUIManager pUIm;
 
+    //Riferimento per test di animazione delle armi
+    [SerializeField]
+    private Animator animator;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +32,12 @@ public class Debugging : MonoBehaviour
             //DIMINUISCE MALIZIA PREMENDO L
             if (Input.GetKey(KeyCode.L)) { pUIm.ChangeMaliciousnessBar(pUIm.GetMaliciousness() - 1); }
 
+        }
+
+        //Sparo animazione
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            animator.SetTrigger("Shooting");
         }
 
     }

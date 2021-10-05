@@ -6,10 +6,10 @@ using UnityEngine;
 public class WeaponsContainer : MonoBehaviour
 {
     //riferimenti alle armi e loro colpi(ciò che viene attivato quando si attacca)
+    [SerializeField]
     private GameObject sword, //riferimento alla spada
         slash, //riferimento al colpo della spada
-        gun, // riferimento alla pistola
-        bullet; //riferimento al proiettile della pistola
+        gun; // riferimento alla pistola
 
     //riferimento allo sprite della spada
     private SpriteRenderer swordSprite;
@@ -30,6 +30,9 @@ public class WeaponsContainer : MonoBehaviour
     private float swordAttackCD = default, //indica quanto deve passare tra un attacco con spada e l'altro
         gunAttackCD = default; //indica quanto deve passare tra uno sparo e l'altro
 
+    //Posizione in cui apparirà lo slash e il proiettile
+    [SerializeField]
+    private Transform slashPos, shootPos;
     //indica quanto tempo deve passare tra un attacco con spada all'altro per interrompere la sequenza
     [SerializeField]
     private float slashSequenceResetCD = 0.2f;
@@ -43,17 +46,21 @@ public class WeaponsContainer : MonoBehaviour
     [SerializeField]
     private PlayerUIManager playerUIManag = default;
 
+    //Riferimento all'animator del player per eseguire le sue animazioni
+    [SerializeField]
+    private Animator animator;
+
 
     // Start is called before the first frame update
     void Start()
     {
         //ottiene i riferimenti alle armi e loro colpi
-        sword = transform.GetChild(0).gameObject;
-        slash = sword.transform.GetChild(0).gameObject;
-        gun = transform.GetChild(1).gameObject;
+        //sword = transform.GetChild(0).gameObject;
+        //slash = sword.transform.GetChild(0).gameObject;
+        //gun = transform.GetChild(1).gameObject;
         //bullet = gun.transform.GetChild(0).gameObject;
         //ottiene il riferimento allo sprite della spada
-        swordSprite = slash.GetComponent<SpriteRenderer>();
+        //swordSprite = slash.GetComponent<SpriteRenderer>();
         //ottiene il numero massimo di sequenze d'attacco possibili con spada in base al numero di sprites nell'array
         maxSlashAtkSequence = swordAtkSequenceSprites.Length;
         //ottiene il riferimento al Rigidbody2D del proiettile
@@ -72,13 +79,13 @@ public class WeaponsContainer : MonoBehaviour
             //premendo Q, le armi vengono scambiate
             if (Input.GetKeyDown(KeyCode.Q)) { SwapWeapons(); }
             //premendo il tasto sinistro del mouse, attacca in base all'arma attualmente in uso
-            if (Input.GetKeyDown(KeyCode.Mouse0)) { Attack(); }
+            if (Input.GetKey(KeyCode.Mouse0)) { Attack(); }
 
         } //altrimenti, se non si sta usando la pistola e il colpo di spada è disattivo, il giocatore sta continuando la sequenza di attacchi, quindi...
         else if(!gunOut && !slash.activeSelf)
         {
             //...se il giocatore cerca di attaccare...
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKey(KeyCode.Mouse0))
             {
                 //... e non si è raggiunto il massimo numero di attacchi sequenziali...
                 if (slashAtkSequence < maxSlashAtkSequence)
@@ -126,8 +133,12 @@ public class WeaponsContainer : MonoBehaviour
     /// <returns></returns>
     private IEnumerator SwordAttack()
     {
+        //Eseguo l'animazione di attacco con la spada
+        animator.SetTrigger("Sword");
         //il giocatore non potrà attaccare
         canAttack = false;
+        //Ottengo un'istanza di slash dall'object pooling
+        slash = ObjectPooling.inst.SpawnObjectFromPool("Slash", slashPos.position, transform.rotation);
         //cambia lo sprite del colpo con spada in base alla sequenza corrente
         ChangeSwordSequenceSprite();
         //attiva il colpo della spada
@@ -150,6 +161,7 @@ public class WeaponsContainer : MonoBehaviour
     private void ChangeSwordSequenceSprite()
     {
         //cambia lo sprite del colpo di spada in base alla sequenza d'attacco corrente
+        swordSprite = slash.transform.GetChild(1).GetComponent<SpriteRenderer>();
         swordSprite.sprite = swordAtkSequenceSprites[slashAtkSequence];
         //indica l'indice della sequenza che l'attacco di spada deve avere nel prossimo attacco
         slashAtkSequence++;
@@ -171,10 +183,12 @@ public class WeaponsContainer : MonoBehaviour
     /// <returns></returns>
     private IEnumerator GunAttack()
     {
+        //Eseguo l'animazione di attacco con la pistola
+        animator.SetTrigger("Shooting");
         //il giocatore non potrà attaccare
         canAttack = false;
         //il proiettile torna alla posizione iniziale
-        bullet = ObjectPooling.inst.SpawnBulletFromPool("Bullets", gun.transform.position, gun.transform.rotation);
+        ObjectPooling.inst.SpawnFromPool("Bullets", shootPos.position, transform.rotation);
         #region da cancellare
         //bullet.transform.position = gun.transform.position;
         //attiva il proiettile
@@ -193,13 +207,10 @@ public class WeaponsContainer : MonoBehaviour
 
     }
 
+    //Metodo che serve per ottenere la direzione corrente del personaggio, viene passata al proiettile per fargli seguire la direzione
     public Vector2 GetGunDirection()
     {
-        //Se la pistola esiste ritorno la direzione
-        if (gun)
-            return -gun.transform.right;
-        //Altrimenti ritorno Vector2 default
-        else return default;
+        return transform.right;
     }
 
 }
