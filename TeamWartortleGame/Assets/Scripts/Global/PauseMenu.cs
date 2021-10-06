@@ -5,8 +5,8 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
     //riferimento al menù di pausa
-    [SerializeField]
-    private GameObject pauseMenu = default;
+    //[SerializeField]
+    //private GameObject pauseMenu = default;
 
 
     public void Pause(bool isPaused)
@@ -16,7 +16,7 @@ public class PauseMenu : MonoBehaviour
         //altrimenti, viene fatto scorrere normalmente
         else { Time.timeScale = 1; }
         //il menù di pausa viene attivato o disattivato in base al parametro ricevuto
-        pauseMenu.SetActive(isPaused);
+        //pauseMenu.SetActive(isPaused);
 
     }
 

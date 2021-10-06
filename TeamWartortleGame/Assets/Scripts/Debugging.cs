@@ -30,6 +30,7 @@ public class Debugging : MonoBehaviour
     }
 
     //LETTERE IN USO:
+    //LanguageManager: T
     //PlayerUIManager: K, L
     //GufoBehaviour: G
     void Update()

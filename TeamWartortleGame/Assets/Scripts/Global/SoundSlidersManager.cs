@@ -44,6 +44,8 @@ public class SoundSlidersManager : MonoBehaviour, IUpdateData
         ChangeMusicVolume();
         ChangeSfxVolume();
 
+        gameObject.SetActive(false);
+
     }
 
 
