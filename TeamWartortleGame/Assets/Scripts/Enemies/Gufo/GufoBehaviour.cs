@@ -48,6 +48,9 @@ public class GufoBehaviour : MonoBehaviour
         isDiving = false, //indica se il gufo si è tuffato
         isAttacking = false; //indica se il gufo sta attaccando o meno
 
+    //indica se il nemico è stato stordito o meno
+    private bool isStunned = false;
+
     [Header("Timers")]
     //vari timer del gufo
     private float jumpAnticipationTimer, //indica quanto tempo bisogna aspettare prima di alzarsi in volo
@@ -123,17 +126,16 @@ public class GufoBehaviour : MonoBehaviour
             //...e se il gufo è atterrato, lo ferma
             if (landed) { StartCoroutine(Landed()); }
             //Debug.Log("Calculating Diving: " + distanceToPoint);
-        } //altrimenti, se non si sta nè volando nè si sta già attaccando...
-        else if (!isFlying && !isAttacking)
+        } //altrimenti, se non si sta nè volando nè si sta già attaccando nè il gufo è stordito...
+        else if (!isFlying && !isAttacking && !isStunned)
         {
             //...calcola se il giocatore è abbastanza vicino...
             distanceToPoint = Vector2.Distance(transform.position, staticPlayer.position);
             //...se lo è, comunica che il giocatore è stato avvistato
             if (distanceToPoint < distanceToSpot) { PlayerSpotted(); }
             //Debug.Log(distanceToPoint);
-
-        } //altrimenti, se non si sta volando...
-        else if (!isFlying)
+        } //altrimenti, se non si sta volando o il gufo è stordito...
+        else if (!isFlying || isStunned)
         {
             //...e calcolando la distanza tra lo sprite e l'ombra...
             distanceToPoint = Mathf.Abs(spriteGufo.position.y - flyingPoint.position.y);
@@ -273,6 +275,19 @@ public class GufoBehaviour : MonoBehaviour
         //...il gufo potrà attaccare di nuovo
         isAttacking = false;
         //Debug.Log("Can attack again -> diving: " + isDiving + " jumped: " + jumped + " isFlying: " + isFlying);
+    }
+
+    public void IsStunned(bool stunned)
+    {
+        //fema tutte le coroutine di questo script
+        StopAllCoroutines();
+        //resetta lo stato del gufo
+        isDiving = false;
+        isAttacking = false;
+        isFlying = false;
+        //comunica se il nemico è stordito o meno
+        isStunned = stunned;
+
     }
 
 }

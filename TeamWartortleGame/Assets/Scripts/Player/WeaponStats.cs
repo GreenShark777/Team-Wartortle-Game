@@ -11,6 +11,19 @@ public class WeaponStats : MonoBehaviour
         pushForceStat = 10, //indica quanto spinge indietro i nemici con un colpo
         stunTime = 0.2f; //indica per quanto tempo un nemico colpito da quest'arma viene stordito
 
+    //enumeratore per il tipo di arma di questo script
+    public enum WeaponType
+    {
+
+        Sword,
+
+        Bullet
+
+    }
+    //indica il tipo di quest'arma
+    [SerializeField]
+    private WeaponType thisWeapon = default;
+
 
     /// <summary>
     /// Permette ad altri script di ottenere la potenza d'attacco di quest'arma
@@ -42,5 +55,10 @@ public class WeaponStats : MonoBehaviour
     /// </summary>
     /// <param name="newValue"></param>
     public void ChangeStunTimeStat(float newValue) { stunTime += newValue; }
+    /// <summary>
+    /// Permette ad altri script di sapere a che arma corrispondono queste statistiche
+    /// </summary>
+    /// <returns></returns>
+    public WeaponType GetWeaponType() { return thisWeapon; }
 
 }

@@ -5160,6 +5160,7 @@ MonoBehaviour:
   attackStat: 1
   pushForceStat: 100
   stunTime: 0.2
+  thisWeapon: 0
 --- !u!70 &7236872107215602640
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -5400,6 +5401,7 @@ MonoBehaviour:
   attackStat: 1
   pushForceStat: 100
   stunTime: 0.2
+  thisWeapon: 1
 --- !u!114 &1692024139913537348
 MonoBehaviour:
   m_ObjectHideFlags: 0
