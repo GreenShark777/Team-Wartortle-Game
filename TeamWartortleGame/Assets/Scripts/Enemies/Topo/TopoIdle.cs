@@ -5,20 +5,30 @@ using UnityEngine;
 public class TopoIdle : TopoAbstract
 {
     //Variabili di timer di attesa prima di muoversi
-    private float startTime, timerToReach = 2;
+    private float startTime, shootStartTimer, timerToReach = 2;
+
+    private GameObject[] projectiles = new GameObject[2];
 
     //Script manager da cui chiamare i suoi metodi
     private TopoManagerSTM topoManager;
 
     public override void StateEnter() {
         //Inizializzo lo startTime al tempo corrente
-        startTime = Time.time;
+        startTime = shootStartTimer = Time.time;
         //Prendo lo script manager
         topoManager = GetComponent<TopoManagerSTM>();
     }
 
     public override void StateUpdate() {
         //Quando il tempo corrente azzerato è maggiore del tempo da raggiungere
+        if (Time.time - shootStartTimer > timerToReach / 2)
+        {
+            projectiles[0] = ObjectPooling.inst.SpawnFromPool("Fiamma", transform.position, Quaternion.identity);
+            projectiles[1] = ObjectPooling.inst.SpawnFromPool("Fiamma", transform.position, Quaternion.identity);
+            projectiles[0].GetComponent<Rigidbody2D>().AddForce(Vector2.left * 5f, ForceMode2D.Impulse);
+            projectiles[1].GetComponent<Rigidbody2D>().AddForce(Vector2.right * 5f, ForceMode2D.Impulse);
+            shootStartTimer = 9999;
+        }
         if (Time.time - startTime > timerToReach)
         {
             //Passo allo stato movement del topo
