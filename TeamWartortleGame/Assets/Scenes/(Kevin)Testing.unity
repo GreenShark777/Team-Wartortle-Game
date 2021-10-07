@@ -2286,6 +2286,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -2850071105861524832, guid: 1bc0627bbdb37724d91387186cb495cf, type: 3}
+    - target: {fileID: 3029431140854281417, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 3121847353008696206, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2773,7 +2777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2742340099010771814, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.085867
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2742340099010771814, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
       propertyPath: m_LocalRotation.w
