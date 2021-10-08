@@ -29,9 +29,9 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
         if (enemyHp == default) { Debug.LogError("I punti vita di " + gameObject.name + " non sono stati ancora impostati!"); }
 
         //Prendo tutti gli sprite renderer per potergli poi cambiare colore
-        spriteRend[0] = transform.GetChild(0).GetChild(0).GetComponentsInChildren<SpriteRenderer>();
-        spriteRend[1] = transform.GetChild(0).GetChild(1).GetComponentsInChildren<SpriteRenderer>();
-        spriteRend[2] = transform.GetChild(0).GetChild(2).GetComponentsInChildren<SpriteRenderer>();
+        spriteRend[0] = /*transform.GetChild(0).GetChild(0).*/GetComponentsInChildren<SpriteRenderer>(true);
+        spriteRend[1] = /*transform.GetChild(0).GetChild(1).*/GetComponentsInChildren<SpriteRenderer>(true);
+        spriteRend[2] = /*transform.GetChild(0).GetChild(2).*/GetComponentsInChildren<SpriteRenderer>(true);
 
     }
 

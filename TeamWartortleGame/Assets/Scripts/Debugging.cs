@@ -18,7 +18,7 @@ public class Debugging : MonoBehaviour
 
     //Riferimento per test di animazione delle armi
     [SerializeField]
-    private Animator animator;
+    private Animator playerAnim;
 
 
     // Start is called before the first frame update
@@ -37,6 +37,7 @@ public class Debugging : MonoBehaviour
     //LanguageManager: T
     //PlayerUIManager: K, L
     //GufoBehaviour: G
+    //Animator giocatore: U
     void Update()
     {
         //se esistono i riferimenti al GameManag e al LanguageManager...
@@ -78,7 +79,7 @@ public class Debugging : MonoBehaviour
         //Sparo animazione
         if (Input.GetKeyDown(KeyCode.U))
         {
-            animator.SetTrigger("Shooting");
+            playerAnim.SetTrigger("Shooting");
         }
 
     }

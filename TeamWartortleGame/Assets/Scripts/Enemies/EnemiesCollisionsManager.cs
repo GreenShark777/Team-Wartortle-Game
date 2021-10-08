@@ -78,7 +78,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
     {
         //Debug.Log("Enemy Hit: " + transform.parent.name);
         //il nemico subisce danni in base alla potenza dell'arma da cui è stato colpito
-        eh.TakeDmg(ws.GetAttack());
+        eh.Damage(ws.GetAttack());
 
         //FARE IN MODO CHE IL NEMICO NON SI MUOVA O ATTACCHI(O DISATTIVARE SUO SCRIPT DI LOGICA O CAMBIARE UNA VARIABILE CHE INDICA DI ESSERE STORDITI)
         GetStunned(true);
