@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4157706480522747533}
   - component: {fileID: 4157706480522747523}
   - component: {fileID: 4157706480522747522}
+  - component: {fileID: 4858685448229533521}
+  - component: {fileID: 7169903326394042867}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -78,4 +80,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   languageDropdownList: {fileID: 0}
-  animator: {fileID: 0}
+  playerAnim: {fileID: 0}
+--- !u!114 &4858685448229533521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4157706480522747534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8d4b421e58c134abe898e14a7c0996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textsToChangeLanguage: []
+  languageDropdownList: {fileID: 0}
+--- !u!114 &7169903326394042867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4157706480522747534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e68c5a5ffb18741a1b3ded1cfc2040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadData: 1
+  savedMasterVolume: 0
+  savedMusicVolume: -10
+  savedSfxVolume: 0
+  savedLanguage: 0
