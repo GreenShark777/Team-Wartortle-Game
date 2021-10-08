@@ -15,7 +15,10 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
     private Collider2D enemyCollider = default;
 
     //Riferimento a tutte le componenti sprite renderer nei GameObject per effettuare il cambio colore
-    private SpriteRenderer[][] spriteRend = new SpriteRenderer[3][];
+    private SpriteRenderer[] enemySprites;
+
+    [SerializeField]
+    private string spriteToIgnore = "ombra";
 
     //Colore iniziale da far ritornare al nemico dopo aver ricevuto danno e colore di damage
     [SerializeField]
@@ -28,10 +31,15 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
         //DEBUGGING-------------------------------------------------------------------------------------------------------------------------------
         if (enemyHp == default) { Debug.LogError("I punti vita di " + gameObject.name + " non sono stati ancora impostati!"); }
 
-        //Prendo tutti gli sprite renderer per potergli poi cambiare colore
-        spriteRend[0] = /*transform.GetChild(0).GetChild(0).*/GetComponentsInChildren<SpriteRenderer>(true);
-        spriteRend[1] = /*transform.GetChild(0).GetChild(1).*/GetComponentsInChildren<SpriteRenderer>(true);
-        spriteRend[2] = /*transform.GetChild(0).GetChild(2).*/GetComponentsInChildren<SpriteRenderer>(true);
+        //Prendo tutti gli sprite renderer per potergli poi cambiare colore quando il nemico viene colpito
+        enemySprites = GetComponentsInChildren<SpriteRenderer>(true);
+
+        for (int i = 0; i < enemySprites.Length; i++)
+        {
+
+            if (enemySprites[i].sprite.name == spriteToIgnore) { enemySprites[i] = enemySprites[i-1]; break; }
+
+        }
 
     }
 
@@ -75,23 +83,23 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
     private IEnumerator IHitColor()
     {
         //Per ogni sprite renderer del nemico
-        for (int i = 0; i < spriteRend.Length; i++)
+        for (int i = 0; i < enemySprites.Length; i++)
         {
-            for (int j = 0; j < spriteRend[i].Length; j++)
+            for (int j = 0; j < enemySprites.Length; j++)
             {
                 //imposto il colore di damage
-                spriteRend[i][j].color = dmgColor;
+                enemySprites[j].color = dmgColor;
             }
         }
 
         yield return new WaitForSeconds(.2f);
 
-        for (int i = 0; i < spriteRend.Length; i++)
+        for (int i = 0; i < enemySprites.Length; i++)
         {
-            for (int j = 0; j < spriteRend[i].Length; j++)
+            for (int j = 0; j < enemySprites.Length; j++)
             {
                 //imposto il colore di damage
-                spriteRend[i][j].color = startColor;
+                enemySprites[j].color = startColor;
             }
         }
 

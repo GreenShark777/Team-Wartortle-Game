@@ -5915,7 +5915,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &355131687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6037,7 +6037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &428896617
 Rigidbody2D:
   serializedVersion: 4
@@ -6277,7 +6277,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -6408,7 +6408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &530718188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6730,6 +6730,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &673317852 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4391720601220500408, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
+  m_PrefabInstance: {fileID: 1136615541}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61bd0e44df83fe44a0ecfaa35fef589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &673847204
 GameObject:
   m_ObjectHideFlags: 0
@@ -6915,7 +6926,7 @@ PrefabInstance:
     - target: {fileID: 5920272291967465559, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
       propertyPath: playerUIManag
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 673317852}
     - target: {fileID: 7999280477419645829, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
       propertyPath: m_Name
       value: (Kevin)Player
@@ -8022,7 +8033,7 @@ Transform:
   m_GameObject: {fileID: 1747948470}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.2226, y: 0.0299, z: 0}
-  m_LocalScale: {x: 17.097504, y: 9.570712, z: 1}
+  m_LocalScale: {x: 20.970089, y: 11.738479, z: 1.2265}
   m_Children:
   - {fileID: 533096047}
   - {fileID: 649636369}
