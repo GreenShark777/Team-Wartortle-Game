@@ -90,4 +90,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         this.maxHealth++;
         SetHealthContainer(maxHealth);
     }
+
+    public bool GetFullHealth()
+    {
+        if (health == maxHealth * 2) return true;
+        else return false;
+    }
 }
