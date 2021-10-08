@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 8653376158574842309}
   - component: {fileID: 8653376158574841915}
   - component: {fileID: 8653376158574841914}
+  - component: {fileID: 492983636}
   m_Layer: 0
   m_Name: Gufo
   m_TagString: Enemy
@@ -193,8 +194,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHp: 3
   enemyCollider: {fileID: 8653376158657852147}
-  startColor: {r: 0, g: 0, b: 0, a: 0}
-  dmgColor: {r: 0, g: 0, b: 0, a: 0}
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  dmgColor: {r: 1, g: 0.16509432, b: 0.16509432, a: 1}
 --- !u!95 &8653376158574841915
 Animator:
   serializedVersion: 3
@@ -235,6 +236,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!210 &492983636
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653376158574841912}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &8653376158657852145
 GameObject:
   m_ObjectHideFlags: 0
