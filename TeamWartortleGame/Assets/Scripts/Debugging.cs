@@ -19,6 +19,8 @@ public class Debugging : MonoBehaviour
     //Riferimento per test di animazione delle armi
     [SerializeField]
     private Animator playerAnim;
+    //lista di riferimenti di tutti i checkpoint nella scena
+    public Checkpoints[] allCheckpoints;
 
 
     // Start is called before the first frame update
@@ -30,7 +32,30 @@ public class Debugging : MonoBehaviour
         lm = FindObjectOfType<LanguageManager>(true);
         //languageDropdownList = FindObjectOfType<Dropdown>(true);
         g = FindObjectOfType<GameManag>(true);
+        allCheckpoints = FindObjectsOfType<Checkpoints>();
 
+        //controlla se dei checkpoint hanno lo stesso ID
+        if (allCheckpoints.Length > 0 && g)
+        {
+
+            for (int i = 0; i < allCheckpoints.Length; i++)
+            {
+
+                for (int j = i; j < allCheckpoints.Length; j++)
+                {
+
+                    if (allCheckpoints[i] != allCheckpoints[j] && allCheckpoints[i].GetID() == allCheckpoints[j].GetID())
+                    {
+                        Debug.LogError("I checkpoint " + allCheckpoints[i].transform.parent + " e " + allCheckpoints[j].transform.parent
+                        + " hanno lo stesso ID: " + allCheckpoints[i].GetID());
+                    }
+
+                }
+
+            }
+
+        }
+        //Fine controllo checkpoint
     }
 
     //LETTERE IN USO:

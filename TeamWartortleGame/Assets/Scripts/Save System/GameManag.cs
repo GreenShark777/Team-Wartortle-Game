@@ -13,7 +13,8 @@ public class GameManag : MonoBehaviour
         savedMusicVolume = -10, //indica il valore del volume della musica scelto dal giocatore l'ultima volta che è stato salvato
         savedSfxVolume = 0; //indica il valore del volume degli effetti sonori scelto dal giocatore l'ultima volta che è stato salvato
 
-    public int savedLanguage = 0;//indica la lingua che è stata messa l'ultima volta dal giocatore
+    public int savedLanguage = 0, //indica la lingua che è stata messa l'ultima volta dal giocatore
+        activeCheckpoint = -1; //indica l'ultimo checkpoint in cui il giocatore ha salvato
 
     //riferimento a tutti gli script che usano l'interfaccia per l'aggiornamento dei dati nel GameManag
     public static List<IUpdateData> dataToSave = new List<IUpdateData>();
@@ -63,6 +64,7 @@ public class GameManag : MonoBehaviour
             savedMusicVolume = sd.savedMusicVolume;
             savedSfxVolume = sd.savedSfxVolume;
             savedLanguage = sd.savedLanguage;
+            activeCheckpoint = sd.activeCheckpoint;
 
             Debug.Log("Caricati dati salvati");
         } //altrimenti, tutti i dati vengono messi al loro valore originale, in quanto non si è trovato un file di salvataggio
@@ -79,6 +81,7 @@ public class GameManag : MonoBehaviour
         savedMusicVolume = -10;
         savedSfxVolume = 0;
         savedLanguage = 0;
+        activeCheckpoint = -1;
         
         //tutti gli array vengono svuotati
         EmptyArrays();
@@ -116,13 +119,21 @@ public class GameManag : MonoBehaviour
         //Debug.Log("Aggiornati dati nel GameManag. Il numero di elementi aggiornati sono: " + n);
     }
 
-    private void OnDestroy()
+    public void SaveDataAfterUpdate()
     {
         //aggiorna i dati se la scena non è un livello o, se lo è, se il livello è stato completato
         UpdateDataBeforeSave();
         //salva i dati ogni volta che si va da una scena all'altra, se i dati non stanno venendo cancellati
         if (!SaveSystem.isDeleting) { SaveSystem.DataSave(this); Debug.Log("Dati aggiornati e salvati"); }
-        else Debug.LogError("Dati non aggiornati perchè stanno venendo cancellati");
+        else Debug.LogError("Dati non aggiornati, perchè stanno venendo cancellati");
+
+    }
+
+    private void OnDestroy()
+    {
+        //salva i dati di gioco dopo aver ottenuto gli aggiornamenti dalla lista di script che devono aggiornare i dati
+        SaveDataAfterUpdate();
+
     }
 
 }

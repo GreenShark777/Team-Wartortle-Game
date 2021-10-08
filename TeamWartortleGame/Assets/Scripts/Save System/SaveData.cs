@@ -7,7 +7,8 @@ public class SaveData {
         savedMusicVolume, //indica il valore del volume della musica scelto dal giocatore l'ultima volta che è stato salvato
         savedSfxVolume; //indica il valore del volume degli effetti sonori scelto dal giocatore l'ultima volta che è stato salvato
 
-    public int savedLanguage = 0; //indica la lingua che è stata messa l'ultima volta dal giocatore
+    public int savedLanguage = 0, //indica la lingua che è stata messa l'ultima volta dal giocatore
+        activeCheckpoint = 0; //indica l'ultimo checkpoint in cui il giocatore ha salvato
 
 
     public SaveData(GameManag g)
@@ -17,6 +18,7 @@ public class SaveData {
         savedMusicVolume = g.savedMusicVolume;
         savedSfxVolume = g.savedSfxVolume;
         savedLanguage = g.savedLanguage;
+        activeCheckpoint = g.activeCheckpoint;
 
     }
 
