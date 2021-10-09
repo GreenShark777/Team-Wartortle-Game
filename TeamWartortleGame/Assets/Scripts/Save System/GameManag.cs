@@ -14,7 +14,8 @@ public class GameManag : MonoBehaviour
         savedSfxVolume = 0; //indica il valore del volume degli effetti sonori scelto dal giocatore l'ultima volta che è stato salvato
 
     public int savedLanguage = 0, //indica la lingua che è stata messa l'ultima volta dal giocatore
-        activeCheckpoint = -1; //indica l'ultimo checkpoint in cui il giocatore ha salvato
+        activeCheckpoint = -1, //indica l'ultimo checkpoint in cui il giocatore ha salvato
+        maliciousness = 100; //indica quanta malizia aveva il giocatore l'ultima volta che ha salvato(indicherà di conseguenza anche la sua bontà)
 
     //riferimento a tutti gli script che usano l'interfaccia per l'aggiornamento dei dati nel GameManag
     public static List<IUpdateData> dataToSave = new List<IUpdateData>();
@@ -41,7 +42,7 @@ public class GameManag : MonoBehaviour
     {
         //viene svuotata la lista di script che devono salvare i dati
         dataToSave.Clear();
-        //viene creato un'array recipiente con tutti gli script che devono salvare dati
+        //viene creato un'array recipiente con tutti gli script che devono salvare dati(anche quelli inattivi)
         var recipient = FindObjectsOfType<MonoBehaviour>(true).OfType<IUpdateData>();
         //inizializza la lista di script che devono salvare i dati, aggiungendo tutti gli elementi nella lista recipiente
         foreach (IUpdateData elem in recipient) { dataToSave.Add(elem); }
@@ -65,6 +66,7 @@ public class GameManag : MonoBehaviour
             savedSfxVolume = sd.savedSfxVolume;
             savedLanguage = sd.savedLanguage;
             activeCheckpoint = sd.activeCheckpoint;
+            maliciousness = sd.maliciousness;
 
             Debug.Log("Caricati dati salvati");
         } //altrimenti, tutti i dati vengono messi al loro valore originale, in quanto non si è trovato un file di salvataggio
@@ -82,6 +84,7 @@ public class GameManag : MonoBehaviour
         savedSfxVolume = 0;
         savedLanguage = 0;
         activeCheckpoint = -1;
+        maliciousness = 100;
         
         //tutti gli array vengono svuotati
         EmptyArrays();

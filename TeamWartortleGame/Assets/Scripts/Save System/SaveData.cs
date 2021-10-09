@@ -8,7 +8,8 @@ public class SaveData {
         savedSfxVolume; //indica il valore del volume degli effetti sonori scelto dal giocatore l'ultima volta che è stato salvato
 
     public int savedLanguage = 0, //indica la lingua che è stata messa l'ultima volta dal giocatore
-        activeCheckpoint = 0; //indica l'ultimo checkpoint in cui il giocatore ha salvato
+        activeCheckpoint = 0, //indica l'ultimo checkpoint in cui il giocatore ha salvato
+        maliciousness = 100; //indica quanta malizia aveva il giocatore l'ultima volta che ha salvato(indicherà di conseguenza anche la sua bontà)
 
 
     public SaveData(GameManag g)
@@ -19,6 +20,7 @@ public class SaveData {
         savedSfxVolume = g.savedSfxVolume;
         savedLanguage = g.savedLanguage;
         activeCheckpoint = g.activeCheckpoint;
+        maliciousness = g.maliciousness;
 
     }
 
