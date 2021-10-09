@@ -15,12 +15,13 @@ public class Debugging : MonoBehaviour
     public Dropdown languageDropdownList;
     //riferimento al GameManag di scena
     private GameManag g;
-
     //Riferimento per test di animazione delle armi
     [SerializeField]
     private Animator playerAnim;
     //lista di riferimenti di tutti i checkpoint nella scena
     public Checkpoints[] allCheckpoints;
+    //indica l'indice della musica di sottofondo da far mettere al MusicManager
+    private int nMusic = 0;
 
 
     // Start is called before the first frame update
@@ -63,6 +64,7 @@ public class Debugging : MonoBehaviour
     //PlayerUIManager: K, L
     //GufoBehaviour: G
     //Animator giocatore: U
+    //MusicManager: M
     void Update()
     {
         //se esistono i riferimenti al GameManag e al LanguageManager...
@@ -106,6 +108,8 @@ public class Debugging : MonoBehaviour
         {
             playerAnim.SetTrigger("Shooting");
         }
+        //CAMBIA MUSICA ANDANDO A QUELLA ALL'INDICE SUCCESSIVO(CONTROLLANDO CHE NON SI VADA FUORI DAI LIMITI DELL'ARRAY DELLE MUSICHE)
+        if (Input.GetKeyDown(KeyCode.M)) { nMusic++; if (nMusic > 2) { nMusic = 0; } MusicManager.ChangeBackgroundMusic(nMusic); }
 
     }
 
