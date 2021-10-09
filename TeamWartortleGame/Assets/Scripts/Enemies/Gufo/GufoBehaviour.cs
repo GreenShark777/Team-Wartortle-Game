@@ -94,11 +94,11 @@ public class GufoBehaviour : MonoBehaviour
         foreach (AnimationClip clip in gufoAnimationsClips)
         {
             //se il nome della clip è uguale al nome della clip di anticipazione al salto, ne ottiene la durata
-            if (clip.name == jumpAnticipationName) { jumpAnticipationTimer = clip.length; Debug.Log("JumpAnticipationTimer: " + jumpAnticipationTimer); }
+            if (clip.name == jumpAnticipationName) { jumpAnticipationTimer = clip.length; /*Debug.Log("JumpAnticipationTimer: " + jumpAnticipationTimer);*/ }
             //se il nome della clip è uguale al nome della clip di anticipazione al tuffo, ne ottiene la durata
-            if (clip.name == diveAnticipationName) { diveAnticipationTimer = clip.length; Debug.Log("DiveAnticipationTimer: " + diveAnticipationTimer); }
+            if (clip.name == diveAnticipationName) { diveAnticipationTimer = clip.length; /*Debug.Log("DiveAnticipationTimer: " + diveAnticipationTimer);*/ }
             //se tutti i timer di anticipazione sono stati cambiati in base alla durata delle loro clip, esce dal ciclo
-            if (AreAllTimersReady()) { Debug.Log("Trovate tutte le clip"); break; }
+            if (AreAllTimersReady()) { /*Debug.Log("Trovate tutte le clip");*/ break; }
 
         }
         
@@ -281,7 +281,7 @@ public class GufoBehaviour : MonoBehaviour
         isDiving = false;
         //rende di nuovo solido il collider del gufo
         collGufo.isTrigger = false;
-        Debug.Log("Landed");
+        //Debug.Log("Landed");
         //aspetta del tempo e...
         yield return new WaitForSeconds(afterLandingCD);
         //...il gufo potrà attaccare di nuovo
