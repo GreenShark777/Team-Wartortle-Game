@@ -33,13 +33,9 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
 
         //Prendo tutti gli sprite renderer per potergli poi cambiare colore quando il nemico viene colpito
         enemySprites = GetComponentsInChildren<SpriteRenderer>(true);
-
+        //rimuove lo sprite da ignorare(l'ombra), cercando nella lista di sprite appena creata uno sprite con il nome dello sprite da ignorare
         for (int i = 0; i < enemySprites.Length; i++)
-        {
-
-            if (enemySprites[i].sprite.name == spriteToIgnore) { enemySprites[i] = enemySprites[i-1]; break; }
-
-        }
+        { if (enemySprites[i].sprite.name == spriteToIgnore) { enemySprites[i] = enemySprites[i-1]; break; } }
 
     }
 
