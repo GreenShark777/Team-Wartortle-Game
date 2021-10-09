@@ -175,13 +175,10 @@ public class GufoBehaviour : MonoBehaviour
     private IEnumerator StartFlying()
     {
         //Debug.Log("anticipazione volo");
+        //fa partire l'animazione di anticipazione al salto
         gufoAnimator.SetBool("IsFlying", true);
-
         //aspetta che l'animazione di anticipazione finisca
         yield return new WaitForSeconds(jumpAnticipationTimer);
-
-        //FA PARTIRE L'ANIMAZIONE DI INNALZAMENTO IN VOLO
-
         //rende non solido il collider del gufo
         collGufo.isTrigger = true;
         //rimuove ogni forza che agisce sul Rigidbody del gufo
@@ -258,14 +255,10 @@ public class GufoBehaviour : MonoBehaviour
 
     private IEnumerator DiveAttack()
     {
-
-        //FA PARTIRE L'ANIMAZIONE DI ANTICIPAZIONE AL TUFFO
-
+        //fa partire l'animazione di anticipazione al tuffo
+        gufoAnimator.SetBool("IsDiving", true);
         //aspetta che l'animazione di anticipazione al tuffo finisca
         yield return new WaitForSeconds(diveAnticipationTimer);
-
-        //FA PARTIRE L'ANIMAZIONE DI TUFFO
-
         //il gufo si tuffa verso il giocatore
         rbGufo.velocity = (staticPlayer.position - transform.position).normalized * diveSpeed;
         //salva il punto in cui il gufo deve tuffarsi
@@ -279,6 +272,9 @@ public class GufoBehaviour : MonoBehaviour
 
     private IEnumerator Landed()
     {
+        //fa partire l'animazione di atterraggio
+        gufoAnimator.SetBool("IsFlying", false);
+        gufoAnimator.SetBool("IsDiving", false);
         //ferma il nemico
         rbGufo.velocity = Vector2.zero;
         //comunica che ha smesso di tuffarsi
