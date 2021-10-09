@@ -16,6 +16,10 @@ public class Checkpoints : MonoBehaviour
     //riferimento al GameManag di scena
     [SerializeField]
     private GameManag g = default;
+    //riferimento al particellare da attivare ad avvenuto salvataggio
+    private ParticleSystem psSave;
+    //riferimento all'audio da suonare quando viene salvato il gioco
+    private AudioSource sfxSave;
     //identificatore per ogni checkpoint
     [SerializeField]
     private int IDCheckpoint = default;
@@ -28,6 +32,10 @@ public class Checkpoints : MonoBehaviour
     {
         //se l'ultimo checkpoint salvato nel GameManag è questo checkpoint, respawna il giocatore
         if (g.activeCheckpoint == IDCheckpoint) { RespawnPlayer(); }
+        //ottiene il riferimento al particellare di salvataggio
+        psSave = transform.GetChild(0).GetComponent<ParticleSystem>();
+        //ottiene il riferimento all'audio da suonare ad avvenuto salvataggio
+        sfxSave = GetComponent<AudioSource>();
 
     }
 
@@ -63,7 +71,7 @@ public class Checkpoints : MonoBehaviour
         canSave = canPlayerSave;
         //attiva o disattiva la UI di salvataggio se il giocatore può salvare
         saveUI.SetActive(canSave);
-        Debug.Log("Can player save: " + canSave);
+        //Debug.Log("Can player save: " + canSave);
     }
 
     private void Save()
@@ -74,7 +82,11 @@ public class Checkpoints : MonoBehaviour
         g.SaveDataAfterUpdate();
         //non permette al giocatore di salvare fino a quando non esce dal collider del checkpoint
         CanPlayerSave(false);
-        Debug.Log("Checkpoint in cui si è salvato: " + g.activeCheckpoint);
+        //fa partire il particellare di salvataggio del checkpoint
+        psSave.Play();
+        //fa partire l'audio di avvenuto salvataggio
+        sfxSave.Play();
+        //Debug.Log("Checkpoint in cui si è salvato: " + g.activeCheckpoint);
     }
 
     private void RespawnPlayer()
@@ -83,7 +95,7 @@ public class Checkpoints : MonoBehaviour
         respawnPoint = transform./*GetChild(0).*/position;
         //il giocatore verrà messo nella posizione di respawn di questo checkpoint
         player.position = respawnPoint;
-        Debug.Log("PlayerPos: " + player.position + ", respawnPos: " + respawnPoint);
+        //Debug.Log("PlayerPos: " + player.position + ", respawnPos: " + respawnPoint);
     }
 
 
