@@ -55,6 +55,11 @@ public class GufoBehaviour : MonoBehaviour
     //vari timer del gufo
     private float jumpAnticipationTimer, //indica quanto tempo bisogna aspettare prima di alzarsi in volo
         diveAnticipationTimer; //indica quanto tempo bisogna aspettare prima di tuffarsi
+
+    [SerializeField]
+    private string jumpAnticipationName = default,
+        diveAnticipationName = default;
+
     [SerializeField]
     private float startAttackMaxTimer = 2, //indica il tempo massimo che il gufo deve aspettare prima di attaccare
         startAttackMinTimer = 1, //indica il tempo minimo che il gufo deve aspettare prima di attaccare
@@ -81,11 +86,22 @@ public class GufoBehaviour : MonoBehaviour
         collFlyingPoint = flyingPoint.GetComponent<Collider2D>();
         //fa in modo che le collisioni tra il punto di volo del gufo e il giocatore vengano ignorate
         //Physics2D.IgnoreCollision(collFlyingPoint, collPlayer);
+        //ottiene il riferimento all'Animator del gufo
+        gufoAnimator = GetComponent<Animator>();
+        //ottiene un array di tutte le animazioni del gufo
+        AnimationClip[] gufoAnimationsClips = gufoAnimator.runtimeAnimatorController.animationClips;
+        //ottiene il tempo di anticipazione delle animazioni di anticipazione del gufo
+        foreach (AnimationClip clip in gufoAnimationsClips)
+        {
+            //se il nome della clip è uguale al nome della clip di anticipazione al salto, ne ottiene la durata
+            if (clip.name == jumpAnticipationName) { jumpAnticipationTimer = clip.length; Debug.Log("JumpAnticipationTimer: " + jumpAnticipationTimer); }
+            //se il nome della clip è uguale al nome della clip di anticipazione al tuffo, ne ottiene la durata
+            if (clip.name == diveAnticipationName) { diveAnticipationTimer = clip.length; Debug.Log("DiveAnticipationTimer: " + diveAnticipationTimer); }
+            //se tutti i timer di anticipazione sono stati cambiati in base alla durata delle loro clip, esce dal ciclo
+            if (AreAllTimersReady()) { Debug.Log("Trovate tutte le clip"); break; }
 
-        //OTTIENE IL TEMPO DI ANTICIPAZIONE AL VOLO E DELLE ALTRE ANIMAZIONI
-        jumpAnticipationTimer = 2;
-        diveAnticipationTimer = 1;
-
+        }
+        
     }
     
     private void Update()
@@ -159,7 +175,7 @@ public class GufoBehaviour : MonoBehaviour
     private IEnumerator StartFlying()
     {
         //Debug.Log("anticipazione volo");
-        //FA PARTIRE L'ANIMAZIONE DI ANTICIPAZIONE AL VOLO
+        gufoAnimator.SetBool("IsFlying", true);
 
         //aspetta che l'animazione di anticipazione finisca
         yield return new WaitForSeconds(jumpAnticipationTimer);
@@ -287,6 +303,13 @@ public class GufoBehaviour : MonoBehaviour
         isFlying = false;
         //comunica se il nemico è stordito o meno
         isStunned = stunned;
+
+    }
+
+    private bool AreAllTimersReady()
+    {
+        //comunica se tutti i timer sono stati inizializzati alla durata delle loro rispettive clip
+        return jumpAnticipationTimer != default && diveAnticipationTimer != default;
 
     }
 
