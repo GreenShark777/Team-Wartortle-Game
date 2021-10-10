@@ -19,6 +19,8 @@ public class RoomsBehaviour : MonoBehaviour
     {
         //ottiene il riferimento al contenitore di tutte le porte
         doorsContainer = transform.GetChild(0);
+        //indicherà il nuovo indice delle porte di questa stanza
+        int newID = 0;
         //per ogni figlio nel contenitore delle porte...
         foreach(Transform child in doorsContainer)
         {
@@ -26,9 +28,14 @@ public class RoomsBehaviour : MonoBehaviour
             DoorsBehaviour door = child.GetComponent<DoorsBehaviour>();
             //...lo aggiunge alla lista di porte...
             doors.Add(door);
-            //...e gli comunica a quale stanza appartiene
+            //...gli da un ID unico...
+            door.SetDoorID(newID);
+            //...e gli comunica a quale stanza appartiene...
             door.SetOwnRoomID(roomID);
-        
+            Debug.Log("Porta: " + door.transform.name + " con indice: " + newID);
+            //...infine, incrementa l'indice in modo che la prossima porta abbia un ID diverso 
+            newID++;
+
         }
 
 
@@ -51,7 +58,10 @@ public class RoomsBehaviour : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Posiziona il giocatore davanti la porta indicata dal parametro indice ricevuto
+    /// </summary>
+    /// <param name="doorIndex"></param>
     public void PositionPlayer(int doorIndex)
     {
         //attiva questa stanza
@@ -60,7 +70,10 @@ public class RoomsBehaviour : MonoBehaviour
         player.position = doors[doorIndex].GetSpawnPosition();
 
     }
-
+    /// <summary>
+    /// Permette ad altri script di ottenere l'ID di questa stanza
+    /// </summary>
+    /// <returns></returns>
     public int GetRoomID() { return roomID; }
 
 }

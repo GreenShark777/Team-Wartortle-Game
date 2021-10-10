@@ -5,7 +5,6 @@ using UnityEngine;
 public class DoorsBehaviour : MonoBehaviour
 {
     //identificatore per ogni porta
-    [SerializeField]
     private int doorID = 0;
     //riferimento allo script della porta a cui questa porta deve portare
     [SerializeField]
@@ -38,6 +37,11 @@ public class DoorsBehaviour : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public int GetDoorID() { return doorID; }
+    /// <summary>
+    /// Permette di cambiare l'ID di questa porta
+    /// </summary>
+    /// <param name="newID"></param>
+    public void SetDoorID(int newID) { doorID = newID; }
     /// <summary>
     /// Ritorna la posizione in cui il giocatore deve essere messo quando entra da questa porta
     /// </summary>
