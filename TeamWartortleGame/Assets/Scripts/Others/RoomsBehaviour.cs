@@ -42,8 +42,8 @@ public class RoomsBehaviour : MonoBehaviour
 
                 if (doors[i] != doors[j] && doors[i].GetDoorID() == doors[j].GetDoorID())
                 {
-                    Debug.LogError("Le porte " + doors[i].transform.parent + " e " + doors[j].transform.parent
-                    + " hanno lo stesso ID: " + doors[i].GetDoorID());
+                    Debug.LogError("Le porte " + doors[i].transform.name + " e " + doors[j].transform.name
+                    + " della stanza " + transform.name + " hanno lo stesso ID: " + doors[i].GetDoorID());
                 }
 
             }
@@ -54,7 +54,9 @@ public class RoomsBehaviour : MonoBehaviour
 
     public void PositionPlayer(int doorIndex)
     {
-        //posiziona il giocatore nella posizione di spawn della porta da cui deve entrare
+        //attiva questa stanza
+        gameObject.SetActive(true);
+        //posiziona il giocatore nella posizione di spawn della porta da cui sta entrando
         player.position = doors[doorIndex].GetSpawnPosition();
 
     }

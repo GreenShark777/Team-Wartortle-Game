@@ -32,7 +32,7 @@ public class RoomsManager : MonoBehaviour
 
                 if (rooms[i] != rooms[j] && rooms[i].GetRoomID() == rooms[j].GetRoomID())
                 {
-                    Debug.LogError("Le stanze " + rooms[i].transform.parent + " e " + rooms[j].transform.parent
+                    Debug.LogError("Le stanze " + rooms[i].transform.name + " e " + rooms[j].transform.name
                     + " hanno lo stesso ID: " + rooms[i].GetRoomID());
                 }
 
@@ -78,6 +78,11 @@ public class RoomsManager : MonoBehaviour
     public static void ChangeRoom(DoorsBehaviour openedDoor)
     {
 
+        //FARE PRIMA DISSOLVENZA
+
+        //disattiva la stanza da cui si sta uscendo
+        rooms[openedDoor.GetOwnRoomID()].gameObject.SetActive(false);
+        //ordina alla stanza della porta accanto di posizionare il giocatore nella posizione della porta da cui si entra
         rooms[openedDoor.GetNextDoor().GetOwnRoomID()].PositionPlayer(openedDoor.GetNextDoor().GetDoorID());
 
     }
