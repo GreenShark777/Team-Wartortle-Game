@@ -16,10 +16,11 @@ public class Debugging : MonoBehaviour
     //riferimento al GameManag di scena
     private GameManag g;
 
-    //Riferimento per test di animazione delle armi
-    [SerializeField]
-    private Animator playerAnim;
+    //Riferimento playerHealth per testare il suo damage system
+    private PlayerHealth playerHealth;
 
+    //Riferimento animator del player
+    private Animator anPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -31,13 +32,18 @@ public class Debugging : MonoBehaviour
         //languageDropdownList = FindObjectOfType<Dropdown>(true);
         g = FindObjectOfType<GameManag>(true);
 
+        //Prendo lo script del player
+        playerHealth = FindObjectOfType<PlayerHealth>(true);
+        //Prendo l'animator del player
+        anPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+
     }
 
     //LETTERE IN USO:
     //LanguageManager: T
     //PlayerUIManager: K, L
     //GufoBehaviour: G
-    //Animator giocatore: U
+    //HealthSystem giocatore: U, I, H
     void Update()
     {
         //se esistono i riferimenti al GameManag e al LanguageManager...
@@ -76,10 +82,17 @@ public class Debugging : MonoBehaviour
         } //altrimenti, ottiene un nuovo riferimento ad uno script di un gufo
         else { if (Input.GetKeyDown(KeyCode.G)) { gb = FindObjectOfType<GufoBehaviour>(); } }
 
-        //Sparo animazione
+        //Debug health system
         if (Input.GetKeyDown(KeyCode.U))
         {
-            playerAnim.SetTrigger("Shooting");
+            playerHealth.Damage(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.I)) playerHealth.Damage(-1);
+        else if (Input.GetKeyDown(KeyCode.H)) playerHealth.GetNewContainer();
+
+        //Check animazioni del player
+        if (Input.GetKeyDown(KeyCode.B)){
+            anPlayer.SetTrigger("Execution");
         }
 
     }

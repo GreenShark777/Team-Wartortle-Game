@@ -10,15 +10,20 @@ public class TopoIdle : TopoAbstract
     private GameObject[] projectiles = new GameObject[2];
 
     //Script manager da cui chiamare i suoi metodi
-    private TopoManagerSTM topoManager;
+    [HideInInspector]
+    public TopoManagerSTM topoManager;
 
     //Game object che controllerà quale tra orizzontale e verticale è attivo e decidera di conseguenza la direzione dei proiettili
     //In direzione verticale spara in basso e in alto e a destra e sinistra in direzione orizzontale
     private bool horizontal;
 
+    //Posizione da cui far partire lo sparo
     private Transform shootPos;
 
     public override void StateEnter() {
+        //Se il nemico è stato sconfitto, ha vita uguale o sotto zero quindi, cambio lo stato a quello di sconfitta
+        if (topoManager.enHealth.IsEnemyDefeated())
+            topoManager.SwitchState(topoManager.topoDefeated);
         //Inizializzo lo startTime al tempo corrente
         startTime = shootStartTimer = Time.time;
         //Prendo lo script manager
@@ -35,6 +40,10 @@ public class TopoIdle : TopoAbstract
 
     public override void StateUpdate() {
 
+        //Se il nemico è stato sconfitto, ha vita uguale o sotto zero quindi, cambio lo stato a quello di sconfitta
+        if (topoManager.enHealth.IsEnemyDefeated())
+            topoManager.SwitchState(topoManager.topoDefeated);
+        //Chiamo metodo di sparo
         Shoot();
 
         if (Time.time - startTime > timerToReach)
