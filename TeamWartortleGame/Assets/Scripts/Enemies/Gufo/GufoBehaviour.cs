@@ -66,10 +66,12 @@ public class GufoBehaviour : MonoBehaviour
         afterLandingCD = 1; //indica il tempo che il gufo deve aspettare per attaccare di nuovo dopo essere atterrato
 
     [Header("Distances")]
+    //indica quanto vicino può essere al massimo lo sprite al punto di volo o di atterraggio per continuare
     [SerializeField]
-    private float acceptableDistanceToPoint = 0.2f, //indica quanto vicino può essere al massimo lo sprite al punto di volo o di atterraggio per continuare
-        distanceToSpot = 5; //indica quanto
-
+    private float acceptableDistanceToPoint = 0.2f;
+    [SerializeField] [Tooltip("Indica quanto vicino deve essere il giocatore al gufo per notarlo e iniziare a volare")]
+    //indica quanto vicino deve essere il giocatore al gufo per notarlo e iniziare a volare
+    private float distanceToSpot = 9;
     //indica il punto in cui il gufo deve atterrare
     private Vector2 divingPoint;
 

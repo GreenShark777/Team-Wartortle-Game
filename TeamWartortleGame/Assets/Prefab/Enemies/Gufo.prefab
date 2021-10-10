@@ -213,7 +213,7 @@ MonoBehaviour:
   startAttackMinTimer: 1
   afterLandingCD: 1
   acceptableDistanceToPoint: 0.4
-  distanceToSpot: 3
+  distanceToSpot: 9
 --- !u!114 &8653376158574842309
 MonoBehaviour:
   m_ObjectHideFlags: 0
