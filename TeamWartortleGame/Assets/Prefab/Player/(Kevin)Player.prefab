@@ -3796,7 +3796,7 @@ MonoBehaviour:
   slashPos: {fileID: 2049428453176108542}
   shootPos: {fileID: 2049428453625128614}
   slashSequenceResetCD: 1
-  playerUIManag: {fileID: 760891484}
+  playerUIManag: {fileID: 0}
   animator: {fileID: 7999280477419645825}
 --- !u!1 &2937049226258090559
 GameObject:
