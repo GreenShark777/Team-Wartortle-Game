@@ -16,6 +16,11 @@ public class EnemiesCollisionsManager : MonoBehaviour
     private GufoBehaviour gb = default;
     //riferimento al collider di questo nemico
     private Collider2D enemyColl;
+
+    [SerializeField]
+    private Transform player;
+
+    private static Transform staticPlayer;
     /*
     //riferimento al WeaponContainer del giocatore
     [SerializeField]
@@ -34,6 +39,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
         //ottiene il riferimento al collider di questo nemico
         enemyColl = GetComponent<Collider2D>();
 
+        if (player != null && staticPlayer == null) { staticPlayer = player; }
         //se non esiste ancora un riferimento statico al WeaponContainer del giocatore, lo ottiene dal riferimento non statico
         //if (staticWc == null && wc != null) { staticWc = wc; }
 
@@ -86,24 +92,23 @@ public class EnemiesCollisionsManager : MonoBehaviour
         //ogni forza che agisce sul rigidbody del nemico viene azzerata
         enemyRb.velocity = Vector2.zero;
         //calcola come spingere il nemico in base alla potenza di spinta dell'arma
-        Vector2 calculatedPush = -(ws.transform.position - transform.position).normalized * ws.GetPushForce();
+        Vector2 calculatedPush = -(/*ws.transform*/staticPlayer.position - transform.position).normalized * ws.GetPushForce()/* * enemyRb.mass*/;
         //il nemico viene spinto via, in base alla potenza di spinta calcolata
-        enemyRb.AddForce(calculatedPush);
+        enemyRb.velocity = calculatedPush;
         //Debug.Log("POtenza spinta calcolata: " + calculatedPush);
         //aspetta un po' di tempo, in base al tempo di stordimento inflitto dall'arma
         yield return new WaitForSeconds(ws.GetStunTime());
         //il nemico si riprende e torna a camminare come di consueto
         enemyRb.velocity = Vector2.zero;
-
-        //FARE IN MODO CHE IL NEMICO SI MUOVA O ATTACCHI DI NUOVO
-        GetStunned(false);
+        //fare in modo che il nemico si comporti come di consueto, se la sua vita non è a zero
+        if(!eh.IsEnemyDefeated()) GetStunned(false);
 
     }
 
     private void GetStunned(bool gotStunned)
     {
         //se questo nemico è un gufo, lo stordisce se deve essere stordito(o se è stato sconfitto)
-        if (gb) { gb.IsStunned(gotStunned || eh.IsEnemyDefeated()); }
+        if (gb) { gb.IsStunned(gotStunned); }
 
     }
 

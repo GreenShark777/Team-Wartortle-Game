@@ -55,16 +55,23 @@ public class GufoBehaviour : MonoBehaviour
     //vari timer del gufo
     private float jumpAnticipationTimer, //indica quanto tempo bisogna aspettare prima di alzarsi in volo
         diveAnticipationTimer; //indica quanto tempo bisogna aspettare prima di tuffarsi
+
+    [SerializeField]
+    private string jumpAnticipationName = default,
+        diveAnticipationName = default;
+
     [SerializeField]
     private float startAttackMaxTimer = 2, //indica il tempo massimo che il gufo deve aspettare prima di attaccare
         startAttackMinTimer = 1, //indica il tempo minimo che il gufo deve aspettare prima di attaccare
         afterLandingCD = 1; //indica il tempo che il gufo deve aspettare per attaccare di nuovo dopo essere atterrato
 
     [Header("Distances")]
+    //indica quanto vicino può essere al massimo lo sprite al punto di volo o di atterraggio per continuare
     [SerializeField]
-    private float acceptableDistanceToPoint = 0.2f, //indica quanto vicino può essere al massimo lo sprite al punto di volo o di atterraggio per continuare
-        distanceToSpot = 5; //indica quanto
-
+    private float acceptableDistanceToPoint = 0.2f;
+    [SerializeField] [Tooltip("Indica quanto vicino deve essere il giocatore al gufo per notarlo e iniziare a volare")]
+    //indica quanto vicino deve essere il giocatore al gufo per notarlo e iniziare a volare
+    private float distanceToSpot = 9;
     //indica il punto in cui il gufo deve atterrare
     private Vector2 divingPoint;
 
@@ -81,19 +88,30 @@ public class GufoBehaviour : MonoBehaviour
         collFlyingPoint = flyingPoint.GetComponent<Collider2D>();
         //fa in modo che le collisioni tra il punto di volo del gufo e il giocatore vengano ignorate
         //Physics2D.IgnoreCollision(collFlyingPoint, collPlayer);
+        //ottiene il riferimento all'Animator del gufo
+        gufoAnimator = GetComponent<Animator>();
+        //ottiene un array di tutte le animazioni del gufo
+        AnimationClip[] gufoAnimationsClips = gufoAnimator.runtimeAnimatorController.animationClips;
+        //ottiene il tempo di anticipazione delle animazioni di anticipazione del gufo
+        foreach (AnimationClip clip in gufoAnimationsClips)
+        {
+            //se il nome della clip è uguale al nome della clip di anticipazione al salto, ne ottiene la durata
+            if (clip.name == jumpAnticipationName) { jumpAnticipationTimer = clip.length; /*Debug.Log("JumpAnticipationTimer: " + jumpAnticipationTimer);*/ }
+            //se il nome della clip è uguale al nome della clip di anticipazione al tuffo, ne ottiene la durata
+            if (clip.name == diveAnticipationName) { diveAnticipationTimer = clip.length; /*Debug.Log("DiveAnticipationTimer: " + diveAnticipationTimer);*/ }
+            //se tutti i timer di anticipazione sono stati cambiati in base alla durata delle loro clip, esce dal ciclo
+            if (AreAllTimersReady()) { /*Debug.Log("Trovate tutte le clip");*/ break; }
 
-        //OTTIENE IL TEMPO DI ANTICIPAZIONE AL VOLO E DELLE ALTRE ANIMAZIONI
-        jumpAnticipationTimer = 2;
-        diveAnticipationTimer = 1;
-
+        }
+        
     }
     
     private void Update()
     {
         //crea una variabile che indica quanto è lontano lo sprite del gufo dal punto
         float distanceToPoint = 100;
-        //se il gufo sta saltando...
-        if (jumped)
+        //se il gufo sta saltando e non è stordito...
+        if (jumped && !isStunned)
         {
             //...lo sprite del gufo viene messo lentamente nella posizione in cui deve essere per essere in volo...
             spriteGufo.position = Vector2.Lerp(spriteGufo.position, flyingPoint.position, flyingSpeed * Time.deltaTime);
@@ -144,6 +162,15 @@ public class GufoBehaviour : MonoBehaviour
             { spriteGufo.position = Vector2.Lerp(spriteGufo.position, groundPoint.position, flyingSpeed * Time.deltaTime); }
 
         }
+        //se il gufo non è stordito, sta attaccando, ma non si sta tuffando...
+        if (!isStunned && isAttacking && !isDiving)
+        {
+            //...calcola la rotazione Y che deve avere...
+            float YRotation = (player.position.x < transform.position.x) ? 0 : 180;
+            //...e ruota il gufo di conseguenza
+            transform.rotation = new Quaternion(transform.rotation.x, YRotation, transform.rotation.z, transform.rotation.w);
+        
+        }
 
     }
 
@@ -159,13 +186,10 @@ public class GufoBehaviour : MonoBehaviour
     private IEnumerator StartFlying()
     {
         //Debug.Log("anticipazione volo");
-        //FA PARTIRE L'ANIMAZIONE DI ANTICIPAZIONE AL VOLO
-
+        //fa partire l'animazione di anticipazione al salto
+        gufoAnimator.SetBool("IsFlying", true);
         //aspetta che l'animazione di anticipazione finisca
         yield return new WaitForSeconds(jumpAnticipationTimer);
-
-        //FA PARTIRE L'ANIMAZIONE DI INNALZAMENTO IN VOLO
-
         //rende non solido il collider del gufo
         collGufo.isTrigger = true;
         //rimuove ogni forza che agisce sul Rigidbody del gufo
@@ -242,14 +266,10 @@ public class GufoBehaviour : MonoBehaviour
 
     private IEnumerator DiveAttack()
     {
-
-        //FA PARTIRE L'ANIMAZIONE DI ANTICIPAZIONE AL TUFFO
-
+        //fa partire l'animazione di anticipazione al tuffo
+        gufoAnimator.SetBool("IsDiving", true);
         //aspetta che l'animazione di anticipazione al tuffo finisca
         yield return new WaitForSeconds(diveAnticipationTimer);
-
-        //FA PARTIRE L'ANIMAZIONE DI TUFFO
-
         //il gufo si tuffa verso il giocatore
         rbGufo.velocity = (staticPlayer.position - transform.position).normalized * diveSpeed;
         //salva il punto in cui il gufo deve tuffarsi
@@ -263,13 +283,16 @@ public class GufoBehaviour : MonoBehaviour
 
     private IEnumerator Landed()
     {
+        //fa partire l'animazione di atterraggio
+        gufoAnimator.SetBool("IsFlying", false);
+        gufoAnimator.SetBool("IsDiving", false);
         //ferma il nemico
         rbGufo.velocity = Vector2.zero;
         //comunica che ha smesso di tuffarsi
         isDiving = false;
         //rende di nuovo solido il collider del gufo
         collGufo.isTrigger = false;
-        Debug.Log("Landed");
+        //Debug.Log("Landed");
         //aspetta del tempo e...
         yield return new WaitForSeconds(afterLandingCD);
         //...il gufo potrà attaccare di nuovo
@@ -283,10 +306,29 @@ public class GufoBehaviour : MonoBehaviour
         StopAllCoroutines();
         //resetta lo stato del gufo
         isDiving = false;
-        isAttacking = false;
         isFlying = false;
         //comunica se il nemico è stordito o meno
         isStunned = stunned;
+        //fa partire l'animazione di stordimento del gufo
+        gufoAnimator.SetBool("Stunned", stunned);
+        if(stunned) gufoAnimator.SetTrigger("GetStunned");
+        //per essere stordito, il gufo deve essere stato colpito dal giocatore, quindi il gufo nota il giocatore quando esce dallo stordimento
+        if (!isStunned) PlayerSpotted();
+
+    }
+
+    private bool AreAllTimersReady()
+    {
+        //comunica se tutti i timer sono stati inizializzati alla durata delle loro rispettive clip
+        return jumpAnticipationTimer != default && diveAnticipationTimer != default;
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        //disegna il gizmo di una sfera che indica il raggio di vista del gufo
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, distanceToSpot);
 
     }
 

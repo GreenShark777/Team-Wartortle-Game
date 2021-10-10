@@ -15,12 +15,14 @@ public class Debugging : MonoBehaviour
     public Dropdown languageDropdownList;
     //riferimento al GameManag di scena
     private GameManag g;
+    //Riferimento per test di animazione delle armi
+    [SerializeField]
+    private Animator playerAnim;
+    //lista di riferimenti di tutti i checkpoint nella scena
+    public Checkpoints[] allCheckpoints;
+    //indica l'indice della musica di sottofondo da far mettere al MusicManager
+    private int nMusic = 0;
 
-    //Riferimento playerHealth per testare il suo damage system
-    private PlayerHealth playerHealth;
-
-    //Riferimento animator del player
-    private Animator anPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -31,19 +33,38 @@ public class Debugging : MonoBehaviour
         lm = FindObjectOfType<LanguageManager>(true);
         //languageDropdownList = FindObjectOfType<Dropdown>(true);
         g = FindObjectOfType<GameManag>(true);
+        allCheckpoints = FindObjectsOfType<Checkpoints>();
 
-        //Prendo lo script del player
-        playerHealth = FindObjectOfType<PlayerHealth>(true);
-        //Prendo l'animator del player
-        anPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+        //controlla se dei checkpoint hanno lo stesso ID
+        if (allCheckpoints.Length > 0 && g)
+        {
 
+            for (int i = 0; i < allCheckpoints.Length; i++)
+            {
+
+                for (int j = i; j < allCheckpoints.Length; j++)
+                {
+
+                    if (allCheckpoints[i] != allCheckpoints[j] && allCheckpoints[i].GetID() == allCheckpoints[j].GetID())
+                    {
+                        Debug.LogError("I checkpoint " + allCheckpoints[i].transform.parent + " e " + allCheckpoints[j].transform.parent
+                        + " hanno lo stesso ID: " + allCheckpoints[i].GetID());
+                    }
+
+                }
+
+            }
+
+        }
+        //Fine controllo checkpoint
     }
 
     //LETTERE IN USO:
     //LanguageManager: T
     //PlayerUIManager: K, L
     //GufoBehaviour: G
-    //HealthSystem giocatore: U, I, H
+    //Animator giocatore: U
+    //MusicManager: M
     void Update()
     {
         //se esistono i riferimenti al GameManag e al LanguageManager...
@@ -82,18 +103,13 @@ public class Debugging : MonoBehaviour
         } //altrimenti, ottiene un nuovo riferimento ad uno script di un gufo
         else { if (Input.GetKeyDown(KeyCode.G)) { gb = FindObjectOfType<GufoBehaviour>(); } }
 
-        //Debug health system
+        //Sparo animazione
         if (Input.GetKeyDown(KeyCode.U))
         {
-            playerHealth.Damage(1);
+            playerAnim.SetTrigger("Shooting");
         }
-        else if (Input.GetKeyDown(KeyCode.I)) playerHealth.Damage(-1);
-        else if (Input.GetKeyDown(KeyCode.H)) playerHealth.GetNewContainer();
-
-        //Check animazioni del player
-        if (Input.GetKeyDown(KeyCode.B)){
-            anPlayer.SetTrigger("Execution");
-        }
+        //CAMBIA MUSICA ANDANDO A QUELLA ALL'INDICE SUCCESSIVO(CONTROLLANDO CHE NON SI VADA FUORI DAI LIMITI DELL'ARRAY DELLE MUSICHE)
+        if (Input.GetKeyDown(KeyCode.M)) { nMusic++; if (nMusic > 2) { nMusic = 0; } MusicManager.ChangeBackgroundMusic(nMusic); }
 
     }
 
