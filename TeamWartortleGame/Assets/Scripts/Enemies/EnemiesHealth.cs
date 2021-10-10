@@ -65,7 +65,8 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
         enemyCollider.isTrigger = true;
 
         //Attivo animazione sconfitta
-        enAnim.SetTrigger("Defeat");
+        if(enAnim) enAnim.SetTrigger("Defeat");
+
     }
     /// <summary>
     /// Permette ad altri script di sapere se questo nemico è stato sconfitto o meno
