@@ -13375,6 +13375,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gufo
       objectReference: {fileID: 0}
+    - target: {fileID: 8653376158574841912, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8653376158574841913, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
       propertyPath: player
       value: 

@@ -162,6 +162,15 @@ public class GufoBehaviour : MonoBehaviour
             { spriteGufo.position = Vector2.Lerp(spriteGufo.position, groundPoint.position, flyingSpeed * Time.deltaTime); }
 
         }
+        //se il gufo non è stordito, sta attaccando, ma non si sta tuffando...
+        if (!isStunned && isAttacking && !isDiving)
+        {
+            //...calcola la rotazione Y che deve avere...
+            float YRotation = (player.position.x < transform.position.x) ? 0 : 180;
+            //...e ruota il gufo di conseguenza
+            transform.rotation = new Quaternion(transform.rotation.x, YRotation, transform.rotation.z, transform.rotation.w);
+        
+        }
 
     }
 
@@ -312,6 +321,14 @@ public class GufoBehaviour : MonoBehaviour
     {
         //comunica se tutti i timer sono stati inizializzati alla durata delle loro rispettive clip
         return jumpAnticipationTimer != default && diveAnticipationTimer != default;
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        //disegna il gizmo di una sfera che indica il raggio di vista del gufo
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, distanceToSpot);
 
     }
 
