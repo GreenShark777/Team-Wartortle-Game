@@ -25,7 +25,7 @@ public class MusicManager : MonoBehaviour
 
     private static AudioSource sfxSource/*, MusicSource*/;
     //Dizionario di audioclip con stringhe associate per poter avviare tutti gli audioclip attraverso questo script
-    private static Dictionary<string, AudioClip> audioManager = new Dictionary<string, AudioClip>();
+    private static Dictionary<string, AudioClip> soundDictionary = new Dictionary<string, AudioClip>();
 
     //Array di audioclip per effetti sonori
     [SerializeField]
@@ -47,10 +47,8 @@ public class MusicManager : MonoBehaviour
         allBgMusics[1] = battleMusic;
         allBgMusics[2] = bossMusic;
         //crea un'array di tutti gli audioSource per gli effetti sonori
-        for (int i = 0; i < soundFX.Length; i++)
-        {
-            audioManager.Add(soundFX[i].name, soundFX[i]);
-        }
+        soundDictionary.Clear();
+        for (int i = 0; i < soundFX.Length; i++) { soundDictionary.Add(soundFX[i].name, soundFX[i]); }
 
     }
 
@@ -97,7 +95,7 @@ public class MusicManager : MonoBehaviour
     public static void PlaySound(string audio)
     {
         //suona il suono con il nome ricevuto come parametro
-        sfxSource.PlayOneShot(audioManager[audio]);
+        sfxSource.PlayOneShot(soundDictionary[audio]);
 
     }
 
