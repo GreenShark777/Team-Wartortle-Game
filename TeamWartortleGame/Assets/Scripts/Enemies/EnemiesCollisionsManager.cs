@@ -86,7 +86,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
         //ogni forza che agisce sul rigidbody del nemico viene azzerata
         enemyRb.velocity = Vector2.zero;
         //calcola come spingere il nemico in base alla potenza di spinta dell'arma
-        Vector2 calculatedPush = -(ws.transform.position - transform.position).normalized * ws.GetPushForce();
+        Vector2 calculatedPush = -(ws.transform.position - transform.position).normalized * ws.GetPushForce() * enemyRb.mass;
         //il nemico viene spinto via, in base alla potenza di spinta calcolata
         enemyRb.AddForce(calculatedPush);
         //Debug.Log("POtenza spinta calcolata: " + calculatedPush);
@@ -94,16 +94,15 @@ public class EnemiesCollisionsManager : MonoBehaviour
         yield return new WaitForSeconds(ws.GetStunTime());
         //il nemico si riprende e torna a camminare come di consueto
         enemyRb.velocity = Vector2.zero;
-
-        //FARE IN MODO CHE IL NEMICO SI MUOVA O ATTACCHI DI NUOVO
-        GetStunned(false);
+        //fare in modo che il nemico si comporti come di consueto, se la sua vita non è a zero
+        if(!eh.IsEnemyDefeated()) GetStunned(false);
 
     }
 
     private void GetStunned(bool gotStunned)
     {
         //se questo nemico è un gufo, lo stordisce se deve essere stordito(o se è stato sconfitto)
-        if (gb) { gb.IsStunned(gotStunned || eh.IsEnemyDefeated()); }
+        if (gb) { gb.IsStunned(gotStunned); }
 
     }
 

@@ -108,8 +108,8 @@ public class GufoBehaviour : MonoBehaviour
     {
         //crea una variabile che indica quanto è lontano lo sprite del gufo dal punto
         float distanceToPoint = 100;
-        //se il gufo sta saltando...
-        if (jumped)
+        //se il gufo sta saltando e non è stordito...
+        if (jumped && !isStunned)
         {
             //...lo sprite del gufo viene messo lentamente nella posizione in cui deve essere per essere in volo...
             spriteGufo.position = Vector2.Lerp(spriteGufo.position, flyingPoint.position, flyingSpeed * Time.deltaTime);
@@ -295,10 +295,14 @@ public class GufoBehaviour : MonoBehaviour
         StopAllCoroutines();
         //resetta lo stato del gufo
         isDiving = false;
-        isAttacking = false;
         isFlying = false;
         //comunica se il nemico è stordito o meno
         isStunned = stunned;
+        //fa partire l'animazione di stordimento del gufo
+        gufoAnimator.SetBool("Stunned", stunned);
+        if(stunned) gufoAnimator.SetTrigger("GetStunned");
+        //per essere stordito, il gufo deve essere stato colpito dal giocatore, quindi il gufo nota il giocatore quando esce dallo stordimento
+        if (!isStunned) PlayerSpotted();
 
     }
 
