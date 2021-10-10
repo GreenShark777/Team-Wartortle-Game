@@ -18,8 +18,6 @@ public class Checkpoints : MonoBehaviour
     private GameManag g = default;
     //riferimento al particellare da attivare ad avvenuto salvataggio
     private ParticleSystem psSave;
-    //riferimento all'audio da suonare quando viene salvato il gioco
-    private AudioSource sfxSave;
     //identificatore per ogni checkpoint
     [SerializeField]
     private int IDCheckpoint = default;
@@ -34,8 +32,6 @@ public class Checkpoints : MonoBehaviour
         if (g.activeCheckpoint == IDCheckpoint) { RespawnPlayer(); }
         //ottiene il riferimento al particellare di salvataggio
         psSave = transform.GetChild(0).GetComponent<ParticleSystem>();
-        //ottiene il riferimento all'audio da suonare ad avvenuto salvataggio
-        sfxSave = GetComponent<AudioSource>();
 
     }
 
@@ -84,8 +80,8 @@ public class Checkpoints : MonoBehaviour
         CanPlayerSave(false);
         //fa partire il particellare di salvataggio del checkpoint
         psSave.Play();
-        //fa partire l'audio di avvenuto salvataggio
-        sfxSave.Play();
+        //fa partire l'audio di avvenuto salvataggio;
+        MusicManager.PlaySound("Undertale Save SFX");
         //Debug.Log("Checkpoint in cui si è salvato: " + g.activeCheckpoint);
     }
 

@@ -23,6 +23,15 @@ public class MusicManager : MonoBehaviour
     private float dissolveRate = 0.1f;
 
 
+    private static AudioSource sfxSource/*, MusicSource*/;
+    //Dizionario di audioclip con stringhe associate per poter avviare tutti gli audioclip attraverso questo script
+    private static Dictionary<string, AudioClip> audioManager = new Dictionary<string, AudioClip>();
+
+    //Array di audioclip per effetti sonori
+    [SerializeField]
+    private AudioClip[] soundFX;
+
+
     private void Start()
     {
         //inizializza al loro valore originale tutte le variabili statiche
@@ -30,11 +39,19 @@ public class MusicManager : MonoBehaviour
         musicToPlay = null;
         //ottiene il riferimento all'audio source della musica di sottofondo del gioco
         backgroundMusic = GetComponent<AudioSource>();
+
+        sfxSource = transform.GetChild(0).GetComponent<AudioSource>();
+
         //crea un'array ordinato con tutte le musiche ottenute da editor
         allBgMusics[0] = mainBgMusic;
         allBgMusics[1] = battleMusic;
         allBgMusics[2] = bossMusic;
-        
+        //crea un'array di tutti gli audioSource per gli effetti sonori
+        for (int i = 0; i < soundFX.Length; i++)
+        {
+            audioManager.Add(soundFX[i].name, soundFX[i]);
+        }
+
     }
 
     private void Update()
@@ -74,6 +91,13 @@ public class MusicManager : MonoBehaviour
             hasToChange = false;
 
         }
+
+    }
+
+    public static void PlaySound(string audio)
+    {
+        //suona il suono con il nome ricevuto come parametro
+        sfxSource.PlayOneShot(audioManager[audio]);
 
     }
 
