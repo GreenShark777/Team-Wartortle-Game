@@ -13,7 +13,11 @@ public class TopoManagerSTM : MonoBehaviour
     //Stato di movimento
     [HideInInspector]
     public TopoMovement topoMovement;
+    //Stato di sconfitta
+    [HideInInspector]
+    public TopoDefeated topoDefeated;
 
+    //LayerMask del ground su cui potrà camminare e degli ostacoli che dovrà invece bloccarsi quando li toccherà con un raycast
     public LayerMask groundMask, obstacleMask;
 
     //Velocità di movimento
@@ -30,13 +34,22 @@ public class TopoManagerSTM : MonoBehaviour
     //Direzione corrente
     private Vector2 movePos;
 
-
+    //Riferimento allo script della vita per capire se il nemico è stato sconfitto o no
+    [HideInInspector]
+    public EnemiesHealth enHealth;
 
     private void Awake()
     {
         //Aggiungo tutti gli stm al gameObject
-        topoIdle = gameObject.AddComponent<TopoIdle>();
-        topoMovement = gameObject.AddComponent<TopoMovement>();
+        topoIdle = GetComponent<TopoIdle>();
+        topoMovement = GetComponent<TopoMovement>();
+        topoDefeated = GetComponent<TopoDefeated>();
+
+        //Passo questo script agli altri stati che ne hanno bisogno
+        topoIdle.topoManager = topoMovement.topoManager = this;
+
+        //Prendo il riferimento dello script EnemiesHealth
+        enHealth = GetComponent<EnemiesHealth>();
     }
 
     private void Start()

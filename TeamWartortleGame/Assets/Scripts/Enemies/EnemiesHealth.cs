@@ -9,7 +9,8 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
     [SerializeField]
     private float enemyHp = default;
     //indica se questo nemico è stato sconfitto e non deve più essere colpito
-    private bool defeated = false;
+    [HideInInspector]
+    public bool defeated = false;
     //riferimento al collider di questo nemico
     [SerializeField]
     private Collider2D enemyCollider = default;
@@ -18,13 +19,21 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
     private SpriteRenderer[][] spriteRend = new SpriteRenderer[3][];
 
     //Colore iniziale da far ritornare al nemico dopo aver ricevuto danno e colore di damage
+    public Color startColor;
     [SerializeField]
-    private Color startColor, dmgColor;
+    private Color dmgColor;
 
-  
+    //Colore corrente
+    [HideInInspector]
+    public Color currentColor;
+
+    //Riferimento all'animator del nemico per fargli avviare l'animazione di sconfitta
+    [SerializeField]
+    private Animator enAnim;
     private void Awake()
     {
-
+        //Prendo il colore corrente
+        currentColor = startColor;
         //DEBUGGING-------------------------------------------------------------------------------------------------------------------------------
         if (enemyHp == default) { Debug.LogError("I punti vita di " + gameObject.name + " non sono stati ancora impostati!"); }
 
@@ -51,9 +60,8 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
         //il collider del nemico non è più solido, in modo da non poter essere più colpito da armi
         enemyCollider.isTrigger = true;
 
-        //NON FAR SCOMPARIRE IL NEMICO, FALLO STORDIRE E DARE POSSIBILITA' AL GIOCATORE DI UCCIDERLO
-
-        Debug.Log(gameObject.name + " sconfitto");
+        //Attivo animazione sconfitta
+        enAnim.SetTrigger("Defeat");
     }
     /// <summary>
     /// Permette ad altri script di sapere se questo nemico è stato sconfitto o meno

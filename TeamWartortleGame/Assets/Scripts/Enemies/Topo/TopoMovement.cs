@@ -10,7 +10,8 @@ public class TopoMovement : TopoAbstract
     private float speed; //Velocità di movimento
 
     //Reference allo script manager da cui chiamare i suoi metodi
-    private TopoManagerSTM topoManager;
+    [HideInInspector]
+    public TopoManagerSTM topoManager;
 
     //Vettore che conterrà la destinazione
     private Vector2 movePos;
@@ -23,8 +24,9 @@ public class TopoMovement : TopoAbstract
     private LayerMask groundMask, obstacleMask;
 
     public override void StateEnter() {
-        //Ottengo il manager
-        topoManager = GetComponent<TopoManagerSTM>();
+        //Se il nemico è stato sconfitto, ha vita uguale o sotto zero quindi, cambio lo stato a quello di sconfitta
+        if (topoManager.enHealth.IsEnemyDefeated())
+            topoManager.SwitchState(topoManager.topoDefeated);
 
         groundMask = topoManager.groundMask;
         obstacleMask = topoManager.obstacleMask;
@@ -41,7 +43,11 @@ public class TopoMovement : TopoAbstract
 
     }
 
-    public override void StateUpdate() { }
+    public override void StateUpdate() {
+        //Se il nemico è stato sconfitto, ha vita uguale o sotto zero quindi, cambio lo stato a quello di sconfitta
+        if (topoManager.enHealth.IsEnemyDefeated())
+            topoManager.SwitchState(topoManager.topoDefeated);
+    }
 
     public override void StateFixedUpdate() {
        

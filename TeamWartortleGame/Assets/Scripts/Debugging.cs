@@ -19,6 +19,9 @@ public class Debugging : MonoBehaviour
     //Riferimento playerHealth per testare il suo damage system
     private PlayerHealth playerHealth;
 
+    //Riferimento animator del player
+    private Animator anPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +34,8 @@ public class Debugging : MonoBehaviour
 
         //Prendo lo script del player
         playerHealth = FindObjectOfType<PlayerHealth>(true);
+        //Prendo l'animator del player
+        anPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
 
     }
 
@@ -84,6 +89,11 @@ public class Debugging : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.I)) playerHealth.Damage(-1);
         else if (Input.GetKeyDown(KeyCode.H)) playerHealth.GetNewContainer();
+
+        //Check animazioni del player
+        if (Input.GetKeyDown(KeyCode.B)){
+            anPlayer.SetTrigger("Execution");
+        }
 
     }
 

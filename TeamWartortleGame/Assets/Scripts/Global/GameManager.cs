@@ -11,6 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private WeaponsContainer weaponContainer;
 
+    //Riferimento al player
+    [SerializeField]
+    private GameObject player;
+
+    //Nemico corrente per la decisione(esecuzione o purificazione)
+    public GameObject currentEnemy = null;
+
     private void Start()
     {
         //Singleton pattern
@@ -24,5 +31,86 @@ public class GameManager : MonoBehaviour
             return weaponContainer.GetGunDirection();
         //Altrimenti ritorno un valore default di vector2
         else return default;
+    }
+
+    //Metodo per la scelta che il giocatore prende per il nemico, viene passato il nemico e il valore(0 purificazione e 1 per esecuzione)
+    public void SceltaPerNemico(GameObject enemy, int value, EnemiesHealth enHealth)
+    {
+        StartCoroutine(IEnemyDecision(enemy, value, enHealth));
+    }
+
+    private IEnumerator IEnemyDecision(GameObject enemy, int value, EnemiesHealth enHealth)
+    {
+        //Riferimento all'animator del player
+        Animator anPlayer = player.GetComponent<Animator>();
+        anPlayer.SetTrigger("Execution");
+        //Ottengo tutti i suoi sprite renderer per colorarli di nero
+        SpriteRenderer[] enemySprites = enemy.GetComponentsInChildren<SpriteRenderer>(true);
+        //Timer per il cambio dei colori
+        float timer = 0;
+        //Colore corrente
+        Color currentColor = enHealth.startColor;
+        //Se ho scelto purificazione
+        if (value == 0)
+        {
+            while (timer < 1)
+            {      
+                //Aumento il timer, il tutto verrà effettuato in un secondo
+                timer += Time.deltaTime / 1f;
+                //Assegno il colore a quello corrente
+                currentColor = Color.Lerp(enHealth.startColor, Color.black, timer);
+                //e assegno il colore raggiunto allo sprite corrente del nemico
+
+                //Per ogni sprite del nemico
+                for (int i = 0; i < enemySprites.Length; i++)
+                {
+                    //Assegnoi il colore raggiunto
+                    enemySprites[i].color = currentColor;
+
+                }
+                yield return null;
+            }
+
+            //Assegno il colore corrente al nemico
+            enHealth.currentColor = currentColor;
+            //Riazzero il timer per poterlo riutilizzare
+            timer = 0;
+
+        }
+        //Altrimenti se ho scelto esecuzione
+        else 
+        {
+
+        }
+
+        //Aspetto un secondo
+        yield return new WaitForSeconds(1);
+
+        //Colore corrente
+        currentColor = enHealth.currentColor;
+        //Colore corrente ma con trasparenza
+        Color fadeColor = currentColor;
+        fadeColor.a = 0;
+        //In mezzo secondo
+        while (timer < .5)
+        {
+            //Aumento il timer, il tutto verrà effettuato in un mezzo secondo
+            timer += Time.deltaTime / .5f;
+            //Assegno il colore a quello corrente
+            currentColor = Color.Lerp(enHealth.currentColor, fadeColor, timer);
+            //e assegno il colore raggiunto allo sprite corrente del nemico
+
+            //Per ogni sprite del nemico
+            for (int i = 0; i < enemySprites.Length; i++)
+            {
+                //Assegnoi il colore raggiunto
+                enemySprites[i].color = currentColor;
+
+            }
+            yield return null;
+        }
+       
+        enemy.SetActive(false);
+        yield return null;
     }
 }
