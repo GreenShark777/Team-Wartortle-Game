@@ -41,6 +41,7 @@ public class RoomsManager : MonoBehaviour
         }
 
     }
+
     /// <summary>
     /// Riordina la lista in base all'ID delle stanze
     /// </summary>

@@ -7,12 +7,16 @@ public class RoomsBehaviour : MonoBehaviour
     //lista contenente tutti gli script delle porte di questa stanza
     private List<DoorsBehaviour> doors = new List<DoorsBehaviour>();
     //riferimento al contenitore di tutte le porte
-    private Transform doorsContainer;
+    private Transform doorsContainer, 
+        collidersContainer;
     //riferimento al giocatore
     public static Transform player;
     //identificativo della stanza
     [SerializeField]
     private int roomID = 0;
+    //riferimento allo sprite della stanza
+    [SerializeField]
+    private SpriteRenderer roomSprite = default;
 
 
     private void Start()
@@ -37,6 +41,10 @@ public class RoomsBehaviour : MonoBehaviour
             newID++;
 
         }
+        //ottiene il riferimento al contenitore dei collider delle stanze
+        collidersContainer = transform.GetChild(1);
+        //attiva il collider adatto alla stanza
+        ActivateRoomCollider();
 
 
 
@@ -69,6 +77,27 @@ public class RoomsBehaviour : MonoBehaviour
         //posiziona il giocatore nella posizione di spawn della porta da cui sta entrando
         player.position = doors[doorIndex].GetSpawnPosition();
 
+    }
+
+    private void ActivateRoomCollider()
+    {
+        //ottiene il nome dello sprite della stanza
+        string roomSpriteName = roomSprite.sprite.name;
+        //indice che indica il collider da attivare
+        int collToActivate;
+        //se lo sprite della stanza è quello della stanza quadrata, bisogna attivare il collider ad indice 0
+        if (roomSpriteName.Contains("quadrata")) { collToActivate = 0; }
+        //altrimenti,se lo sprite della stanza è quello della stanza rettangolare, bisogna attivare il collider ad indice 1
+        else if (roomSpriteName.Contains("rettangolare")) { collToActivate = 1; }
+        //altrimenti,se lo sprite della stanza è quello della stanza a T, bisogna attivare il collider ad indice 2
+        else if (roomSpriteName.Contains("T")) { collToActivate = 2; }
+        //altrimenti,se lo sprite della stanza è quello della stanza a L, bisogna attivare il collider ad indice 3
+        else if (roomSpriteName.Contains("L")) { collToActivate = 3; }
+        //altrimenti, sarà la stanza del boss, quindi attiva il collider all'indice 4
+        else { collToActivate = 4; }
+        //attiva il collider figlio del contenitore dei collider all'indice ottenuto
+        collidersContainer.GetChild(collToActivate).gameObject.SetActive(true);
+        Debug.Log("Nome sprite: " + roomSpriteName + " -> coll: " + collToActivate);
     }
     /// <summary>
     /// Permette ad altri script di ottenere l'ID di questa stanza
