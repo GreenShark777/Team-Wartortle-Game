@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomsManager : MonoBehaviour
+public class RoomsManager : MonoBehaviour, IUpdateData
 {
     //lista di tutte le stanze
     private static List<RoomsBehaviour> rooms = new List<RoomsBehaviour>();
     //riferimento al giocatore
     [SerializeField]
     private Transform player = default;
+    //riferimento al GameManag di scena
+    [SerializeField]
+    private GameManag g = default;
+    //indica l'ultima stanza in cui il giocatore è entrato
+    private static int lastEnteredRoom;
 
 
     private void Start()
@@ -19,6 +24,10 @@ public class RoomsManager : MonoBehaviour
         RearrangeRoomsBasedOnID();
         //da alle stanze il riferimento al giocatore
         RoomsBehaviour.player = player;
+        //ottiene l'ID dell'ultima stanza in cui il giocatore era entrato quando ha salvato il gioco
+        lastEnteredRoom = g.lastRoomID;
+        //attiva solo la stanza in cui il giocatore è entato per l'ultima volta prima di salvare
+        ActivateOnlyThisRoom(lastEnteredRoom);
 
 
 
@@ -78,6 +87,13 @@ public class RoomsManager : MonoBehaviour
 
     }
 
+    private void ActivateOnlyThisRoom(int roomToActivate)
+    {
+        //attiva la stanza con l'indice ricevuto come parametro e disattiva tutte le altre
+        foreach (RoomsBehaviour room in rooms) { room.gameObject.SetActive(room.GetRoomID() == roomToActivate); }
+
+    }
+
     public static void ChangeRoom(DoorsBehaviour openedDoor)
     {
 
@@ -88,7 +104,15 @@ public class RoomsManager : MonoBehaviour
         //ordina alla stanza della porta accanto di posizionare il giocatore nella posizione della porta da cui si entra
         DoorsBehaviour newRoomDoor = openedDoor.GetNextDoor();
         rooms[newRoomDoor.GetOwnRoomID()].PositionPlayer(newRoomDoor.GetDoorID());
+        //ottiene l'indice della stanza in cui si è entrati
+        lastEnteredRoom = newRoomDoor.GetOwnRoomID();
 
     }
 
+    public void UpdateData()
+    {
+        //aggiorna l'ID dell'ultima stanza in cui il giocatore è entrato
+        g.lastRoomID = lastEnteredRoom;
+        //Debug.Log("Aggiornata ultima stanza entrata: " + lastEnteredRoom);
+    }
 }

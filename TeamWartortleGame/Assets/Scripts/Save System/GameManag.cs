@@ -17,6 +17,9 @@ public class GameManag : MonoBehaviour
         activeCheckpoint = -1, //indica l'ultimo checkpoint in cui il giocatore ha salvato
         maliciousness = 100; //indica quanta malizia aveva il giocatore l'ultima volta che ha salvato(indicherà di conseguenza anche la sua bontà)
 
+    //indica l'ID dell'ultima stanza in cui il giocatore ha salvato la partita
+    public int lastRoomID = 0;
+
     //riferimento a tutti gli script che usano l'interfaccia per l'aggiornamento dei dati nel GameManag
     public static List<IUpdateData> dataToSave = new List<IUpdateData>();
 
@@ -67,6 +70,7 @@ public class GameManag : MonoBehaviour
             savedLanguage = sd.savedLanguage;
             activeCheckpoint = sd.activeCheckpoint;
             maliciousness = sd.maliciousness;
+            lastRoomID = sd.lastRoomID;
 
             Debug.Log("Caricati dati salvati");
         } //altrimenti, tutti i dati vengono messi al loro valore originale, in quanto non si è trovato un file di salvataggio
@@ -85,6 +89,7 @@ public class GameManag : MonoBehaviour
         savedLanguage = 0;
         activeCheckpoint = -1;
         maliciousness = 100;
+        lastRoomID = 0;
         
         //tutti gli array vengono svuotati
         EmptyArrays();

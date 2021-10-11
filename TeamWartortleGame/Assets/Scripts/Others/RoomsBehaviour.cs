@@ -37,7 +37,7 @@ public class RoomsBehaviour : MonoBehaviour
             //...e gli comunica a quale stanza appartiene...
             door.SetOwnRoomID(roomID);
             Debug.Log("Porta: " + door.transform.name + " con indice: " + newID);
-            //...infine, incrementa l'indice in modo che la prossima porta abbia un ID diverso 
+            //...infine, incrementa l'indice in modo che la prossima porta abbia un ID diverso
             newID++;
 
         }

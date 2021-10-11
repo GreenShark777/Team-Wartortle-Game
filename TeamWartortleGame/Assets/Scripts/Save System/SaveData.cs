@@ -11,6 +11,9 @@ public class SaveData {
         activeCheckpoint = 0, //indica l'ultimo checkpoint in cui il giocatore ha salvato
         maliciousness = 100; //indica quanta malizia aveva il giocatore l'ultima volta che ha salvato(indicherà di conseguenza anche la sua bontà)
 
+    //indica l'ID dell'ultima stanza in cui il giocatore ha salvato la partita
+    public int lastRoomID = 0;
+
 
     public SaveData(GameManag g)
     {
@@ -21,6 +24,7 @@ public class SaveData {
         savedLanguage = g.savedLanguage;
         activeCheckpoint = g.activeCheckpoint;
         maliciousness = g.maliciousness;
+        lastRoomID = g.lastRoomID;
 
     }
 
