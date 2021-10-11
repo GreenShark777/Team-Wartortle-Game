@@ -166,9 +166,9 @@ public class GufoBehaviour : MonoBehaviour
         if (!isStunned && isAttacking && !isDiving)
         {
             //...calcola la rotazione Y che deve avere...
-            float YRotation = (player.position.x < transform.position.x) ? 0 : 180;
+            float YRotation = (player.position.x < spriteGufo.position.x) ? 0 : 180;
             //...e ruota il gufo di conseguenza
-            transform.rotation = new Quaternion(transform.rotation.x, YRotation, transform.rotation.z, transform.rotation.w);
+            spriteGufo.rotation = new Quaternion(spriteGufo.rotation.x, YRotation, spriteGufo.rotation.z, spriteGufo.rotation.w);
         
         }
 

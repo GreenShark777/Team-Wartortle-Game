@@ -9091,7 +9091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4454749270502605247, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
       propertyPath: m_Name
-      value: Room (3)
+      value: RoomBoss
       objectReference: {fileID: 0}
     - target: {fileID: 5772496208603117037, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
       propertyPath: m_LocalPosition.x
