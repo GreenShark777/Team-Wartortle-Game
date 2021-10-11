@@ -5983,7 +5983,7 @@ AnimationClip:
         value: 0.084
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 1
         weightedMode: 0
         inWeight: 0
         outWeight: 0
@@ -6002,7 +6002,7 @@ AnimationClip:
         value: -0.823
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 1
         weightedMode: 0
         inWeight: 0
         outWeight: 0
@@ -6021,7 +6021,7 @@ AnimationClip:
         value: 0.00945593
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 1
         weightedMode: 0
         inWeight: 0
         outWeight: 0
@@ -6040,7 +6040,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 1
         weightedMode: 0
         inWeight: 0
         outWeight: 0
@@ -6059,7 +6059,7 @@ AnimationClip:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 1
         weightedMode: 0
         inWeight: 0
         outWeight: 0
@@ -6393,7 +6393,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Player/WeaponsContainer
+    path: Player/ph gun 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6403,7 +6403,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Player/WeaponsContainer
+    path: Player/ph gun 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6413,7 +6413,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Player/WeaponsContainer
+    path: Player/ph gun 1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6753,7 +6753,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Player/ph gun 1
+    path: Player/WeaponsContainer
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6763,7 +6763,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Player/ph gun 1
+    path: Player/WeaponsContainer
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6773,7 +6773,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Player/ph gun 1
+    path: Player/WeaponsContainer
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
