@@ -13,14 +13,29 @@ public class BulletFollow : MonoBehaviour
     //Riferimento al RigidBody
     [SerializeField]
     private Rigidbody2D rb;
-    void OnEnable()
-    {
 
+    private void Awake()
+    {
+        //Prendo la posizione del player come direzione
+        direction = GameObject.FindGameObjectWithTag("Player").transform;
+
+  
+    }
+    private void OnEnable()
+    {
+        //Disattivo il gameobject dopo tot
+        Invoke("Disable", 3f);
         //Calcolo la direzione
         Vector3 targetPos = (direction.position - transform.position);
         //Applico la rotazione adeguata che punta quindi nella direzione calcolata
         transform.right = targetPos;
         //Applico la velocità al RigidBody nella direzione calcolata
         rb.velocity = targetPos.normalized * speed;
+    }
+
+    private void Disable()
+    {
+        if(gameObject.activeSelf)
+            ObjectPooling.inst.ReAddObjectToPool("Scheggia", gameObject);
     }
 }

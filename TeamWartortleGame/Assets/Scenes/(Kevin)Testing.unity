@@ -1228,6 +1228,71 @@ Transform:
   m_Father: {fileID: 306420539}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &372804035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 372804038}
+  - component: {fileID: 372804036}
+  - component: {fileID: 372804037}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!70 &372804036
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372804035}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.048002627, y: 0.92494804}
+  m_Size: {x: 3.9455504, y: 7.567007}
+  m_Direction: 0
+--- !u!114 &372804037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372804035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830e6250652dc0e448bdcf773d1b61fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyRb: {fileID: 2018945162}
+  eh: {fileID: 2018945171}
+  gb: {fileID: 0}
+  isBoss: 1
+  player: {fileID: 773673127}
+--- !u!4 &372804038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372804035}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.86, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2018945172}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &379907881
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,6 +1428,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &416316480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 416316481}
+  m_Layer: 0
+  m_Name: ShootPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &416316481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416316480}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.11, y: 5.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2018945172}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &438333961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,7 +2033,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.83
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2058,6 +2153,7 @@ MonoBehaviour:
   enemyRb: {fileID: 5920317001766995423}
   eh: {fileID: 5920317001766995425}
   gb: {fileID: 0}
+  isBoss: 0
   player: {fileID: 773673127}
 --- !u!4 &547095442
 Transform:
@@ -6084,9 +6180,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3080383755905567969, guid: fcfacda9350ae0e4c9bc355760458ab1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5140593584578479527, guid: fcfacda9350ae0e4c9bc355760458ab1, type: 3}
       propertyPath: m_Name
-      value: boss definitivo
+      value: NonnaBoss
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: -8446232193188881975, guid: fcfacda9350ae0e4c9bc355760458ab1, type: 3}
@@ -6655,8 +6755,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHp: 1
+  maxHP: 0
   defeated: 0
   enemyCollider: {fileID: 1890646280}
+  enemySprites: []
   spriteToIgnore: ombra
   startColor: {r: 1, g: 1, b: 1, a: 1}
   dmgColor: {r: 1, g: 0.16996826, b: 0, a: 1}
@@ -8138,6 +8240,7 @@ MonoBehaviour:
   enemyRb: {fileID: 1656464836}
   eh: {fileID: 1656464834}
   gb: {fileID: 0}
+  isBoss: 0
   player: {fileID: 773673127}
 --- !u!4 &1890646282
 Transform:
@@ -8459,6 +8562,186 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2018945160 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5140593584578479527, guid: fcfacda9350ae0e4c9bc355760458ab1, type: 3}
+  m_PrefabInstance: {fileID: 1596424377}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2018945161
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &2018945162
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &2018945163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df54a8ae960e1e844b18a86da20d23a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonnaManager: {fileID: 0}
+--- !u!114 &2018945164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b8f7b5587d1ba4f8580890883011ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonnaManager: {fileID: 0}
+--- !u!114 &2018945165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f862e57b29b94a46aedbc939d6a918e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonnaManager: {fileID: 0}
+--- !u!114 &2018945166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d137fa60ef44eb4bb5aab7751db35d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonnaManager: {fileID: 0}
+--- !u!114 &2018945167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ef52277253e3a48ab1f411387ada74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonnaManager: {fileID: 0}
+--- !u!114 &2018945168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 014fcad4d3c9cf844bca042701b5109c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: {fileID: 0}
+  nonnaIdle: {fileID: 0}
+  nonnaAttack: {fileID: 0}
+  nonnaSecondAttack: {fileID: 0}
+  nonnaTransition: {fileID: 0}
+  nonnaThirdAttack: {fileID: 0}
+  nonnaDefeated: {fileID: 0}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  speed: 8
+  bossAn: {fileID: 2018945161}
+  rb: {fileID: 2018945162}
+  bossHealth: {fileID: 0}
+  shootPos: {fileID: 416316481}
+--- !u!114 &2018945169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9308487e972e52e46bc35ab3dde49dfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonnaManager: {fileID: 0}
+--- !u!114 &2018945171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018945160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd3d957ef00d0e4a95749ec7fceb908, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyHp: 100
+  maxHP: 0
+  defeated: 0
+  enemyCollider: {fileID: 372804036}
+  enemySprites: []
+  spriteToIgnore: 
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  dmgColor: {r: 1, g: 0.1894218, b: 0, a: 1}
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  enAnim: {fileID: 0}
+  secondPhase: 0
+  rageColor: {r: 0.39488196, g: 1, b: 0, a: 1}
+  dmgRageColor: {r: 1, g: 0.1854864, b: 0, a: 1}
+--- !u!4 &2018945172 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -6738415232086487886, guid: fcfacda9350ae0e4c9bc355760458ab1, type: 3}
+  m_PrefabInstance: {fileID: 1596424377}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2028620855 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 795767948, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
@@ -12357,6 +12640,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4157706480522747533, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
+      propertyPath: parentGB
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157706480522747533, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
       propertyPath: pools.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -13571,8 +13858,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHp: 1
+  maxHP: 0
   defeated: 0
   enemyCollider: {fileID: 547095440}
+  enemySprites: []
   spriteToIgnore: ombra
   startColor: {r: 1, g: 1, b: 1, a: 1}
   dmgColor: {r: 1, g: 0.16996826, b: 0, a: 1}

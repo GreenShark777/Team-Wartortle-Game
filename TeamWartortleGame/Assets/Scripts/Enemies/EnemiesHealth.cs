@@ -80,8 +80,8 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
         enemyHp -= value;
         //se la vita del nemico è a 0 o meno, è stato sconfitto
         if (enemyHp <= 0) { EnemyDefeated(); }
-
-        StartCoroutine(IHitColor());
+        if (gameObject.activeSelf)
+            StartCoroutine(IHitColor());
     }
 
     public virtual IEnumerator IHitColor()

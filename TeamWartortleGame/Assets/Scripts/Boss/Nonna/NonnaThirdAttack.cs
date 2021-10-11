@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NonnaThirdAttack : NonnaAbstract
 {
+    //Prendo il manager
+    [HideInInspector]
+    public NonnaContext nonnaManager;
     public override void StateEnter()
     {
 

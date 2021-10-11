@@ -23,6 +23,8 @@ public class NonnaIdle : NonnaAbstract
 
     public override void StateUpdate()
     {
+
+    
         //Se ancora non sono alla seconda fase ma la vita mi dice che è arrivata alla seconda fase
         if (!secondPhase && nonnaManager.GetSecondPhase())
         {
@@ -34,6 +36,7 @@ public class NonnaIdle : NonnaAbstract
         //Controllo se il timer di attacco è stato raggiunto
         if (Time.time - startTime >= timerToReach)
         {
+          
             //Chiamo l'attacco passando la seconda fase come booleana
             Attack(secondPhase);
         }
@@ -62,11 +65,11 @@ public class NonnaIdle : NonnaAbstract
                 //Eseguo l'attacco scheggia(primo attacco)
                 nonnaManager.SwitchState(nonnaManager.nonnaAttack);
             }
-            else
-            {
-                //Eseguo l'attacco veleno(secondo attacco)
-                nonnaManager.SwitchState(nonnaManager.nonnaSecondAttack);
-            }
+            //else
+            //{
+            //    //Eseguo l'attacco veleno(secondo attacco)
+            //    nonnaManager.SwitchState(nonnaManager.nonnaSecondAttack);
+            //}
         }
         else
         {

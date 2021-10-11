@@ -33,8 +33,7 @@ public class NonnaContext : MonoBehaviour
     public float speed = 8;
 
     //Reference animator
-    [SerializeField]
-    private Animator animator;
+    public Animator bossAn;
     //Reference RigidBody per muoversi
     [SerializeField]
     private Rigidbody2D rb;
@@ -42,6 +41,9 @@ public class NonnaContext : MonoBehaviour
     //Riferimento allo script della vita per capire se il boss è stato sconfitto o no
     [HideInInspector]
     public BossHealth bossHealth;
+
+    //Riferimento alla posizione di sparo(bocca)
+    public Transform shootPos;
 
     private void Awake()
     {
@@ -54,6 +56,8 @@ public class NonnaContext : MonoBehaviour
         nonnaIdle = GetComponent<NonnaIdle>();
 
         //Passo questo script agli altri stati che ne hanno bisogno
+        nonnaSecondAttack.nonnaManager = nonnaThirdAttack.nonnaManager = nonnaTransition.nonnaManager = nonnaDefeated.nonnaManager
+        = nonnaAttack.nonnaManager = nonnaIdle.nonnaManager = this;
 
         //Prendo il riferimento dello script BossHealth
         bossHealth = GetComponent<BossHealth>();
@@ -72,7 +76,7 @@ public class NonnaContext : MonoBehaviour
         //Chiamo il metodo Update dello stato corrente visto che mi trovo nell'update
         currentState.StateUpdate();
 
-
+  
     }
 
     private void FixedUpdate()
