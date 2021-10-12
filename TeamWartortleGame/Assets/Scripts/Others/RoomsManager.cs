@@ -20,16 +20,16 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     {
         //da alle stanze il riferimento al giocatore
         RoomsBehaviour.player = player;
-
-    }
-
-    private void Start()
-    {
         //per ogni figlio del manager delle stanze, ne ottiene lo script da stanza
         rooms.Clear();
         foreach (Transform child in transform) { rooms.Add(child.GetComponent<RoomsBehaviour>()); }
         //riordina la lista di stanze in base all'ID
         RearrangeRoomsBasedOnID();
+
+    }
+
+    private void Start()
+    {
         //ottiene l'ID dell'ultima stanza in cui il giocatore era entrato quando ha salvato il gioco
         lastEnteredRoom = g.lastRoomID;
         //attiva solo la stanza in cui il giocatore è entato per l'ultima volta prima di salvare
@@ -114,6 +114,11 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         lastEnteredRoom = newRoomDoor.GetOwnRoomID();
 
     }
+    /// <summary>
+    /// Permette ad altri script di ottenere la lista completa delle stanze
+    /// </summary>
+    /// <returns></returns>
+    public static List<RoomsBehaviour> GetRoomsList() { return rooms; }
 
     public void UpdateData()
     {

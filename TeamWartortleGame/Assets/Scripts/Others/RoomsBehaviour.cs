@@ -17,6 +17,13 @@ public class RoomsBehaviour : MonoBehaviour
     //riferimento allo sprite della stanza
     [SerializeField]
     private SpriteRenderer roomSprite = default;
+    //indica il tipo di questa stanza
+    // 0 - quadrata
+    // 1 - rettangolare
+    // 2 - T
+    // 3 - L
+    // 4 - boss
+    //private int roomType;
 
 
     private void Awake()
@@ -97,6 +104,8 @@ public class RoomsBehaviour : MonoBehaviour
         else { collToActivate = 4; }
         //attiva il collider figlio del contenitore dei collider all'indice ottenuto
         collidersContainer.GetChild(collToActivate).gameObject.SetActive(true);
+        //ottiene il tipo di questa stanza
+        //roomType = collToActivate;
         Debug.Log("Nome sprite: " + roomSpriteName + " -> coll: " + collToActivate);
     }
     /// <summary>
@@ -104,5 +113,27 @@ public class RoomsBehaviour : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public int GetRoomID() { return roomID; }
+
+    /// <summary>
+    /// Permette agli altri script di ottenere il tipo di questa stanza
+    /// 0 - quadrata
+    /// 1 - rettangolare
+    /// 2 - T
+    /// 3 - L
+    /// 4 - boss
+    /// </summary>
+    /// <returns></returns>
+    //public int GetThisRoomType() { return roomType; }
+
+    /// <summary>
+    /// Permette agli altri script di ottenere lo sprite di questa stanza
+    /// </summary>
+    /// <returns></returns>
+    public Sprite GetThisRoomSprite() { return roomSprite.sprite; }
+    /// <summary>
+    /// Permette ad altri script di ottenere il riferimento al contenitore delle porte
+    /// </summary>
+    /// <returns></returns>
+    public Transform GetThisRoomDoorsContainer() { return doorsContainer; }
 
 }
