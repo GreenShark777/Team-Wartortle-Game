@@ -11,6 +11,8 @@ public class MiniMap : MonoBehaviour
     private Image roomImage;
     //riferimento all'immagine di porta delle stanze
     private Image doorImage;
+    //indica la nuova posizione dell'ancora di ogni nuova immagine di stanza
+    private List<Vector2> newAnchorsPosition = new List<Vector2>();
 
 
     private void Start()
@@ -22,7 +24,7 @@ public class MiniMap : MonoBehaviour
         doorImage = transform.GetChild(1).GetComponent<Image>();
         //genera la mini mappa
         GenerateMiniMap();
-        //disattiva la prima immagine, in quanto di troppo
+        //disattiva le immagini iniziali di porta e stanza, in quanto non servono più
         roomImage.gameObject.SetActive(false);
         doorImage.gameObject.SetActive(false);
 
@@ -30,24 +32,28 @@ public class MiniMap : MonoBehaviour
 
     private void GenerateMiniMap()
     {
-
-        List<Image> doorImages = new List<Image>();
-
+        //per ogni stanza nella lista di stanze...
         foreach (RoomsBehaviour room in listOfRooms)
         {
+            //...crea una nuova immagine di stanza, ne calcola la posizione e rotazione e lo rende figlio di questo gameobject...
+            Image newRoomImage = Instantiate(roomImage, Vector2.zero, room.transform.rotation, transform);
 
-            Image newRoomImage = Instantiate(roomImage, CalculateRoomPosition(), room.transform.rotation, transform);
+            /*newRoomImage.transform.localPosition = */CalculateRoomPosition(room.GetRoomID(), newRoomImage.rectTransform);
 
             //Image newRoomImage = newRoom.GetComponent<Image>();
-
+            //...alla nuova immagine viene dato lo sprite di questa stanza...
             newRoomImage.sprite = room.GetThisRoomSprite();
-
+            //...ottiene il contenitore delle porte di questa stanza...
             Transform thisRoomDoorsContainer = room.GetThisRoomDoorsContainer();
-
+            //...e per ogni suo figlio...
             for (int door = 0; door < thisRoomDoorsContainer.childCount; door++)
             {
+                //...crea una nuova immagine di porta, ne calcola la posizione e rotazione e lo rende figlio dell'immagine di stanza
+                Image newDoorImage = Instantiate(doorImage, Vector2.zero, thisRoomDoorsContainer.GetChild(door).rotation, newRoomImage.transform);
 
-                Image newDoorImage = Instantiate(doorImage, CalculateDoorPosition(), thisRoomDoorsContainer.GetChild(door).rotation, newRoomImage.transform);
+                CalculateDoorPosition(room.GetRoomID(), door, thisRoomDoorsContainer, newDoorImage.rectTransform);
+
+                newAnchorsPosition.Add(newDoorImage.transform.position);
 
             }
             Debug.Log("Creata, nella mini mappa, la stanza: " + room.name);
@@ -55,21 +61,36 @@ public class MiniMap : MonoBehaviour
 
     }
 
-    private Vector2 CalculateRoomPosition()
+    private void CalculateRoomPosition(int thisRoomID, RectTransform roomImageRect)
     {
 
         Vector2 newPos = Vector2.zero;
 
-        return newPos;
+        if (newAnchorsPosition.Count > 0)
+        {
+
+            for (int anchorPos = 0; anchorPos < newAnchorsPosition.Count; anchorPos++)
+            {
+
+                if (thisRoomID == anchorPos - 1) { newPos = newAnchorsPosition[anchorPos]; break; }
+
+            }
+            Debug.Log("Immagine stanza: " + listOfRooms[thisRoomID] + " in posizione porta: " + newPos);
+        }
+
+        roomImageRect.anchoredPosition = newPos;
 
     }
 
-    private Vector2 CalculateDoorPosition()
+    private void CalculateDoorPosition(int roomID, int doorID, Transform roomDoorsContainer, RectTransform doorImageRect)
     {
 
         Vector2 newPos = Vector2.zero;
 
-        return newPos;
+        //newPos = new Vector2(Random.Range(0, 500), Random.Range(0, 500));
+        newPos = listOfRooms[roomID].transform.position - roomDoorsContainer.GetChild(doorID).position;
+
+        doorImageRect.anchoredPosition = newPos;
 
     }
 
