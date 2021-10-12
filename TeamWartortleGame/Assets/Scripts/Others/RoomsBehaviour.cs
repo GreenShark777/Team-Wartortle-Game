@@ -19,7 +19,7 @@ public class RoomsBehaviour : MonoBehaviour
     private SpriteRenderer roomSprite = default;
 
 
-    private void Start()
+    private void Awake()
     {
         //ottiene il riferimento al contenitore di tutte le porte
         doorsContainer = transform.GetChild(0);

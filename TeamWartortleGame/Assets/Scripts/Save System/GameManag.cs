@@ -140,7 +140,7 @@ public class GameManag : MonoBehaviour
     private void OnDestroy()
     {
         //salva i dati di gioco dopo aver ottenuto gli aggiornamenti dalla lista di script che devono aggiornare i dati
-        SaveDataAfterUpdate();
+        //SaveDataAfterUpdate();
 
     }
 
