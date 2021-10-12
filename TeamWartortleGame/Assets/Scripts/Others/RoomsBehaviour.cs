@@ -17,6 +17,13 @@ public class RoomsBehaviour : MonoBehaviour
     //riferimento allo sprite della stanza
     [SerializeField]
     private SpriteRenderer roomSprite = default;
+    //indica se la telecamera deve essere ferma o meno
+    [SerializeField]
+    private bool staticCamera = false;
+    //indica i limiti della telecamera
+    [SerializeField]
+    private float maxCameraLookX = default, 
+        maxCameraLookY = default;
     //indica il tipo di questa stanza
     // 0 - quadrata
     // 1 - rettangolare
@@ -135,5 +142,20 @@ public class RoomsBehaviour : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public Transform GetThisRoomDoorsContainer() { return doorsContainer; }
+    /// <summary>
+    /// Permette ad altri script di sapere se questa stanza è piccola abbastanza da rendere la telecamera statica
+    /// </summary>
+    /// <returns></returns>
+    public bool IsSmallRoom() { return staticCamera; }
+
+    private void OnDrawGizmos()
+    {
+        if (!staticCamera)
+        {
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireCube(roomSprite.transform.position, new Vector3(maxCameraLookX, maxCameraLookY));
+        }
+
+    }
 
 }

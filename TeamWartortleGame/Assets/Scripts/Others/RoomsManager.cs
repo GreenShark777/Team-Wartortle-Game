@@ -8,7 +8,13 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     private static List<RoomsBehaviour> rooms = new List<RoomsBehaviour>();
     //riferimento al giocatore
     [SerializeField]
-    private Transform player = default;
+    private Transform player = default, 
+        cam = default;
+
+    private static Transform staticCam, 
+        staticPlayer;
+
+    private static Vector3 camStartPosition;
     //riferimento al GameManag di scena
     [SerializeField]
     private GameManag g = default;
@@ -24,6 +30,12 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     {
         //da alle stanze il riferimento al giocatore
         RoomsBehaviour.player = player;
+
+        staticPlayer = player;
+
+        staticCam = cam;
+
+        camStartPosition = staticCam.localPosition;
         //per ogni figlio del manager delle stanze, ne ottiene lo script da stanza
         rooms.Clear();
         foreach (Transform child in transform) { rooms.Add(child.GetComponent<RoomsBehaviour>()); }
@@ -105,7 +117,16 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     private void ActivateOnlyThisRoom(int roomToActivate)
     {
         //attiva la stanza con l'indice ricevuto come parametro e disattiva tutte le altre
-        foreach (RoomsBehaviour room in rooms) { room.gameObject.SetActive(room.GetRoomID() == roomToActivate); }
+        foreach (RoomsBehaviour room in rooms)
+        {
+
+            bool isPlayerRoom = room.GetRoomID() == roomToActivate;
+
+            room.gameObject.SetActive(isPlayerRoom);
+
+            if (isPlayerRoom && room.IsSmallRoom()) { cam.parent = null; cam.position = room.transform.position; }
+
+        }
 
     }
 
@@ -121,6 +142,22 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         rooms[newRoomDoor.GetOwnRoomID()].PositionPlayer(newRoomDoor.GetDoorID());
         //ottiene l'indice della stanza in cui si è entrati
         lastEnteredRoom = newRoomDoor.GetOwnRoomID();
+
+        if (rooms[newRoomDoor.GetOwnRoomID()].IsSmallRoom())
+        {
+            
+            staticCam.parent = null;
+            staticCam.position = new Vector3(rooms[newRoomDoor.GetOwnRoomID()].transform.position.x,
+                rooms[newRoomDoor.GetOwnRoomID()].transform.position.y, staticCam.position.z);
+
+        }
+        else
+        {
+
+            staticCam.parent = staticPlayer;
+            staticCam.localPosition = camStartPosition;
+
+        }
         //fa muovere il puntino del personaggio nella stanza in cui è entrato
         staticMiniMap.MovePlayerDot(lastEnteredRoom);
 
