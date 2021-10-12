@@ -12,6 +12,10 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     //riferimento al GameManag di scena
     [SerializeField]
     private GameManag g = default;
+    //riferimento allo script della minimappa
+    [SerializeField]
+    private MiniMap miniMap = default;
+    private static MiniMap staticMiniMap = default;
     //indica l'ultima stanza in cui il giocatore è entrato
     private static int lastEnteredRoom;
 
@@ -34,6 +38,11 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         lastEnteredRoom = g.lastRoomID;
         //attiva solo la stanza in cui il giocatore è entato per l'ultima volta prima di salvare
         ActivateOnlyThisRoom(lastEnteredRoom);
+        //ottiene il riferimento statico alla minimappa
+        staticMiniMap = miniMap;
+        //fa muovere il puntino del personaggio nella stanza in cui è entrato
+        staticMiniMap.MovePlayerDot(lastEnteredRoom);
+
 
 
 
@@ -112,6 +121,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         rooms[newRoomDoor.GetOwnRoomID()].PositionPlayer(newRoomDoor.GetDoorID());
         //ottiene l'indice della stanza in cui si è entrati
         lastEnteredRoom = newRoomDoor.GetOwnRoomID();
+        //fa muovere il puntino del personaggio nella stanza in cui è entrato
+        staticMiniMap.MovePlayerDot(lastEnteredRoom);
 
     }
     /// <summary>
