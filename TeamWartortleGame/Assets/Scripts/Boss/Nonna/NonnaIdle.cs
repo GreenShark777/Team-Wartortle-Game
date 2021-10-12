@@ -73,13 +73,13 @@ public class NonnaIdle : NonnaAbstract
         }
         else
         {
-            //con la probabilità del 40%
-            if (Random.value < .4)
+            //con la probabilità del 30%
+            if (Random.value < .3)
             {
                 //Eseguo l'attacco scheggia(primo attacco)
                 nonnaManager.SwitchState(nonnaManager.nonnaAttack);
             }
-            else if (Random.value < .7)
+            else if (Random.value < .5)
             {
                 //Eseguo l'attacco veleno(secondo attacco)
                 nonnaManager.SwitchState(nonnaManager.nonnaSecondAttack);

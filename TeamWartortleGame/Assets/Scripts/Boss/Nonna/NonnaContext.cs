@@ -48,6 +48,9 @@ public class NonnaContext : MonoBehaviour
     //Riferimenti alla bocca chiusa e alla bocca aperta
     public GameObject boccaDefault, boccaChiusa, boccaAperta;
 
+    //Riferimento alle pietre da far cadere nel momento della transizione
+    public GameObject pietre;
+
     private void Awake()
     {
         //Aggiungo tutti gli stm al gameObject 

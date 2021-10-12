@@ -7,6 +7,10 @@ public class NubeHealth : EnemiesHealth, IDamageable
     //Transform del player per seguire la sua direzione
     private Transform playerTrans;
 
+    //Offset da applicare al punto da raggiungere, le nubi ne avranno uno diverso così non si sovrapporranno
+    [HideInInspector]
+    public Vector3 offset = Vector3.zero;
+
     //Velocità da inserire come reference al metodo smoothDamp
     private Vector3 velocity = Vector3.zero;
 
@@ -18,6 +22,8 @@ public class NubeHealth : EnemiesHealth, IDamageable
     {
         base.Awake();
         playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
+        //Assegno un valore casuale alla velocità di movimento della nube
+        smoothTime = Random.Range(.7f, 1);
     }
 
     private void FixedUpdate()
@@ -25,7 +31,7 @@ public class NubeHealth : EnemiesHealth, IDamageable
         //Ottento la direzione del player
         Vector3 targetPosition = playerTrans.position;
         //Muovo in modo smooth la nube verso il player
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition + offset, ref velocity, smoothTime);
     }
     public override void EnemyDefeated()
     {
@@ -45,6 +51,13 @@ public class NubeHealth : EnemiesHealth, IDamageable
         //Se sono ancora attivo posso scalare in basso quando prendo danno
         if (gameObject.activeSelf)
             StartCoroutine(IScaleDown());
+    }
+
+    private void OnDisable()
+    {
+        //Resetto la scala e la vita
+        transform.localScale = Vector3.one;
+        enemyHp = maxHP;
     }
 
     private IEnumerator IScaleDown()

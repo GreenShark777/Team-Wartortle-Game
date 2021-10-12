@@ -25,11 +25,10 @@ public class NonnaSecondAttack : NonnaAbstract
         this.shootPos = nonnaManager.shootPos;
         //Imposto l'animazione in hold delle nubi
         bossAn.SetTrigger("HoldPoison");
-        //Prendo la lunghezza dell'animazione corrente, quella in cui carica la nube quindi e la passo come tempo da raggiungere prima di sparare
+        //Prendo la lunghezza dell'animazione corrente, quella in cui carica la nube quindi e la passo come tempo
+        //da raggiungere prima di sparare
         //timerToReach = bossAn.GetCurrentAnimatorStateInfo(0).length;
         timerToReach = 1;
-
-        Debug.Log(timerToReach);
     }
 
     public override void StateUpdate()
@@ -38,6 +37,11 @@ public class NonnaSecondAttack : NonnaAbstract
         if (timer < timerToReach)
         {
             timer += Time.deltaTime / 1;
+
+        }
+        //Altrimenti se il timer è stato raggiunto
+        else
+        {
             //Attivo l'animazione di sparo delle nubi
             //bossAn.SetTrigger("NubeShoot");
             //Creo un loop per sparare due nubi
@@ -47,12 +51,14 @@ public class NonnaSecondAttack : NonnaAbstract
                 GameObject temp = ObjectPooling.inst.SpawnObjectFromPool("Nube", shootPos.position, Quaternion.identity);
                 //La posiziono prima a sinistra dello shootPos se i è a 0 mentre se è superiore alla destra
                 temp.transform.position = shootPos.transform.TransformPoint(new Vector3(i == 0 ? -5 : 5, 0));
+                //Imposto la direzione a destra o a sinistra in base all'indice i
+                temp.GetComponent<Rotation>().direction = i == 0 ? -1 : 1;
                 Rigidbody2D rb = temp.GetComponent<Rigidbody2D>();
                 //Gli applico una piccola spinta con il RigidBody
-                rb.AddForce(i == 0 ? -transform.right * 5: transform.right * 5, ForceMode2D.Impulse);
-                //Fermo tutte le velocità del rigidBody
-                StartCoroutine(IStopRigidBodyVelocity(rb, 1));
-            
+                rb.AddForce(i == 0 ? -transform.right * 5 : transform.right * 5, ForceMode2D.Impulse);
+                //Fermo tutte le velocità del rigidBody e passo l'indice corrente per capire quale nube sto lanciando(La prima o la seconda)
+                StartCoroutine(IStopRigidBodyVelocity(rb, 1, i));
+
             }
             //Ritorno allo stato idle della nonna
             nonnaManager.SwitchState(nonnaManager.nonnaIdle);
@@ -71,11 +77,13 @@ public class NonnaSecondAttack : NonnaAbstract
 
     public override void StateExit() { }
 
-    private IEnumerator IStopRigidBodyVelocity(Rigidbody2D rb, float time)
+    private IEnumerator IStopRigidBodyVelocity(Rigidbody2D rb, float time, int i)
     {
         yield return new WaitForSeconds(time);
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0;
         rb.angularDrag = 0;
+        //Imposto un'offset per le nubi così da non farle sovrapporre
+        rb.GetComponent<NubeHealth>().offset = new Vector3(i == 0 ? -1 : 1, 0);
     }
 }

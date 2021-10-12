@@ -5,8 +5,7 @@ using UnityEngine;
 public class Rotation : MonoBehaviour
 {
     //Direzione
-    [SerializeField]
-    private int direction = 1;
+    public int direction = 1;
     //velocità
     [SerializeField]
     private float speed = 1000f;

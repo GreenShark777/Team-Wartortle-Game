@@ -103,7 +103,7 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
             for (int j = 0; j < enemySprites.Length; j++)
             {
                 //imposto il colore di damage
-                enemySprites[j].color = startColor;
+                enemySprites[j].color = currentColor;
             }
         }
 
