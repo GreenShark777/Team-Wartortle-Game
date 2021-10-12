@@ -6,35 +6,34 @@ using UnityEngine;
 public class EnemiesHealth : MonoBehaviour, IDamageable
 {
     //indica quanta vita questo nemico ha
-    [SerializeField]
-    private float enemyHp = default;
+    public float enemyHp = default;
+    [HideInInspector]
+    public float maxHP;
     //indica se questo nemico è stato sconfitto e non deve più essere colpito
     [HideInInspector]
     public bool defeated = false;
     //riferimento al collider di questo nemico
-    [SerializeField]
-    private Collider2D enemyCollider = default;
+    public Collider2D enemyCollider = default;
 
     //Riferimento a tutte le componenti sprite renderer nei GameObject per effettuare il cambio colore
-    private SpriteRenderer[] enemySprites;
+    [HideInInspector]
+    public SpriteRenderer[] enemySprites;
 
-    [SerializeField]
-    private string spriteToIgnore = "ombra";
+    public string spriteToIgnore = "ombra";
 
     //Colore iniziale da far ritornare al nemico dopo aver ricevuto danno e colore di damage
     public Color startColor;
-    [SerializeField]
-    private Color dmgColor;
+    public Color dmgColor;
 
     //Colore corrente
-    [HideInInspector]
     public Color currentColor;
 
     //Riferimento all'animator del nemico per fargli avviare l'animazione di sconfitta
-    [SerializeField]
-    private Animator enAnim;
-    private void Awake()
+    public Animator enAnim;
+    public virtual void Awake()
     {
+        //Memorizzo la vita massima
+        maxHP = enemyHp;
         //Prendo il colore corrente
         currentColor = startColor;
         //DEBUGGING-------------------------------------------------------------------------------------------------------------------------------
@@ -57,7 +56,7 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
 
     //}
 
-    private void EnemyDefeated()
+    public virtual void EnemyDefeated()
     {
         //comunica che questo nemico è stato sconfitto
         defeated = true;
@@ -72,20 +71,20 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
     /// Permette ad altri script di sapere se questo nemico è stato sconfitto o meno
     /// </summary>
     /// <returns></returns>
-    public bool IsEnemyDefeated() { return defeated; }
+    public virtual bool IsEnemyDefeated() { return defeated; }
 
     //Interfaccia di danno
-    public void Damage(float value)
+    public virtual void Damage(float value)
     {
         //il nemico subisce danni in base al valore ricevuto
         enemyHp -= value;
         //se la vita del nemico è a 0 o meno, è stato sconfitto
         if (enemyHp <= 0) { EnemyDefeated(); }
-
-        StartCoroutine(IHitColor());
+        if (gameObject.activeSelf)
+            StartCoroutine(IHitColor());
     }
 
-    private IEnumerator IHitColor()
+    public virtual IEnumerator IHitColor()
     {
         //Per ogni sprite renderer del nemico
         for (int i = 0; i < enemySprites.Length; i++)

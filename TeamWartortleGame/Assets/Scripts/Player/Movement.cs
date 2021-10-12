@@ -97,4 +97,9 @@ public class Movement : MonoBehaviour
         weaponContainer.SpawnBullet();
     }
 
+    public void EquipWeapon(int value)
+    {
+        weaponContainer.EquipWeapon(value);
+    }
+
 }

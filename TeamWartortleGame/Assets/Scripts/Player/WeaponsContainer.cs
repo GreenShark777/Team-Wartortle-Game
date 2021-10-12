@@ -239,4 +239,29 @@ public class WeaponsContainer : MonoBehaviour
         ObjectPooling.inst.SpawnFromPool("Bullets", shootPos.position, transform.rotation);
     }
 
+    public void EquipWeapon(int value)
+    {
+        if (value == 0)
+        {
+            //inverte l'arma in uso
+            gunOut = false;
+            //la spada sarà attiva quando la pistola non è in uso...
+            sword.SetActive(!gunOut);
+            //...e viceversa
+            gun.SetActive(gunOut);
+            //cambia la UI in modo da indicare al giocatore l'avvenuto cambiamento d'armi
+            playerUIManag.ChangeWeaponInUse(gunOut);
+        } else if (value == 1)
+        {
+            //inverte l'arma in uso
+            gunOut = true;
+            //la spada sarà attiva quando la pistola non è in uso...
+            sword.SetActive(!gunOut);
+            //...e viceversa
+            gun.SetActive(gunOut);
+            //cambia la UI in modo da indicare al giocatore l'avvenuto cambiamento d'armi
+            playerUIManag.ChangeWeaponInUse(gunOut);
+        }
+    }
+
 }

@@ -17,6 +17,10 @@ public class EnemiesCollisionsManager : MonoBehaviour
     //riferimento al collider di questo nemico
     private Collider2D enemyColl;
 
+    //Booleana per capire se lo script si trova in un boss o no
+    [SerializeField]
+    bool isBoss = false;
+
     [SerializeField]
     private Transform player;
 
@@ -89,17 +93,20 @@ public class EnemiesCollisionsManager : MonoBehaviour
         //FARE IN MODO CHE IL NEMICO NON SI MUOVA O ATTACCHI(O DISATTIVARE SUO SCRIPT DI LOGICA O CAMBIARE UNA VARIABILE CHE INDICA DI ESSERE STORDITI)
         GetStunned(true);
 
-        //ogni forza che agisce sul rigidbody del nemico viene azzerata
-        enemyRb.velocity = Vector2.zero;
-        //calcola come spingere il nemico in base alla potenza di spinta dell'arma
-        Vector2 calculatedPush = -(/*ws.transform*/staticPlayer.position - transform.position).normalized * ws.GetPushForce()/* * enemyRb.mass*/;
-        //il nemico viene spinto via, in base alla potenza di spinta calcolata
-        enemyRb.velocity = calculatedPush;
-        //Debug.Log("POtenza spinta calcolata: " + calculatedPush);
-        //aspetta un po' di tempo, in base al tempo di stordimento inflitto dall'arma
-        yield return new WaitForSeconds(ws.GetStunTime());
-        //il nemico si riprende e torna a camminare come di consueto
-        enemyRb.velocity = Vector2.zero;
+        if (!isBoss)
+        {
+            //ogni forza che agisce sul rigidbody del nemico viene azzerata
+            enemyRb.velocity = Vector2.zero;
+            //calcola come spingere il nemico in base alla potenza di spinta dell'arma
+            Vector2 calculatedPush = -(/*ws.transform*/staticPlayer.position - transform.position).normalized * ws.GetPushForce()/* * enemyRb.mass*/;
+            //il nemico viene spinto via, in base alla potenza di spinta calcolata
+            enemyRb.velocity = calculatedPush;
+            //Debug.Log("POtenza spinta calcolata: " + calculatedPush);
+            //aspetta un po' di tempo, in base al tempo di stordimento inflitto dall'arma
+            yield return new WaitForSeconds(ws.GetStunTime());
+            //il nemico si riprende e torna a camminare come di consueto
+            enemyRb.velocity = Vector2.zero;
+        }
         //fare in modo che il nemico si comporti come di consueto, se la sua vita non è a zero
         if(!eh.IsEnemyDefeated()) GetStunned(false);
 

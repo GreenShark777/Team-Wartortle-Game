@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ObjectPooling : MonoBehaviour
 {
+    //GameObject che conterrà tutti i GameObject creati dall'object pooling
+    private GameObject parentGB;
+
     //Dizionario che conterrà delle queue di GameObject(bullet esempio) con una stringa assocciata come Key("bullet" esempio)
     public Dictionary<string, Queue<GameObject>> dict_pool = new Dictionary<string, Queue<GameObject>>();
 
@@ -25,6 +28,13 @@ public class ObjectPooling : MonoBehaviour
     //Lista di istanza di tipo pools che poi verrà passata alla Queue
     public List<Pool> pools;
 
+    private void Awake()
+    {
+        //Istanzio il gameobject parent
+        parentGB = new GameObject();
+        //e gli do un nome adeguato
+        parentGB.name = "ObjectPoolingObjects";
+    }
     void Start()
     {
         //Sigleton pattern
@@ -42,6 +52,8 @@ public class ObjectPooling : MonoBehaviour
                 GameObject pref = Instantiate(pool.obj);
                 //Lo disattivo
                 pref.SetActive(false);
+                //Gli assegno il parent
+                pref.transform.parent = parentGB.transform;
                 //Lo aggiungo alla fine della queue
                 obj_queue.Enqueue(pref);
             }
