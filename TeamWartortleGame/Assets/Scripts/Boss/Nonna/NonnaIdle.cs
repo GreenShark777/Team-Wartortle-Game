@@ -60,7 +60,7 @@ public class NonnaIdle : NonnaAbstract
         if (!secondPhase)
         {
             //con la probabilità del 80%
-            if (Random.value < .1)
+            if (Random.value < .8)
             {
                 //Eseguo l'attacco scheggia(primo attacco)
                 nonnaManager.SwitchState(nonnaManager.nonnaAttack);
@@ -74,7 +74,7 @@ public class NonnaIdle : NonnaAbstract
         else
         {
             //con la probabilità del 40%
-            if (Random.value < .8)
+            if (Random.value < .4)
             {
                 //Eseguo l'attacco scheggia(primo attacco)
                 nonnaManager.SwitchState(nonnaManager.nonnaAttack);

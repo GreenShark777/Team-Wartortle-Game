@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a36461b709a064aad6bb0fce9767d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHp: 12
+  enemyHp: 3
   maxHP: 0
   defeated: 0
   enemyCollider: {fileID: 7652147075576738269}
