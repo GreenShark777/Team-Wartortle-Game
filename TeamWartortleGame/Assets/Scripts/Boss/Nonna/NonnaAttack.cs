@@ -11,14 +11,22 @@ public class NonnaAttack : NonnaAbstract
     private Animator bossAn;
     //Timer per tenere chiusa la bocca prima di sparare
     private float startTime, timerToReach = 1;
+    //Bocca chiusa e bocca aperta reference
+    private GameObject boccaDefault, boccaChiusa, boccaAperta;
     public override void StateEnter()
     {
         //Inizializzo il timer a quello corrente
         startTime = Time.time;
         //Assegno l'animatore di questo script prendendolo dal manager
         this.bossAn = nonnaManager.bossAn;
-        //Imposto l'animazione di chiusura della bocca
-        //bossAn.SetTrigger("Hold");
+        //Assegno le bocche
+        this.boccaDefault = nonnaManager.boccaDefault;
+        this.boccaChiusa = nonnaManager.boccaChiusa;
+        this.boccaAperta = nonnaManager.boccaAperta;
+        //Imposto la bossa chiusa come attiva e disattivo la bocca aperta visto che il boss sta caricando i proiettili
+        boccaChiusa.SetActive(true);
+        boccaDefault.SetActive(false);
+        boccaAperta.SetActive(false);
     }
 
     public override void StateUpdate()
@@ -26,6 +34,9 @@ public class NonnaAttack : NonnaAbstract
         //Se il timer è stato raggiunto
         if (Time.time - startTime >= timerToReach)
         {
+            //Faccio aprire la bocca al boss, quindi attivo il gameobject bocca aperta e disattivo quello con la bocca chiusa
+            boccaChiusa.SetActive(false);
+            boccaAperta.SetActive(true);
             //Posso sparare a attivare l'animazione di sparo
             //bossAn.SetTrigger("Shoot");
             ObjectPooling.inst.SpawnObjectFromPool("Scheggia", nonnaManager.shootPos.position, Quaternion.identity);
@@ -44,5 +55,15 @@ public class NonnaAttack : NonnaAbstract
 
     public override void StateCollisionExit(Collision2D collision) { }
 
-    public override void StateExit() { }
+    public override void StateExit() 
+    {
+        Invoke("DefaultMouth", 1f);
+    }
+
+    private void DefaultMouth()
+    {
+        boccaDefault.SetActive(true);
+        boccaChiusa.SetActive(false);
+        boccaAperta.SetActive(false);
+    }
 }

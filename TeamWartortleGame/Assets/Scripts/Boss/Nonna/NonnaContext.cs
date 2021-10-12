@@ -45,6 +45,9 @@ public class NonnaContext : MonoBehaviour
     //Riferimento alla posizione di sparo(bocca)
     public Transform shootPos;
 
+    //Riferimenti alla bocca chiusa e alla bocca aperta
+    public GameObject boccaDefault, boccaChiusa, boccaAperta;
+
     private void Awake()
     {
         //Aggiungo tutti gli stm al gameObject 

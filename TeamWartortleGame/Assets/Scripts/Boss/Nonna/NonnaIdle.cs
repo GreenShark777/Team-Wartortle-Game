@@ -16,7 +16,7 @@ public class NonnaIdle : NonnaAbstract
     public override void StateEnter()
     {
         //Inizializzo randomicamente il timer da raggiungere tra 4 a 7 secondi
-        timerToReach = Random.Range(4, 7);
+        timerToReach = Random.Range(3, 5);
         //Imposto lo startTime a quello corrente del Time.time
         startTime = Time.time;
     }
@@ -60,21 +60,21 @@ public class NonnaIdle : NonnaAbstract
         if (!secondPhase)
         {
             //con la probabilità del 80%
-            if (Random.value < .8)
+            if (Random.value < .1)
             {
                 //Eseguo l'attacco scheggia(primo attacco)
                 nonnaManager.SwitchState(nonnaManager.nonnaAttack);
             }
-            //else
-            //{
-            //    //Eseguo l'attacco veleno(secondo attacco)
-            //    nonnaManager.SwitchState(nonnaManager.nonnaSecondAttack);
-            //}
+            else
+            {
+                //Eseguo l'attacco veleno(secondo attacco)
+                nonnaManager.SwitchState(nonnaManager.nonnaSecondAttack);
+            }
         }
         else
         {
             //con la probabilità del 40%
-            if (Random.value < .4)
+            if (Random.value < .8)
             {
                 //Eseguo l'attacco scheggia(primo attacco)
                 nonnaManager.SwitchState(nonnaManager.nonnaAttack);

@@ -24,7 +24,6 @@ public class NubeHealth : EnemiesHealth, IDamageable
     {
         //Ottento la direzione del player
         Vector3 targetPosition = playerTrans.position;
-
         //Muovo in modo smooth la nube verso il player
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
@@ -35,15 +34,15 @@ public class NubeHealth : EnemiesHealth, IDamageable
         //il collider del nemico non è più solido, in modo da non poter essere più colpito da armi
         enemyCollider.isTrigger = true;
 
-        //Disattivo il GameObject
-        gameObject.SetActive(false);
+        //Disattivo il GameObject e lo mando nell'object pooling
+        ObjectPooling.inst.ReAddObjectToPool("Nube", gameObject);
 
     }
 
     public override void Damage(float value)
     {
         base.Damage(value);
-
+        //Se sono ancora attivo posso scalare in basso quando prendo danno
         if (gameObject.activeSelf)
             StartCoroutine(IScaleDown());
     }
