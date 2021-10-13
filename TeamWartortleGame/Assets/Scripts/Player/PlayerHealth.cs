@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
@@ -11,6 +12,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     //Lista di cuori interni(2 pezzi per ogni Contenitore)
     private List<GameObject> hearts = new List<GameObject>();
 
+    //Lista di cuori 
+    private List<Image> heartsParent = new List<Image>();
+
     //Vita corrente
     private int health;
     //Vita massima iniziale
@@ -18,6 +22,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private int maxHealth;
     //Cuori massimi
     private int maxTotalHealth;
+    //Tutti i tipi di lineart del cuore
+    [SerializeField]
+    Sprite emptyLineart, halfLineart, fullLineart;
 
     private void Start()
     {
@@ -32,7 +39,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         //Libero la lista di cuori nel caso in cui c'era presente qualcosa in precedenza
         hearts.Clear();
-        //Loopo ogni cuore
+        //Libero la lista dei contenitori di cuori così da poterla re inserire in modo pulito
+        heartsParent.Clear();
+        //Ciclo ogni cuore
         for (int i=0; i<maxTotalHealth; i++)
         {
             //Se sono dentro la vita massima
@@ -41,6 +50,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
                 //Attivo il Contenitore
                 GameObject last = healthParent.transform.GetChild(i).gameObject;
                 last.SetActive(true);
+                //Asegno il contenitore alla lista di cuori
+                heartsParent.Add(last.GetComponent<Image>());
                 //Aggiungo i suoi figli alla lista hearts
                 for (int j=0; j<last.transform.childCount; j++)
                     hearts.Add(last.transform.GetChild(j).gameObject);
@@ -71,6 +82,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
         //Chiamo metodo che gestisce i cuori interni ai container
         SetHealth();
+
+        //Metodo che gestisce la lineart dei cuori
+        SetHeartLineart();
     }
     //Metodo che gestisce i cuori interni ai container
     private void SetHealth()
@@ -80,11 +94,33 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         {
             //Se sono dentro la vita corrente li attivo
             if (i < health) hearts[i].SetActive(true);
+               
             //Altrimenti li disattivo
             else hearts[i].SetActive(false);
+
         }
     }
 
+    //Metodo che gestisce la lineart dei cuori
+    private void SetHeartLineart()
+    {
+        //Per ogni cuore
+        for (int i = 0; i < heartsParent.Count; i++)
+        {
+            //Se interamente il cuore imposto la lineart vuota
+            if (!heartsParent[i].transform.GetChild(0).gameObject.activeSelf)
+            {
+                heartsParent[i].sprite = emptyLineart;
+            }
+            //Altrimenti se mi manca mezzo cuore imposto la lineart a metà
+            else if (!heartsParent[i].transform.GetChild(1).gameObject.activeSelf)
+            {
+                heartsParent[i].sprite = halfLineart;
+            }
+            //Altrimenti vuol dire che ho un cuore completo quindi imposto la lineart piena
+            else heartsParent[i].sprite = fullLineart;
+        }
+    }
     public void GetNewContainer()
     {
         this.maxHealth++;

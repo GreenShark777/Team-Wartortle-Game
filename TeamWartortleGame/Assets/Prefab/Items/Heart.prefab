@@ -63,8 +63,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da65d69b9b2a19a43b696aabf0e6ba5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullHeart: {fileID: -4203465106786584334, guid: 4c0990eca011ce94ca00ecb585357c55, type: 3}
-  halfHeart: {fileID: -2515158726418942598, guid: b674bb820234f5c4d8fe861a07e39940, type: 3}
+  fullHeart: {fileID: 21300000, guid: c99c7f9d189cef047b7defb611275b7d, type: 3}
+  halfHeart: {fileID: 21300000, guid: b2d2e9b781143804eb826d29855c45fa, type: 3}
   playerHealth: {fileID: 0}
 --- !u!210 &593767918
 SortingGroup:
@@ -167,7 +167,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c99c7f9d189cef047b7defb611275b7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

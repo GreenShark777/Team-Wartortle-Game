@@ -5,8 +5,8 @@ using UnityEngine;
 public class BulletFollow : MonoBehaviour
 {
     //Transform da direzione
-    [SerializeField]
-    private Vector3 direction;
+    [HideInInspector]
+    private Transform direction;
     //Velocità di movimento
     [SerializeField]
     private float speed;
@@ -23,20 +23,31 @@ public class BulletFollow : MonoBehaviour
     private void Awake()
     {
         //Prendo la posizione del player come direzione
-        if (isFollowPlayer) direction = GameObject.FindGameObjectWithTag("Player").transform.position;
-        else direction = Vector3.down;
-  
+        direction = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
+
     private void OnEnable()
     {
         //Disattivo il gameobject dopo tot
         Invoke("Disable", 3f);
         //Calcolo la direzione
-        Vector3 targetPos = (direction - transform.position);
+        Vector3 targetPos = (direction.position - transform.position);
         //Applico la rotazione adeguata che punta quindi nella direzione calcolata
-        transform.right = isFollowPlayer ? targetPos : direction;
+        transform.right = isFollowPlayer ? targetPos : Vector3.down;
         //Applico la velocità al RigidBody nella direzione calcolata
-        rb.velocity = isFollowPlayer ? targetPos.normalized * speed : direction * speed;
+        rb.velocity = isFollowPlayer ? targetPos.normalized * speed : Vector3.down * speed;
+    }
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Player"))
+        {
+            Disable();
+        } 
+        if (bulletName == "Scheggia2")
+        {
+            if (LayerMask.LayerToName(col.transform.gameObject.layer) == "Obstacle") Disable();
+        }
     }
 
     private void Disable()
@@ -45,4 +56,5 @@ public class BulletFollow : MonoBehaviour
         if(gameObject.activeSelf)
             ObjectPooling.inst.ReAddObjectToPool(bulletName, gameObject);
     }
+
 }

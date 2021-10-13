@@ -13,13 +13,14 @@ public class Heart : MonoBehaviour
     private SpriteRenderer spriteRend;
 
     //Reference al player health per controllare se ha la vita piena o no, nel caso il cuore non sarà ottenibile
-    [SerializeField]
     private PlayerHealth playerHealth;
 
     private void Awake()
     {
         //Ottengo lo sprite renderer del cuore
         spriteRend = transform.GetComponentInChildren<SpriteRenderer>(true);
+        //Ottengo lo script playerHealth
+        playerHealth = GameObject.FindObjectOfType<PlayerHealth>();
     }
     private void OnEnable()
     {
@@ -31,9 +32,12 @@ public class Heart : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Collisione");
         //Se sto toccando il player
         if (collision.CompareTag("Player"))
         {
+            Debug.Log(playerHealth == null);
+            //Se la vita non è piena posso curare il player
             if (!playerHealth.GetFullHealth()) HealPlayer(spriteRend.sprite);
         }
     }

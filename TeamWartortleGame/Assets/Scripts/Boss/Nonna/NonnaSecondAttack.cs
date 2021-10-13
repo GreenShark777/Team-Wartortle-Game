@@ -11,7 +11,7 @@ public class NonnaSecondAttack : NonnaAbstract
     //Prendo l'animator per eseguire l'animazione di attacco
     private Animator bossAn;
     //Timer per tenere chiusa la bocca prima di sparare
-    private float timer = 0, timerToReach;
+    private float timer, timerToReach;
     //Bocca chiusa e bocca aperta reference
     private GameObject boccaDefault, boccaChiusa, boccaAperta;
     //Riferimento alla shootPosition del boss(bocca)
@@ -23,12 +23,12 @@ public class NonnaSecondAttack : NonnaAbstract
         this.bossAn = nonnaManager.bossAn;
         //Assegnor riferimento alla shootPos del boss
         this.shootPos = nonnaManager.shootPos;
-        //Imposto l'animazione in hold delle nubi
-        bossAn.SetTrigger("HoldPoison");
-        //Prendo la lunghezza dell'animazione corrente, quella in cui carica la nube quindi e la passo come tempo
-        //da raggiungere prima di sparare
-        //timerToReach = bossAn.GetCurrentAnimatorStateInfo(0).length;
-        timerToReach = 1;
+        //Inizializzio il timer a 0
+        timer = 0;
+        //Inizializzo il timer da raggiungere
+        timerToReach = .8f;
+        //Attivo animazione di sparo della nube
+        bossAn.SetTrigger("ShootNube");
     }
 
     public override void StateUpdate()
@@ -42,8 +42,6 @@ public class NonnaSecondAttack : NonnaAbstract
         //Altrimenti se il timer è stato raggiunto
         else
         {
-            //Attivo l'animazione di sparo delle nubi
-            //bossAn.SetTrigger("NubeShoot");
             //Creo un loop per sparare due nubi
             for (int i = 0; i < 2; i++)
             {

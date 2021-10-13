@@ -92,8 +92,9 @@ GameObject:
   m_Component:
   - component: {fileID: 235225293432165157}
   - component: {fileID: 235225293432165156}
-  - component: {fileID: 235225293432165159}
   - component: {fileID: 235225293432165158}
+  - component: {fileID: 5568630813004042135}
+  - component: {fileID: 2952444795602726764}
   m_Layer: 0
   m_Name: Scheggia2
   m_TagString: Untagged
@@ -127,23 +128,6 @@ SortingGroup:
   m_SortingLayerID: 1120971449
   m_SortingLayer: 1
   m_SortingOrder: 0
---- !u!114 &235225293432165159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 235225293432165153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18f5ab725aa4e2e45a49fa0aa11de0a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0, z: 0}
-  speed: 10
-  rb: {fileID: 235225293432165158}
-  isFollowPlayer: 0
-  bulletName: Scheggia2
 --- !u!50 &235225293432165158
 Rigidbody2D:
   serializedVersion: 4
@@ -165,3 +149,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5568630813004042135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235225293432165153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f5ab725aa4e2e45a49fa0aa11de0a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  rb: {fileID: 235225293432165158}
+  isFollowPlayer: 0
+  bulletName: Scheggia2
+--- !u!70 &2952444795602726764
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235225293432165153}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0045163603, y: -0.027076308}
+  m_Size: {x: 2.0343134, y: 0.68051887}
+  m_Direction: 1

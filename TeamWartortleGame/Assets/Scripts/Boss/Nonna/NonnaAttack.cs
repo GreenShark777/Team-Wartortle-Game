@@ -10,7 +10,7 @@ public class NonnaAttack : NonnaAbstract
     //Prendo l'animator per eseguire l'animazione di attacco
     private Animator bossAn;
     //Timer per tenere chiusa la bocca prima di sparare
-    private float startTime, timerToReach = 1;
+    private float startTime, timerToReach = .6f;
     //Bocca chiusa e bocca aperta reference
     private GameObject boccaDefault, boccaChiusa, boccaAperta;
     public override void StateEnter()
@@ -27,6 +27,8 @@ public class NonnaAttack : NonnaAbstract
         boccaChiusa.SetActive(true);
         boccaDefault.SetActive(false);
         boccaAperta.SetActive(false);
+        //Attivo animazione di sparo
+        bossAn.SetTrigger("Shoot");
     }
 
     public override void StateUpdate()

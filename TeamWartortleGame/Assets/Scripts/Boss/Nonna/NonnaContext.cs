@@ -51,8 +51,20 @@ public class NonnaContext : MonoBehaviour
     //Riferimento alle pietre da far cadere nel momento della transizione
     public GameObject pietre;
 
+    //Raycast per far cambiare direzione di movimento al boss
+    private RaycastHit2D ray;
+
+    //Posione iniziale del boss per poterla riposizionare dopo averlo sconfitto
+    public Vector3 startPos;
+
+    //Direzione di movimento del boss, inzialmente a destra e un timer per aspettare un po' per cominciare a muovere il boss
+    int dir = 1;
+    float timer = 0;
+
     private void Awake()
     {
+        //Salvo la posizione iniziale
+        startPos = transform.position;
         //Aggiungo tutti gli stm al gameObject 
         nonnaSecondAttack = GetComponent<NonnaSecondAttack>();
         nonnaThirdAttack = GetComponent<NonnaThirdAttack>();
@@ -82,6 +94,13 @@ public class NonnaContext : MonoBehaviour
         //Chiamo il metodo Update dello stato corrente visto che mi trovo nell'update
         currentState.StateUpdate();
 
+        CheckForMoving();
+
+        //Se il boss è stato sconfitto cambio lo stato in quello di sconfitta
+        if (bossHealth.IsEnemyDefeated() && currentState != nonnaDefeated)
+        {
+            SwitchState(nonnaDefeated);
+        }
   
     }
 
@@ -133,4 +152,55 @@ public class NonnaContext : MonoBehaviour
         return bossHealth.secondPhase;
     }
 
+    //Metodo che controlla se il boss si trova alla seconda fase, e in caso si muove a destra e a sinistra attraverso raycast
+    private void CheckForMoving()
+    {
+        //Se sono alla secnda fase e sono tornato all'animazione di idle
+        if (GetSecondPhase())
+        {
+            //Aspetto un secondo
+            if (timer < 2f)
+            {
+                timer += Time.deltaTime / 2;
+            }
+            //Dopo di che comincio a muovere il boss
+            else
+            {
+                //Posso cominciare a muovermi verso una direzione, inizialmente destra e creare il raycast per controllare se sto toccando un muro
+                rb.velocity = new Vector3(dir * speed, 0, 0);
+                //Controllo se il raycast sta toccando un muro e in caso cambio direzione e lo flippo
+                ray = Physics2D.Raycast(transform.position, Vector2.right * dir, 2f, groundMask);
+                //Se ray è a true, quindi sta toccando un muro
+                if (ray)
+                {
+                    //Flippo la direzione
+                    dir *= -1;
+                }
+            }
+        }
+    }
+
+    //Muove la transform verso una posizione
+    public void MoveAbove()
+    {
+        StartCoroutine(IMoveAbove());
+    }
+
+    private IEnumerator IMoveAbove()
+    {
+        //Inizializzo il timer a 0
+        float timer = 0, speed = 1.3f;
+        //Prendo la posizione iniziale e la posizione finale
+        Vector3 startPos = transform.position, targetPos = new Vector3(transform.position.x,3,transform.position.z);
+        //Finché sono sotto il primo secondo
+        while (timer < 1f)
+        {
+            //Aumento il timer secondo la formula secondi
+            timer += Time.deltaTime / 1f;
+            //Lerpo la posizione del boss a quella finale
+;           transform.position = Vector3.Lerp(startPos, targetPos, timer * speed);
+            yield return null;
+        }
+        yield return null;
+    }
 }

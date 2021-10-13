@@ -18,6 +18,7 @@ public class NonnaThirdAttack : NonnaAbstract
     private Transform shootPos;
     //Index di proiettili
     private int i, maxBullet;
+ 
     public override void StateEnter()
     {
         //Inizializzo l'indice del numero di proiettili a 0
@@ -38,6 +39,8 @@ public class NonnaThirdAttack : NonnaAbstract
         boccaChiusa.SetActive(true);
         boccaDefault.SetActive(false);
         boccaAperta.SetActive(false);
+        //Attivo animazione di secondo sparo(raffica di scheggie)
+        bossAn.SetBool("ShootSecond", true);
     }
 
     public override void StateUpdate()
@@ -80,6 +83,8 @@ public class NonnaThirdAttack : NonnaAbstract
 
     public override void StateExit()
     {
+        //Disattivo l'animazione di sparo
+        bossAn.SetBool("ShootSecond", false);
         Invoke("DefaultMouth", 1f);
 
     }

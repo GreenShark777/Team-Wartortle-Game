@@ -23,6 +23,10 @@ public class NonnaTransition : NonnaAbstract
         timerToReach = bossAn.GetCurrentAnimatorStateInfo(0).length;
         //Prendo le pietre dal manager
         this.pietre = nonnaManager.pietre;
+        //Attivo l'animazione di transizione
+        bossAn.SetTrigger("Transition");
+        //Attivo la booleana che fa muovere le ali
+        bossAn.SetBool("WingMoving", true);
     }
 
     public override void StateUpdate()

@@ -23,6 +23,8 @@ public class Debugging : MonoBehaviour
     //indica l'indice della musica di sottofondo da far mettere al MusicManager
     private int nMusic = 0;
 
+    [SerializeField]
+    PlayerHealth playerHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -106,8 +108,8 @@ public class Debugging : MonoBehaviour
         //Sparo animazione
         if (Input.GetKeyDown(KeyCode.U))
         {
-            playerAnim.SetTrigger("Shooting");
-        }
+            playerHealth.Damage(1);
+        } else if (Input.GetKeyDown(KeyCode.P)) playerHealth.Damage(-1);
         //CAMBIA MUSICA ANDANDO A QUELLA ALL'INDICE SUCCESSIVO(CONTROLLANDO CHE NON SI VADA FUORI DAI LIMITI DELL'ARRAY DELLE MUSICHE)
         if (Input.GetKeyDown(KeyCode.M)) { nMusic++; if (nMusic > 2) { nMusic = 0; } MusicManager.ChangeBackgroundMusic(nMusic); }
 
