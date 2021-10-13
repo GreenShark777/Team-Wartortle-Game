@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomsBehaviour : MonoBehaviour
 {
     //lista contenente tutti gli script delle porte di questa stanza
+    [SerializeField]
     private List<DoorsBehaviour> doors = new List<DoorsBehaviour>();
     //riferimento al contenitore di tutte le porte
     private Transform doorsContainer, 
@@ -35,30 +36,33 @@ public class RoomsBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        //ottiene il riferimento al contenitore di tutte le porte
-        doorsContainer = transform.GetChild(0);
+        //ottiene il riferimento al contenitore dei collider delle stanze
+        collidersContainer = transform.GetChild(1);
+        //attiva il collider adatto alla stanza e ottiene il riferimento al suo contenitore di porte
+        ActivateRoomColliderAndDoors();
         //indicherà il nuovo indice delle porte di questa stanza
         int newID = 0;
         //per ogni figlio nel contenitore delle porte...
         foreach(Transform child in doorsContainer)
         {
-            //...ne ottiene lo script da porta...
-            DoorsBehaviour door = child.GetComponent<DoorsBehaviour>();
-            //...lo aggiunge alla lista di porte...
-            doors.Add(door);
-            //...gli da un ID unico...
-            door.SetDoorID(newID);
-            //...e gli comunica a quale stanza appartiene...
-            door.SetOwnRoomID(roomID);
-            Debug.Log("Porta: " + door.transform.name + " con indice: " + newID);
-            //...infine, incrementa l'indice in modo che la prossima porta abbia un ID diverso
-            newID++;
+            //...se il figlio è attivo...
+            if (child.gameObject.activeSelf)
+            {
+                //...ne ottiene lo script da porta...
+                DoorsBehaviour door = child.GetComponent<DoorsBehaviour>();
+                //...lo aggiunge alla lista di porte...
+                doors.Add(door);
+                //...gli da un ID unico...
+                door.SetDoorID(newID);
+                //...e gli comunica a quale stanza appartiene...
+                door.SetOwnRoomID(roomID);
+                Debug.Log("Porta: " + door.transform.name + " con indice: " + newID);
+                //...infine, incrementa l'indice in modo che la prossima porta abbia un ID diverso
+                newID++;
+
+            }
 
         }
-        //ottiene il riferimento al contenitore dei collider delle stanze
-        collidersContainer = transform.GetChild(1);
-        //attiva il collider adatto alla stanza
-        ActivateRoomCollider();
 
 
 
@@ -93,27 +97,29 @@ public class RoomsBehaviour : MonoBehaviour
 
     }
 
-    private void ActivateRoomCollider()
+    private void ActivateRoomColliderAndDoors()
     {
         //ottiene il nome dello sprite della stanza
         string roomSpriteName = roomSprite.sprite.name;
         //indice che indica il collider da attivare
-        int collToActivate;
+        int indexToActivate;
         //se lo sprite della stanza è quello della stanza quadrata, bisogna attivare il collider ad indice 0
-        if (roomSpriteName.Contains("quadrata")) { collToActivate = 0; }
+        if (roomSpriteName.Contains("quadrata")) { indexToActivate = 0; }
         //altrimenti,se lo sprite della stanza è quello della stanza rettangolare, bisogna attivare il collider ad indice 1
-        else if (roomSpriteName.Contains("rettangolare")) { collToActivate = 1; }
+        else if (roomSpriteName.Contains("rettangolare")) { indexToActivate = 1; }
         //altrimenti,se lo sprite della stanza è quello della stanza a T, bisogna attivare il collider ad indice 2
-        else if (roomSpriteName.Contains("T")) { collToActivate = 2; }
+        else if (roomSpriteName.Contains("T")) { indexToActivate = 2; }
         //altrimenti,se lo sprite della stanza è quello della stanza a L, bisogna attivare il collider ad indice 3
-        else if (roomSpriteName.Contains("L")) { collToActivate = 3; }
+        else if (roomSpriteName.Contains("L")) { indexToActivate = 3; }
         //altrimenti, sarà la stanza del boss, quindi attiva il collider all'indice 4
-        else { collToActivate = 4; }
+        else { indexToActivate = 4; }
         //attiva il collider figlio del contenitore dei collider all'indice ottenuto
-        collidersContainer.GetChild(collToActivate).gameObject.SetActive(true);
+        collidersContainer.GetChild(indexToActivate).gameObject.SetActive(true);
+        //ottiene il riferimento al contenitore di tutte le porte di questo tipo di stanza
+        doorsContainer = transform.GetChild(0).GetChild(indexToActivate);
         //ottiene il tipo di questa stanza
         //roomType = collToActivate;
-        Debug.Log("Nome sprite: " + roomSpriteName + " -> coll: " + collToActivate);
+        Debug.Log("Nome sprite: " + roomSpriteName + " -> coll: " + indexToActivate);
     }
     /// <summary>
     /// Permette ad altri script di ottenere l'ID di questa stanza
