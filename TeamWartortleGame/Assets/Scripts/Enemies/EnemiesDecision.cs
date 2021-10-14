@@ -61,7 +61,6 @@ public class EnemiesDecision : MonoBehaviour
                         {
                             //Attivo la scelta
                             chooseGB.SetActive(true);
-
                         }
                     }
                 }

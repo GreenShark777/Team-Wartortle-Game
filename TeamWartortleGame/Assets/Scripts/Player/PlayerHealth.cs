@@ -108,8 +108,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             //Metodo che gestisce la lineart dei cuori
             SetHeartLineart();
 
-            //Attiva la coroutine che cambia il colore in rosso per un attimol
-            StartCoroutine(IHitColor());
+            //Controllo che non mi stia invece curando perché in caso non cambio colore
+            if (value > 0)
+            {
+                //Attiva la coroutine che cambia il colore in rosso per un attimol
+                StartCoroutine(IHitColor());
+            }
         }
     }
     //Metodo che gestisce i cuori interni ai container

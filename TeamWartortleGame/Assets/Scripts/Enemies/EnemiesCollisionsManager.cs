@@ -19,7 +19,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
 
     //Booleana per capire se lo script si trova in un boss o no
     [SerializeField]
-    bool isBoss = false;
+    bool isBoss = false, trap = false;
 
     [SerializeField]
     private Transform player;
@@ -57,18 +57,21 @@ public class EnemiesCollisionsManager : MonoBehaviour
     {
 
         //se il nemico non è ancora stato sconfitto, controlla i tag dell'oggetto con cui collide
-        if (!eh.IsEnemyDefeated())
+        if (!trap)
         {
-            //se si sta collidendo con un'arma...
-            if (collision.CompareTag("Weapon"))
+            if (!eh.IsEnemyDefeated())
             {
-                //...ottiene il riferimento alle info dell'arma...
-                WeaponStats ws = collision.GetComponent<WeaponStats>();
-                //...il nemico viene colpito da quest'arma, se può essere colpito
-                if (CanBeHit(ws)) { StartCoroutine(GotHit(ws)); }
-            
-            }
+                //se si sta collidendo con un'arma...
+                if (collision.CompareTag("Weapon"))
+                {
+                    //...ottiene il riferimento alle info dell'arma...
+                    WeaponStats ws = collision.GetComponent<WeaponStats>();
+                    //...il nemico viene colpito da quest'arma, se può essere colpito
+                    if (CanBeHit(ws)) { StartCoroutine(GotHit(ws)); }
 
+                }
+
+            }
         }
 
     }
@@ -91,12 +94,30 @@ public class EnemiesCollisionsManager : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        DamageTo(collision);
+        //Se non è una trappola vuole dire che devo controllare se il nemico non è stato sconfitto prima
+        if (!trap)
+        {
+            //Se il nemico non è sconfitto
+            if (!eh.IsEnemyDefeated())
+                DamageTo(collision);
+        }
+        //Altrimenti se è una trappola faccio continuamenter danno
+        else
+            DamageTo(collision);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        DamageTo(collision);
+        //Se non è una trappola vuole dire che devo controllare se il nemico non è stato sconfitto prima
+        if (!trap)
+        {
+            //Se il nemico non è sconfitto
+            if (!eh.IsEnemyDefeated())
+                DamageTo(collision);
+        }
+        //Altrimenti se è una trappola faccio continuamenter danno
+        else
+            DamageTo(collision);
     }
 
     private bool CanBeHit(WeaponStats ws)

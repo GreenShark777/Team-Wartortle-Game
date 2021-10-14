@@ -50,3 +50,9 @@ TagManager:
   - name: Enemy
     uniqueID: 3029753725
     locked: 0
+  - name: Trappole
+    uniqueID: 3109514739
+    locked: 0
+  - name: Player
+    uniqueID: 3014145639
+    locked: 0

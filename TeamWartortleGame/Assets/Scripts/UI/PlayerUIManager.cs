@@ -24,10 +24,10 @@ public class PlayerUIManager : MonoBehaviour
         gunContainer = default;
 
 
-    private void Update()
-    {
-        Debug.Log(goodwillSlider.value);
-    }
+    //private void Update()
+    //{
+    //    Debug.Log(goodwillSlider.value);
+    //}
     /// <summary>
     /// Cambia il valore della barra della malizia, cambiando di conseguenza anche quella della bontà
     /// </summary>

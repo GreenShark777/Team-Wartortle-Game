@@ -24,6 +24,7 @@ public class TopoDefeated : TopoAbstract
 
     public override void StateEnter()
     {
+        topoManager.rb.MovePosition(topoManager.rb.position);
         //Ottengo i riferimenti via codice
         //fillPurifica = chooseGB.transform.GetChild(0).GetChild(0).GetComponent<Image>();
         //fillEsecuzione = chooseGB.transform.GetChild(1).GetChild(0).GetComponent<Image>();

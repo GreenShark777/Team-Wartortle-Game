@@ -27,8 +27,7 @@ public class TopoManagerSTM : MonoBehaviour
     [SerializeField]
     private Animator animator;
     //Reference RigidBody per muoversi
-    [SerializeField]
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
  
 
     //Direzione corrente
@@ -46,7 +45,7 @@ public class TopoManagerSTM : MonoBehaviour
         topoDefeated = GetComponent<TopoDefeated>();
 
         //Passo questo script agli altri stati che ne hanno bisogno
-        topoIdle.topoManager = topoMovement.topoManager = this;
+        topoIdle.topoManager = topoMovement.topoManager = topoDefeated.topoManager = this;
 
         //Prendo il riferimento dello script EnemiesHealth
         enHealth = GetComponent<EnemiesHealth>();

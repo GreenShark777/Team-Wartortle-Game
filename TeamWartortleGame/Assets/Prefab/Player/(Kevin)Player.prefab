@@ -6893,6 +6893,7 @@ GameObject:
   - component: {fileID: 7999280477419645824}
   - component: {fileID: 7999280477419645825}
   - component: {fileID: 7999280477419645831}
+  - component: {fileID: 782397620785422627}
   m_Layer: 0
   m_Name: (Kevin)Player
   m_TagString: Player
@@ -6973,6 +6974,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!210 &782397620785422627
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7999280477419645829}
+  m_Enabled: 1
+  m_SortingLayerID: -1280821657
+  m_SortingLayer: 4
+  m_SortingOrder: 1
 --- !u!1 &7999280477524382555
 GameObject:
   m_ObjectHideFlags: 0
@@ -12842,13 +12854,13 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8766278067908756884, guid: 245e61c53f456b942ab6fc7e279f5c7a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 245e61c53f456b942ab6fc7e279f5c7a, type: 3}
---- !u!4 &548048709644958553 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4162186576279369935, guid: 245e61c53f456b942ab6fc7e279f5c7a, type: 3}
-  m_PrefabInstance: {fileID: 4492342579324011414}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5723411223074457219 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8157608718975763733, guid: 245e61c53f456b942ab6fc7e279f5c7a, type: 3}
+  m_PrefabInstance: {fileID: 4492342579324011414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &548048709644958553 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4162186576279369935, guid: 245e61c53f456b942ab6fc7e279f5c7a, type: 3}
   m_PrefabInstance: {fileID: 4492342579324011414}
   m_PrefabAsset: {fileID: 0}
