@@ -11,10 +11,12 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     private Transform player = default, 
         cam = default;
 
-    private static Transform staticCam, 
+    private static Transform /*staticCam, */
         staticPlayer;
 
-    private static Vector3 camStartPosition;
+    private static CameraBehaviour camBehaviour;
+
+    //private static Vector3 camStartPosition;
     //riferimento al GameManag di scena
     [SerializeField]
     private GameManag g = default;
@@ -33,9 +35,9 @@ public class RoomsManager : MonoBehaviour, IUpdateData
 
         staticPlayer = player;
 
-        staticCam = cam;
+        camBehaviour = cam.GetComponent<CameraBehaviour>();
 
-        camStartPosition = staticCam.localPosition;
+        //camStartPosition = staticCam.localPosition;
         //per ogni figlio del manager delle stanze, ne ottiene lo script da stanza
         rooms.Clear();
         foreach (Transform child in transform) { rooms.Add(child.GetComponent<RoomsBehaviour>()); }
@@ -145,19 +147,31 @@ public class RoomsManager : MonoBehaviour, IUpdateData
 
         if (rooms[newRoomDoor.GetOwnRoomID()].IsSmallRoom())
         {
-            
-            staticCam.parent = null;
-            staticCam.position = new Vector3(rooms[newRoomDoor.GetOwnRoomID()].transform.position.x,
-                rooms[newRoomDoor.GetOwnRoomID()].transform.position.y, staticCam.position.z);
+
+            //staticCam.parent = null;
+            //staticCam.position = new Vector3(rooms[newRoomDoor.GetOwnRoomID()].transform.position.x,
+            //    rooms[newRoomDoor.GetOwnRoomID()].transform.position.y, staticCam.position.z);
+
+            camBehaviour.ChangeCamParent(null);
+
+            camBehaviour.StopCameraLimits();
+
+            camBehaviour.ChangeCamPosition(new Vector3(rooms[newRoomDoor.GetOwnRoomID()].transform.position.x,
+                rooms[newRoomDoor.GetOwnRoomID()].transform.position.y, camBehaviour.transform.position.z));
 
         }
         else
         {
 
-            staticCam.parent = staticPlayer;
-            staticCam.localPosition = camStartPosition;
+            //staticCam.parent = staticPlayer;
+            //staticCam.localPosition = camStartPosition;
+
+            camBehaviour.MakePlayerParent();
+
+            camBehaviour.LimitCameraBounds(rooms[newRoomDoor.GetOwnRoomID()].GetRoomBounds(), rooms[newRoomDoor.GetOwnRoomID()].GetThisRoomSpriteRend().transform);
 
         }
+
         //fa muovere il puntino del personaggio nella stanza in cui è entrato
         staticMiniMap.MovePlayerDot(lastEnteredRoom);
 

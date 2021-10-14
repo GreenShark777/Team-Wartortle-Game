@@ -1301,10 +1301,6 @@ PrefabInstance:
       propertyPath: healthParent
       value: 
       objectReference: {fileID: 795767948}
-    - target: {fileID: 519420032, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10
-      objectReference: {fileID: 0}
     - target: {fileID: 5920272291967465559, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
       propertyPath: playerUIManag
       value: 
@@ -14811,7 +14807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
       propertyPath: maxCameraLookY
-      value: 22
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 91013525402707022, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
       propertyPath: m_IsActive

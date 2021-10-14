@@ -143,6 +143,10 @@ public class RoomsBehaviour : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public Sprite GetThisRoomSprite() { return roomSprite.sprite; }
+
+    public SpriteRenderer GetThisRoomSpriteRend() { return roomSprite; }
+
+    public Vector2 GetRoomBounds() { return new Vector2(maxCameraLookX, maxCameraLookY); }
     /// <summary>
     /// Permette ad altri script di ottenere il riferimento al contenitore delle porte
     /// </summary>
