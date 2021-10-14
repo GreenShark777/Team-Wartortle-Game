@@ -1,0 +1,594 @@
+fileFormatVersion: 2
+guid: 17934e3019bbeee45b81e86335e4c107
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: MANO SX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1490
+      y: 1213
+      width: 118
+      height: 155
+    spriteID: 8b3b14770f918fa4d8c5e30ac5b6d391
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -74, y: 176}
+  - name: POLLICE SX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 763
+      y: 3682
+      width: 70
+      height: 104
+    spriteID: b918e582c67c9c14bac1dc8c68e4e06d
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -781, y: 2597}
+  - name: MANO DX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1616
+      y: 1213
+      width: 120
+      height: 152
+    spriteID: 645c8755ef4a989439b4c44eb1e0783b
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 836, y: 201}
+  - name: POLLICE DX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 679
+      y: 3682
+      width: 76
+      height: 104
+    spriteID: 21fdaab7384922c4b93ab1e82e6ebdaa
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -166, y: 2621}
+  - name: OCCHI CHIUSI ANGEL
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 3682
+      width: 667
+      height: 119
+    spriteID: 4ae653c98d0757a479580bf7947a4b6d
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -882, y: 1406}
+  - name: 'OCCHI APERTI ANGEL '
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 3390
+      width: 793
+      height: 284
+    spriteID: 1e71c89c5520e4b45bfe3fb3b5037d2b
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -835, y: 1200}
+  - name: 'TESTA '
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 1478
+      height: 1424
+    spriteID: 430a610d4fc64ad408d955e546134bb9
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -455, y: -1817}
+  - name: BUSTO
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 1436
+      width: 874
+      height: 1226
+    spriteID: cbf28c1c3e313734aa9729e621c31319
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -822, y: 787}
+  - name: PIEDE SX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1757
+      y: 748
+      width: 259
+      height: 445
+    spriteID: 8fb1108601206d845b979b97e678a300
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 419, y: 482}
+  - name: GAMBA SX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 886
+      y: 2186
+      width: 292
+      height: 845
+    spriteID: d07b3658305a5474f994cf9df461a2c3
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -364, y: 1523}
+  - name: PIEDE DX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1490
+      y: 748
+      width: 259
+      height: 457
+    spriteID: f1ef57c5fb05a654095dd2a1d263a7ea
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 608, y: 479}
+  - name: GAMBA DX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 886
+      y: 3039
+      width: 288
+      height: 845
+    spriteID: 3ffd4f7aa5716fa4cb1f453c8696be60
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -55, y: 2373}
+  - name: BRACCIO SX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1490
+      y: 4
+      width: 383
+      height: 736
+    spriteID: 96420708436ae6a4499c421667d1fa09
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 176, y: -1168}
+  - name: BRACCIO DX
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 886
+      y: 1436
+      width: 370
+      height: 742
+    spriteID: d5a041dfd0086bf4fa4fad41b828ba30
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 118, y: 287}
+  - name: Livello 7
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1757
+      y: 1201
+      width: 152
+      height: 40
+    spriteID: 81c3454ecbd99e744a14fe98bdbb6052
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 982, y: 34}
+  - name: Livello 12
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 2670
+      width: 864
+      height: 712
+    spriteID: 08df51912b42878469d2a8c0cf1d8b08
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -829, y: 2012}
+  platformSettings: []
+  mosaicLayers: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 0
+  importedTextureWidth: 1024
+  importedTextureHeight: 2048
+  documentSize: {x: 2480, y: 3508}
+  paperDollMode: 0
+  keepDupilcateSpriteName: 0
+  spriteCategoryList:
+    categories: []
+  textureActualWidth: 2048
+  textureActualHeight: 4096
+  spritePackingTag: 
+  resliceFromLayer: 0
+  characterMode: 1
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: FRONT
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 
+    layerID: 22
+    mosaicPosition: {x: 0, y: 0}
+  - name: MANO SX
+    spriteName: MANO SX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 8b3b14770f918fa4d8c5e30ac5b6d391
+    layerID: 11
+    mosaicPosition: {x: 1490, y: 1213}
+  - name: POLLICE SX
+    spriteName: POLLICE SX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: b918e582c67c9c14bac1dc8c68e4e06d
+    layerID: 54
+    mosaicPosition: {x: 763, y: 3682}
+  - name: MANO DX
+    spriteName: MANO DX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 645c8755ef4a989439b4c44eb1e0783b
+    layerID: 6
+    mosaicPosition: {x: 1616, y: 1213}
+  - name: POLLICE DX
+    spriteName: POLLICE DX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 21fdaab7384922c4b93ab1e82e6ebdaa
+    layerID: 52
+    mosaicPosition: {x: 679, y: 3682}
+  - name: OCCHI CHIUSI ANGEL
+    spriteName: OCCHI CHIUSI ANGEL
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 4ae653c98d0757a479580bf7947a4b6d
+    layerID: 110
+    mosaicPosition: {x: 4, y: 3682}
+  - name: 'OCCHI APERTI ANGEL '
+    spriteName: 'OCCHI APERTI ANGEL '
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 1e71c89c5520e4b45bfe3fb3b5037d2b
+    layerID: 114
+    mosaicPosition: {x: 4, y: 3390}
+  - name: 'TESTA '
+    spriteName: 'TESTA '
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 430a610d4fc64ad408d955e546134bb9
+    layerID: 116
+    mosaicPosition: {x: 4, y: 4}
+  - name: BUSTO
+    spriteName: BUSTO
+    isGroup: 0
+    parentIndex: 0
+    spriteID: cbf28c1c3e313734aa9729e621c31319
+    layerID: 70
+    mosaicPosition: {x: 4, y: 1436}
+  - name: PIEDE SX
+    spriteName: PIEDE SX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 8fb1108601206d845b979b97e678a300
+    layerID: 72
+    mosaicPosition: {x: 1757, y: 748}
+  - name: GAMBA SX
+    spriteName: GAMBA SX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: d07b3658305a5474f994cf9df461a2c3
+    layerID: 73
+    mosaicPosition: {x: 886, y: 2186}
+  - name: PIEDE DX
+    spriteName: PIEDE DX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: f1ef57c5fb05a654095dd2a1d263a7ea
+    layerID: 75
+    mosaicPosition: {x: 1490, y: 748}
+  - name: GAMBA DX
+    spriteName: GAMBA DX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 3ffd4f7aa5716fa4cb1f453c8696be60
+    layerID: 74
+    mosaicPosition: {x: 886, y: 3039}
+  - name: BRACCIO SX
+    spriteName: BRACCIO SX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 96420708436ae6a4499c421667d1fa09
+    layerID: 76
+    mosaicPosition: {x: 1490, y: 4}
+  - name: BRACCIO DX
+    spriteName: BRACCIO DX
+    isGroup: 0
+    parentIndex: 0
+    spriteID: d5a041dfd0086bf4fa4fad41b828ba30
+    layerID: 78
+    mosaicPosition: {x: 886, y: 1436}
+  - name: Livello 7
+    spriteName: Livello 7
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 81c3454ecbd99e744a14fe98bdbb6052
+    layerID: 56
+    mosaicPosition: {x: 1757, y: 1201}
+  - name: Livello 12
+    spriteName: Livello 12
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 08df51912b42878469d2a8c0cf1d8b08
+    layerID: 79
+    mosaicPosition: {x: 4, y: 2670}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+  generateGOHierarchy: 0
+  textureAssetName: RIG PROTAGONISTA ANGELICO FRONT RETRO COLORE DEFINITIVO Texture
+  prefabAssetName: RIG PROTAGONISTA ANGELICO FRONT RETRO COLORE DEFINITIVO Prefab
+  spriteLibAssetName: RIG PROTAGONISTA ANGELICO FRONT RETRO COLORE DEFINITIVO Sprite
+    Lib
+  secondarySpriteTextures: []

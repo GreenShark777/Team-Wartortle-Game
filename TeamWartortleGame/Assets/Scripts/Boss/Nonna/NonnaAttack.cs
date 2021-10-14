@@ -59,13 +59,7 @@ public class NonnaAttack : NonnaAbstract
 
     public override void StateExit() 
     {
-        Invoke("DefaultMouth", 1f);
+        nonnaManager.Invoke("DefaultMouth", 1f);
     }
 
-    private void DefaultMouth()
-    {
-        boccaDefault.SetActive(true);
-        boccaChiusa.SetActive(false);
-        boccaAperta.SetActive(false);
-    }
 }

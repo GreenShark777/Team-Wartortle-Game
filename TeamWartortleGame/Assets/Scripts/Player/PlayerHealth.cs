@@ -26,12 +26,31 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField]
     Sprite emptyLineart, halfLineart, fullLineart;
 
+    //Colore iniziale da far ritornare al nemico dopo aver ricevuto danno e colore di damage
+    [SerializeField]
+    private Color startColor;
+    [SerializeField]
+    private Color dmgColor;
+
+    //Colore corrente
+    [SerializeField]
+    private Color currentColor;
+
+    //Riferimento a tutte le componenti sprite renderer nei GameObject per effettuare il cambio colore
+    private SpriteRenderer[] playerSprites;
+
+    //Booleana che decide quando il player potrà essere danneggiato nuovamente
+    private bool canDamage = true;
+
     private void Start()
     {
         //Ottengo i cuori massimi con un childcount del parent
         maxTotalHealth = healthParent.transform.childCount;
         //Setto metodo iniziale che gestisce quanti container devono apparire
         SetHealthContainer(maxHealth);
+
+        //Prendo tutti gli sprite renderer per potergli poi cambiare colore quando il nemico viene colpito
+        playerSprites = transform.parent.GetComponentsInChildren<SpriteRenderer>(true);
     }
 
     //Metodo iniziale che gestisce quanti container devono apparire
@@ -72,19 +91,26 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     //Metodo per la gestione del danno
     public void Damage(float value)
     {
-        //Converto in int il valore passato
-        health -= Mathf.FloorToInt(value);
-        health = Mathf.Clamp(health, 0, maxHealth * 2);
-        //Se la vita è sotto zero muoio e reimposto sempre la vit a 0
-        if (health <= 0)
+        //Se posso essere nuovamente danneggiato
+        if (canDamage)
         {
-            Debug.Log("Morto");
-        }
-        //Chiamo metodo che gestisce i cuori interni ai container
-        SetHealth();
+            //Converto in int il valore passato
+            health -= Mathf.FloorToInt(value);
+            health = Mathf.Clamp(health, 0, maxHealth * 2);
+            //Se la vita è sotto zero muoio e reimposto sempre la vit a 0
+            if (health <= 0)
+            {
+                Debug.Log("Morto");
+            }
+            //Chiamo metodo che gestisce i cuori interni ai container
+            SetHealth();
 
-        //Metodo che gestisce la lineart dei cuori
-        SetHeartLineart();
+            //Metodo che gestisce la lineart dei cuori
+            SetHeartLineart();
+
+            //Attiva la coroutine che cambia il colore in rosso per un attimol
+            StartCoroutine(IHitColor());
+        }
     }
     //Metodo che gestisce i cuori interni ai container
     private void SetHealth()
@@ -131,5 +157,37 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         if (health == maxHealth * 2) return true;
         else return false;
+    }
+
+    private IEnumerator IHitColor()
+    {
+        //Imposto che non posso essere danneggiato attraverso la booleana canDamage
+        canDamage = false;
+        //Per ogni sprite renderer
+        for (int i = 0; i < playerSprites.Length; i++)
+        {
+            for (int j = 0; j < playerSprites.Length; j++)
+            {
+                //imposto il colore di damage
+                playerSprites[j].color = dmgColor;
+            }
+        }
+
+        //Aspetto un po'
+        yield return new WaitForSeconds(.2f);
+
+        for (int i = 0; i < playerSprites.Length; i++)
+        {
+            for (int j = 0; j < playerSprites.Length; j++)
+            {
+                //imposto il colore iniziale
+                playerSprites[j].color = currentColor;
+            }
+        }
+
+        //Aspetto mezzo secondo e poi potrò nuovamente essere danneggiato
+        yield return new WaitForSeconds(.5f);
+        canDamage = true;
+        yield return null;
     }
 }

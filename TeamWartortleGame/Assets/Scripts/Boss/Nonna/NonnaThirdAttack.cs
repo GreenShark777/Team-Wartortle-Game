@@ -28,7 +28,7 @@ public class NonnaThirdAttack : NonnaAbstract
         //Inizializzo il timer a quello corrente
         startTime = Time.time;
         //Assegno il timer da raggiungere prima di ripetere lo sparo(meno di mezzo secondo)
-        timerToReach = .2f;
+        timerToReach = .15f;
         //Assegno l'animatore di questo script prendendolo dal manager
         this.bossAn = nonnaManager.bossAn;
         //Assegno le bocche

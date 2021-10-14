@@ -30,6 +30,7 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
 
     //Riferimento all'animator del nemico per fargli avviare l'animazione di sconfitta
     public Animator enAnim;
+
     public virtual void Awake()
     {
         //Memorizzo la vita massima
@@ -58,13 +59,15 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
 
     public virtual void EnemyDefeated()
     {
+
         //comunica che questo nemico è stato sconfitto
         defeated = true;
         //il collider del nemico non è più solido, in modo da non poter essere più colpito da armi
         enemyCollider.isTrigger = true;
 
         //Attivo animazione sconfitta
-        if(enAnim) enAnim.SetTrigger("Defeat");
+        if (enAnim) enAnim.SetTrigger("Defeat");
+
 
     }
     /// <summary>

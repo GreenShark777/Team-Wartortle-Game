@@ -16,12 +16,18 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     private Image weaponInUseImage = default,
         weaponNotInUseImage = default;
-    //riferimenti agli sprite delle armi
+    //riferimenti agli sprite delle armi e ai loro contenitori per farli swappare
     [SerializeField]
     private Sprite swordSprite = default,
-        gunSprite = default;
+        gunSprite = default,
+        swordContainer = default,
+        gunContainer = default;
 
 
+    private void Update()
+    {
+        Debug.Log(goodwillSlider.value);
+    }
     /// <summary>
     /// Cambia il valore della barra della malizia, cambiando di conseguenza anche quella della bontà
     /// </summary>
@@ -53,6 +59,15 @@ public class PlayerUIManager : MonoBehaviour
         //cambia gli sprite in base al valore booleano
         weaponInUseImage.sprite = isUsingGun ? gunSprite : swordSprite;
         weaponNotInUseImage.sprite = !isUsingGun ? gunSprite : swordSprite;
+
+        //Controllo che sprite quale sprite corrente ho per impostare lo swap del container e la rotazione dell'immagine della spada
+        Image containerInUse = weaponInUseImage.rectTransform.parent.GetComponent<Image>();
+        containerInUse.sprite = isUsingGun ? gunContainer : swordContainer;
+        containerInUse.rectTransform.rotation = isUsingGun ? Quaternion.Euler(Vector3.zero) : Quaternion.Euler(new Vector3(0, 0, 20));
+        //Faccio la stessa cosa per l'altro contenitore
+        Image containerNotInUse = weaponNotInUseImage.rectTransform.parent.GetComponent<Image>();
+        containerNotInUse.sprite = !isUsingGun ? gunContainer : swordContainer;
+        containerNotInUse.rectTransform.rotation = !isUsingGun ? Quaternion.Euler(Vector3.zero) : Quaternion.Euler(new Vector3(0, 0, 20));
 
     }
 

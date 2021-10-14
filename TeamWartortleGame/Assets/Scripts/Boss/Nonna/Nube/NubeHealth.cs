@@ -47,17 +47,23 @@ public class NubeHealth : EnemiesHealth, IDamageable
 
     public override void Damage(float value)
     {
-        base.Damage(value);
+        //il nemico subisce danni in base al valore ricevuto
+        enemyHp -= value;
+        //se la vita del nemico è a 0 o meno, è stato sconfitto
+        if (gameObject.activeSelf)
+            StartCoroutine(IHitColor());
         //Se sono ancora attivo posso scalare in basso quando prendo danno
         if (gameObject.activeSelf)
             StartCoroutine(IScaleDown());
     }
 
-    private void OnDisable()
+    private void OnEnable()
     {
+        StopAllCoroutines();
         //Resetto la scala e la vita
         transform.localScale = Vector3.one;
         enemyHp = maxHP;
+     
     }
 
     private IEnumerator IScaleDown()

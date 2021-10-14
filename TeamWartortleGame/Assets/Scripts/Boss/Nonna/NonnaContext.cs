@@ -186,6 +186,14 @@ public class NonnaContext : MonoBehaviour
         StartCoroutine(IMoveAbove());
     }
 
+    //Chiude la bocca della nonna
+    public void DefaultMouth()
+    {
+        boccaDefault.SetActive(true);
+        boccaChiusa.SetActive(false);
+        boccaAperta.SetActive(false);
+    }
+
     private IEnumerator IMoveAbove()
     {
         //Inizializzo il timer a 0

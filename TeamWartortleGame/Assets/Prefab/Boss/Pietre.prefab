@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3662273121154511235}
   - component: {fileID: 3662273121154511233}
   - component: {fileID: 3662273121154511234}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pietra (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3662273121154511236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.48, y: -5.86, z: 11.60515}
-  m_LocalScale: {x: 1.5653, y: 1.5653, z: 1.5653}
+  m_LocalPosition: {x: -8.52, y: -0.09, z: 11.60515}
+  m_LocalScale: {x: 0.37122655, y: 0.37122655, z: 0.37122655}
   m_Children: []
   m_Father: {fileID: 3662273122235724164}
   m_RootOrder: 3
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_SortingOrder: 16
+  m_Sprite: {fileID: 21300000, guid: 059f101576ebeb2428353ecc348d16ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,18 +96,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.10076809, y: -2.0041432}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 20.4, y: 20.4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10.427309, y: 5.2769985}
   m_EdgeRadius: 0
 --- !u!1 &3662273121561432535
 GameObject:
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 3662273121561432534}
   - component: {fileID: 3662273121561432532}
   - component: {fileID: 3662273121561432533}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pietra (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,8 +135,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3662273121561432535}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.86, y: -3.11, z: 11.60515}
-  m_LocalScale: {x: 1.5653, y: 1.5653, z: 1.5653}
+  m_LocalPosition: {x: 4.96, y: 1.71, z: 11.60515}
+  m_LocalScale: {x: 0.37122655, y: 0.37122655, z: 0.37122655}
   m_Children: []
   m_Father: {fileID: 3662273122235724164}
   m_RootOrder: 1
@@ -180,8 +180,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_SortingOrder: 16
+  m_Sprite: {fileID: 21300000, guid: 059f101576ebeb2428353ecc348d16ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -205,18 +205,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.10076809, y: -2.0041432}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 20.4, y: 20.4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10.427309, y: 5.2769985}
   m_EdgeRadius: 0
 --- !u!1 &3662273121987834591
 GameObject:
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 3662273121987834590}
   - component: {fileID: 3662273121987834588}
   - component: {fileID: 3662273121987834589}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pietra (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,8 +244,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3662273121987834591}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.1, y: -3.11, z: 11.60515}
-  m_LocalScale: {x: 1.5653, y: 1.5653, z: 1.5653}
+  m_LocalPosition: {x: -5.13, y: -5.81, z: 11.60515}
+  m_LocalScale: {x: 0.37122655, y: 0.37122655, z: 0.37122655}
   m_Children: []
   m_Father: {fileID: 3662273122235724164}
   m_RootOrder: 2
@@ -289,8 +289,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_SortingOrder: 16
+  m_Sprite: {fileID: 21300000, guid: 059f101576ebeb2428353ecc348d16ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -314,18 +314,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.10076809, y: -2.116995}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 20.4, y: 20.4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10.427309, y: 5.051295}
   m_EdgeRadius: 0
 --- !u!1 &3662273122235724165
 GameObject:
@@ -337,6 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3662273122235724164}
   - component: {fileID: 3662273122235724163}
+  - component: {fileID: 8906090634427523502}
   m_Layer: 0
   m_Name: Pietre
   m_TagString: Untagged
@@ -352,7 +353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3662273122235724165}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.402597, y: 5.462632, z: -11.60515}
+  m_LocalPosition: {x: 3.03, y: -0.65, z: -11.60515}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3662273122620097213}
@@ -381,6 +382,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!210 &8906090634427523502
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3662273122235724165}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &3662273122620097214
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +404,7 @@ GameObject:
   - component: {fileID: 3662273122620097213}
   - component: {fileID: 3662273122620097211}
   - component: {fileID: 3662273122620097212}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pietra
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,8 +419,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3662273122620097214}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.68, z: 11.60515}
-  m_LocalScale: {x: 1.5653, y: 1.5653, z: 1.5653}
+  m_LocalPosition: {x: 0.99, y: -2.23, z: 11.60515}
+  m_LocalScale: {x: 0.37122655, y: 0.37122655, z: 0.37122655}
   m_Children: []
   m_Father: {fileID: 3662273122235724164}
   m_RootOrder: 0
@@ -452,8 +464,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_SortingOrder: 16
+  m_Sprite: {fileID: 21300000, guid: 059f101576ebeb2428353ecc348d16ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -477,16 +489,16 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.10076809, y: -2.0041432}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 20.4, y: 20.4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10.427309, y: 5.2769985}
   m_EdgeRadius: 0

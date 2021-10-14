@@ -27,6 +27,8 @@ public class NonnaTransition : NonnaAbstract
         bossAn.SetTrigger("Transition");
         //Attivo la booleana che fa muovere le ali
         bossAn.SetBool("WingMoving", true);
+        //Faccio chiudere la bocca della nonna per evitare effetti conflitti che avvengono alla transizione subito dopo uno sparo dalla bocca
+        nonnaManager.DefaultMouth();
     }
 
     public override void StateUpdate()

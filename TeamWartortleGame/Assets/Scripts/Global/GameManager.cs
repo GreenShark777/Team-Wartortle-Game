@@ -56,13 +56,44 @@ public class GameManager : MonoBehaviour
         //Se ho scelto purificazione
         if (value == 0)
         {
+            anPlayer.SetTrigger("Execution");
+            //Attivo la croce
+            croce.SetActive(true);
+            //La posiziono sopra il nemico
+            croce.transform.parent.position = enemy.transform.position + Vector3.up * 3;
+            while (timer < 1)
+            {
+                //Aumento il timer, il tutto verrà effettuato in un secondo
+                timer += Time.deltaTime / 1f;
+                //Assegno il colore a quello corrente
+                currentColor = Color.Lerp(enHealth.startColor, Color.cyan, timer);
+                //e assegno il colore raggiunto allo sprite corrente del nemico
+
+                //Per ogni sprite del nemico
+                for (int i = 0; i < enemySprites.Length; i++)
+                {
+                    //Assegno il colore raggiunto
+                    enemySprites[i].color = currentColor;
+
+                }
+                yield return null;
+            }
+
+            //Assegno il colore corrente al nemico
+            enHealth.currentColor = currentColor;
+            //Riazzero il timer per poterlo riutilizzare
+            timer = 0;
+        }
+        //Altrimenti se ho scelto Esecuzione
+        else 
+        {
             anPlayer.SetTrigger("Purify");
             //Attivo la spada
             spada.SetActive(true);
             //La posiziono sopra il nemico
             spada.transform.parent.position = enemy.transform.position + Vector3.up * 3;
             while (timer < 1)
-            {      
+            {
                 //Aumento il timer, il tutto verrà effettuato in un secondo
                 timer += Time.deltaTime / 1f;
                 //Assegno il colore a quello corrente
@@ -72,7 +103,7 @@ public class GameManager : MonoBehaviour
                 //Per ogni sprite del nemico
                 for (int i = 0; i < enemySprites.Length; i++)
                 {
-                    //Assegnoi il colore raggiunto
+                    //Assegno il colore raggiunto
                     enemySprites[i].color = currentColor;
 
                 }
@@ -83,38 +114,8 @@ public class GameManager : MonoBehaviour
             enHealth.currentColor = currentColor;
             //Riazzero il timer per poterlo riutilizzare
             timer = 0;
-   
-        }
-        //Altrimenti se ho scelto esecuzione
-        else 
-        {
-            anPlayer.SetTrigger("Execution");
-            //Attivo la spada
-            croce.SetActive(true);
-            //La posiziono sopra il nemico
-            croce.transform.parent.position = enemy.transform.position + Vector3.up * 3;
-            while (timer < 1)
-            {
-                //Aumento il timer, il tutto verrà effettuato in un secondo
-                timer += Time.deltaTime / 1f;
-                //Assegno il colore a quello corrente
-                currentColor = Color.Lerp(enHealth.startColor, Color.red, timer);
-                //e assegno il colore raggiunto allo sprite corrente del nemico
+            
 
-                //Per ogni sprite del nemico
-                for (int i = 0; i < enemySprites.Length; i++)
-                {
-                    //Assegnoi il colore raggiunto
-                    enemySprites[i].color = currentColor;
-
-                }
-                yield return null;
-            }
-
-            //Assegno il colore corrente al nemico
-            enHealth.currentColor = currentColor;
-            //Riazzero il timer per poterlo riutilizzare
-            timer = 0;
 
         }
 
@@ -127,10 +128,10 @@ public class GameManager : MonoBehaviour
         Color fadeColor = currentColor;
         fadeColor.a = 0;
         //In mezzo secondo
-        while (timer < .5)
+        while (timer < 1)
         {
             //Aumento il timer, il tutto verrà effettuato in un mezzo secondo
-            timer += Time.deltaTime / .5f;
+            timer += Time.deltaTime / 1f;
             //Assegno il colore a quello corrente
             currentColor = Color.Lerp(enHealth.currentColor, fadeColor, timer);
             //e assegno il colore raggiunto allo sprite corrente del nemico

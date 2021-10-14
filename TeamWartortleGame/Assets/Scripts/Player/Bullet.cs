@@ -33,9 +33,10 @@ public class Bullet : MonoBehaviour
         if (collision.CompareTag(target))
         {
             //Chiamo il suo Damage
-            IDamageable temp = collision.transform.parent.GetComponent<IDamageable>();
+            IDamageable temp = collision.transform.parent.GetComponentInChildren<IDamageable>();
             if (temp != null)
                 temp.Damage(dmg);
+            //Lo riaggiungo all'object pooling
             ReAddToPool();
         }
     }
@@ -47,11 +48,11 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag(target))
         {
             //Chiamo il suo Damage
-            IDamageable temp = collision.transform.parent.GetComponent<IDamageable>();
+            IDamageable temp = collision.transform.parent.GetComponentInChildren<IDamageable>();
             if (temp != null)
                 temp.Damage(dmg);
         }
-
+        //Lo riaggiungo all'object pooling
         ReAddToPool();
     }
 }

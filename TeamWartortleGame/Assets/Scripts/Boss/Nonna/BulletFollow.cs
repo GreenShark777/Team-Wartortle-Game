@@ -20,6 +20,9 @@ public class BulletFollow : MonoBehaviour
     [SerializeField]
     private string bulletName = "Scheggia";
 
+    //Danno del proiettile
+    private int dmg = 1;
+
     private void Awake()
     {
         //Prendo la posizione del player come direzione
@@ -38,20 +41,26 @@ public class BulletFollow : MonoBehaviour
         //Applico la velocità al RigidBody nella direzione calcolata
         rb.velocity = isFollowPlayer ? targetPos.normalized * speed : Vector3.down * speed;
     }
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (col.CompareTag("Player"))
+        //Se collido con il target
+        if (collision.CompareTag("Player"))
         {
+            //Chiamo il suo Damage
+            IDamageable temp = collision.transform.parent.GetComponentInChildren<IDamageable>();
+            if (temp != null)
+                temp.Damage(dmg);
             Disable();
-        } 
+        }
         if (bulletName == "Scheggia2")
         {
-            if (LayerMask.LayerToName(col.transform.gameObject.layer) == "Obstacle") Disable();
+            if (LayerMask.LayerToName(collision.transform.gameObject.layer) == "Obstacle") Disable();
         }
     }
 
     private void Disable()
     {
+
         //Re inserisco il gameobject nell'object pooling passando il nome registrato
         if(gameObject.activeSelf)
             ObjectPooling.inst.ReAddObjectToPool(bulletName, gameObject);

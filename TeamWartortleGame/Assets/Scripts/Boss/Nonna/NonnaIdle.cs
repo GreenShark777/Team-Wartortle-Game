@@ -15,8 +15,8 @@ public class NonnaIdle : NonnaAbstract
     private bool secondPhase = false;
     public override void StateEnter()
     {
-        //Inizializzo randomicamente il timer da raggiungere tra 4 a 7 secondi
-        timerToReach = Random.Range(3, 5);
+        //Inizializzo randomicamente il timer da raggiungere tra 1 a 2 secondi
+        timerToReach = Random.Range(2, 3);
         //Imposto lo startTime a quello corrente del Time.time
         startTime = Time.time;
     }

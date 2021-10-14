@@ -24,6 +24,10 @@ public class EnemiesCollisionsManager : MonoBehaviour
     [SerializeField]
     private Transform player;
 
+    //Int del danno che infligge questo nemico, normalmente togliera metà cuore(1) mentre il danno per il cuore intero è 2
+    [SerializeField]
+    private int dmg = 1;
+
     private static Transform staticPlayer;
     /*
     //riferimento al WeaponContainer del giocatore
@@ -51,6 +55,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         //se il nemico non è ancora stato sconfitto, controlla i tag dell'oggetto con cui collide
         if (!eh.IsEnemyDefeated())
         {
@@ -65,7 +70,33 @@ public class EnemiesCollisionsManager : MonoBehaviour
             }
 
         }
-        //Debug.Log(collision.tag);
+
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        //Se collido con il player
+        if (collision.transform.CompareTag("Player"))
+        {
+            //Prendo la sua interface IDamageable che ha il metodo Damage
+            IDamageable temp = collision.transform.GetComponentInChildren<IDamageable>();
+            //e se non è null
+            if (temp != null)
+            {
+                //Richiamo il metodo damage e gli passo il danno di questo nemico
+                temp.Damage(dmg);
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        DamageTo(collision);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        DamageTo(collision);
     }
 
     private bool CanBeHit(WeaponStats ws)
@@ -117,6 +148,40 @@ public class EnemiesCollisionsManager : MonoBehaviour
         //se questo nemico è un gufo, lo stordisce se deve essere stordito(o se è stato sconfitto)
         if (gb) { gb.IsStunned(gotStunned); }
 
+    }
+
+    //Overload in collision
+    private void DamageTo(Collision2D collision)
+    {
+        //Se collido con il player
+        if (collision.transform.CompareTag("Player"))
+        {
+            //Prendo la sua interface IDamageable che ha il metodo Damage
+            IDamageable temp = collision.transform.GetComponentInChildren<IDamageable>();
+            //e se non è null
+            if (temp != null)
+            {
+                //Richiamo il metodo damage e gli passo il danno di questo nemico
+                temp.Damage(dmg);
+            }
+        }
+    }
+
+    //Overload in trigger
+    private void DamageTo(Collider2D collision)
+    {
+        //Se collido con il player
+        if (collision.CompareTag("Player"))
+        {
+            //Prendo la sua interface IDamageable che ha il metodo Damage
+            IDamageable temp = collision.transform.GetComponentInChildren<IDamageable>();
+            //e se non è null
+            if (temp != null)
+            {
+                //Richiamo il metodo damage e gli passo il danno di questo nemico
+                temp.Damage(dmg);
+            }
+        }
     }
 
 }

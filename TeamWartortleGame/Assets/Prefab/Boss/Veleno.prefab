@@ -156,6 +156,8 @@ MonoBehaviour:
   dmgColor: {r: 0.5154543, g: 1, b: 0.0047169924, a: 1}
   currentColor: {r: 1, g: 1, b: 1, a: 1}
   enAnim: {fileID: 0}
+  defeatable: 0
+  offset: {x: 0, y: 0, z: 0}
   smoothTime: 1
 --- !u!50 &7652147074443743943
 Rigidbody2D:
@@ -334,9 +336,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyRb: {fileID: 7652147074443743943}
-  eh: {fileID: 0}
+  eh: {fileID: 7652147074443743941}
   gb: {fileID: 0}
-  isBoss: 1
+  isBoss: 0
   player: {fileID: 0}
 --- !u!70 &7652147075576738269
 CapsuleCollider2D:
