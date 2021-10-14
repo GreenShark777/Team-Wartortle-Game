@@ -68,30 +68,29 @@ public class SetObjectsDepth : MonoBehaviour
         //}
         //per ulteriore sicurezza, se non esiste il riferimento al PlayerSpriteManager lo ottiene privatamente
         if (psm == null) { GetPlayerSpriteManager(); }
-        //se si è colliso con un oggetto fisico o è un giocatore..
-        Debug.Log(collision.name);
-        if (/*!collision.isTrigger || */collision.CompareTag("Player"))
+        //se si è colliso con un oggetto fisico...
+        if (!collision.isTrigger/* || collision.CompareTag("Player")*/)
         {
- 
+            Debug.LogError("Collider con cui si è colliso e che cambia il layer: " + collision.name);
             //...viene creata la variabile che indicherà la profondità dell'oggetto con cui si ha colliso...
             int objectLayerOrder = 0;
             //...viene inizializzato il riferimento allo sprite dell'oggetto con cui si ha colliso...
             SpriteRenderer objectSprite = null;
             //...ottiene il riferimento al SortingGroup dell'oggetto con cui si ha colliso...
             SortingGroup objectSG = ObtainObjectComponent<SortingGroup>(collision.transform);
-            //Debug.Log("FINITA RICERCA DI SORTING GROUP");
+            Debug.Log("FINITA RICERCA DI SORTING GROUP");
             //...e, se il riferimento è nullo, ne ottiene la profondità
-            if (objectSG != null) { objectLayerOrder = objectSG.sortingOrder; /*Debug.LogError("SORTING GROUP");*/ }
+            if (objectSG != null) { objectLayerOrder = objectSG.sortingOrder; Debug.LogError("SORTING GROUP"); }
             //altrimenti...
             else
             {
                 //...ottiene il riferimento allo SpriteRenderer dell'oggetto con cui si ha colliso...
                 objectSprite = ObtainObjectComponent<SpriteRenderer>(collision.transform);
-                //Debug.Log("FINITA RICERCA DI SPRITE");
+                Debug.Log("FINITA RICERCA DI SPRITE");
                 //...e ne ottiene la sua profondità, se si è trovato il riferimento
                 if (objectSprite != null) { objectLayerOrder = objectSprite.sortingOrder; }
-                //else { Debug.LogError("Non è stato nemmeno trovato il riferimento allo sprite dell'oggetto"); }
-                //Debug.Log("SPRITE");
+                else { Debug.LogError("Non è stato nemmeno trovato il riferimento allo sprite dell'oggetto"); }
+                Debug.Log("SPRITE");
             }
             //...infine, se la profondità dell'oggetto è uguale a quella del giocatore, ...
             if (objectLayerOrder == playerLayerOrder)
@@ -333,10 +332,10 @@ public class SetObjectsDepth : MonoBehaviour
                                     {
                                         obtainedComponent = objParent.GetComponentInChildren<T>(true);
                                         //Debug.Log("Cercato componente nei figli del padre dell'oggetto, che è: " + objParent);
-                                        //if (IsComponentOfTypeTNull(obtainedComponent)) { Debug.LogError("Componente non trovato, si rifa il ciclo"); }
-                                        //else { Debug.Log("Componente ottenuto dai figli di: " + objParent); break; }
+                                        if (IsComponentOfTypeTNull(obtainedComponent)) { Debug.LogError("Componente non trovato, si rifa il ciclo"); }
+                                        else { Debug.Log("Componente ottenuto dai figli di: " + objParent); break; }
                                     }
-                                    //else { Debug.Log("Componente ottenuto dal padre ciclato: " + objParent); }
+                                    else { Debug.Log("Componente ottenuto dal padre ciclato: " + objParent); }
                                     //Debug.LogError("Ciclo provato");
                                 }
 
@@ -344,14 +343,14 @@ public class SetObjectsDepth : MonoBehaviour
                             while (IsComponentOfTypeTNull(obtainedComponent) && objParent != null);
                         
                         }
-                        //else if (!IsComponentOfTypeTNull(obtainedComponent)) { Debug.Log("Componente ottenuto dai figli di: " + objParent); }
-                        //else { Debug.LogError("Non esiste un padre di: " + objParent + " -> " + objParent.parent); }
+                        else if (!IsComponentOfTypeTNull(obtainedComponent)) { Debug.Log("Componente ottenuto dai figli di: " + objParent); }
+                        else { Debug.LogError("Non esiste un padre di: " + objParent + " -> " + objParent.parent); }
                     }
-                    //else { Debug.Log("Componente ottenuto da: " + objParent); }
+                    else { Debug.Log("Componente ottenuto da: " + objParent); }
                 }
-                //else { Debug.Log("L'oggetto: " + obj + " non ha padri"); }
+                else { Debug.Log("L'oggetto: " + obj + " non ha padri"); }
             }
-            //else { Debug.Log("Componente ottenuto dai figli di: " + obj); }
+            else { Debug.Log("Componente ottenuto dai figli di: " + obj); }
             /*
             foreach(T component in recipientForComponents)
             {
@@ -359,7 +358,7 @@ public class SetObjectsDepth : MonoBehaviour
             }
             */
         }
-        //else{ Debug.Log("Componente ottenuto da: " + obj); }
+        else{ Debug.Log("Componente ottenuto da: " + obj); }
 
         /*
         if (!IsComponentOfTypeTNull(obtainedComponent)) { Debug.Log("Il componente è: " + obtainedComponent); }

@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 public class PlayerSpriteManager : MonoBehaviour
 {
     //lista di tutti gli sprite del giocatore
-    private List<SpriteRenderer> playerSprites = new List<SpriteRenderer>();
+    //private List<SpriteRenderer> playerSprites = new List<SpriteRenderer>();
     //riferimento al SortingGroup degli sprite del giocatore
     private SortingGroup playerSpritesSG;
     //lista di riferimenti degli sprite da disattivare
@@ -24,16 +24,16 @@ public class PlayerSpriteManager : MonoBehaviour
     {
         //SwipeSimul = FindObjectOfType<SwipeSimulation>();
         //ottiene il riferimento al contenitore di tutti gli sprite del giocatore
-        Transform spriteContainer = transform.GetChild(0);
+        //Transform spriteContainer = transform/*.GetChild(0)*/;
         //viene creato un recipiente di tutti gli sprite del giocatore
-        var spritesRecipient = spriteContainer.GetComponentsInChildren<SpriteRenderer>(true);
+        //var spritesRecipient = spriteContainer.GetComponentsInChildren<SpriteRenderer>(true);
         //tutti gli sprite vengono inseriti nella lista finale
-        for (int i = 0; i < spritesRecipient.Length; i++) { /*Debug.Log(spritesRecipient[i]);*/ playerSprites.Add(spritesRecipient[i]); }
+        //for (int i = 0; i < spritesRecipient.Length; i++) { /*Debug.Log(spritesRecipient[i]);*/ playerSprites.Add(spritesRecipient[i]); }
         //ottiene il riferimento al SortingGroup degli sprite del giocatore
-        playerSpritesSG = spriteContainer.GetComponent<SortingGroup>();
+        playerSpritesSG = /*spriteContainer.GetComponent<SortingGroup>()*/GetComponent<SortingGroup>();
 
         //ottiene il riferimento agli oggetti da disattivare, ciclando ogni sprite nella lista
-        for (int obj = 0; obj < playerSprites.Count; obj++)
+        /*for (int obj = 0; obj < playerSprites.Count; obj++)
         {
             //ottiene il riferimento al padre dello sprite che si sta controllando
             GameObject thisSpriteParent = playerSprites[obj].transform.parent.gameObject;
@@ -41,7 +41,7 @@ public class PlayerSpriteManager : MonoBehaviour
             if (!spritesToDeactivate.Contains(thisSpriteParent) && thisSpriteParent.transform != spriteContainer.GetChild(0)) { spritesToDeactivate.Add(thisSpriteParent); }
             //Debug.Log("Sprite controllato: " + playerSprites[obj] + ", con padre: " + thisSpriteParent + " , da mettere in lista? -> "
             //    + (!spritesToDeactivate.Contains(thisSpriteParent) && thisSpriteParent.transform != spriteContainer));
-        }
+        }*/
         //Debug.Log("Oggetti nella lista: " + spritesToDeactivate.Count);
 
         ////inizializza un riferimento per il giocatore originale, nel caso questo giocatore sia un duplicato
@@ -57,7 +57,7 @@ public class PlayerSpriteManager : MonoBehaviour
 
         //}
         //inizializza un int che indicherà quale sprite non bisogna disattivare
-        int spriteToNotDeactivate = -1;
+        //int spriteToNotDeactivate = -1;
         //se questo oggetto è un duplicato e si è riuscito a trovare un altro PlayerControlls...
         //if (otherPlayerPc != null)
         //{
@@ -78,11 +78,11 @@ public class PlayerSpriteManager : MonoBehaviour
         //}
 
         //crea una lista di gameObject che conterrà tutti gli sprite animati
-        List<GameObject> animatedSprites = new List<GameObject>();
+        //List<GameObject> animatedSprites = new List<GameObject>();
         //aggiungo gli oggetti nella lista
-        animatedSprites.Add(spriteContainer.GetChild(0).gameObject);
+        //animatedSprites.Add(spriteContainer.GetChild(0).gameObject);
 
-        for(int j = 0; j < spritesToDeactivate.Count; j++) { animatedSprites.Add(spritesToDeactivate[j]); }
+        //for(int j = 0; j < spritesToDeactivate.Count; j++) { animatedSprites.Add(spritesToDeactivate[j]); }
         //copia la lista su PlayerControlls
         //pc.PlayerPos = animatedSprites;
         //SwipeSimul.PlayerPos = animatedSprites;
