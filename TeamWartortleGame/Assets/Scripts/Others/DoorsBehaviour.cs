@@ -28,7 +28,7 @@ public class DoorsBehaviour : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //se il giocatore entra in questa porta, comunica al manager delle stanze che bisogna cambiare stanza
-        if (collision.CompareTag("Player")) { RoomsManager.ChangeRoom(this); }
+        if (collision.CompareTag("Player")) { StartCoroutine(RoomsManager.ChangeRoom(this)); }
 
     }
 

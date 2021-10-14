@@ -11619,6 +11619,7 @@ MonoBehaviour:
   cam: {fileID: 692262187}
   g: {fileID: 1576675593}
   miniMap: {fileID: 1800524313}
+  blackScreenAnim: {fileID: 1136615542}
 --- !u!1 &403388294
 GameObject:
   m_ObjectHideFlags: 0
@@ -22219,6 +22220,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3091115483847661238, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4391720599860846304, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
       propertyPath: g
       value: 
@@ -22333,6 +22338,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
+--- !u!95 &1136615542 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 305947710812975346, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
+  m_PrefabInstance: {fileID: 1136615541}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1139543101
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,17 +6,12 @@ public class RoomsManager : MonoBehaviour, IUpdateData
 {
     //lista di tutte le stanze
     private static List<RoomsBehaviour> rooms = new List<RoomsBehaviour>();
-    //riferimento al giocatore
+    //riferimento al giocatore e alla telecamera
     [SerializeField]
     private Transform player = default, 
         cam = default;
-
-    private static Transform /*staticCam, */
-        staticPlayer;
-
+    //riferimento allo script della telecamera
     private static CameraBehaviour camBehaviour;
-
-    //private static Vector3 camStartPosition;
     //riferimento al GameManag di scena
     [SerializeField]
     private GameManag g = default;
@@ -26,22 +21,26 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     private static MiniMap staticMiniMap = default;
     //indica l'ultima stanza in cui il giocatore è entrato
     private static int lastEnteredRoom;
+    //riferimento all'Animator dell'immagine che funge da dissolvenza
+    [SerializeField]
+    private Animator blackScreenAnim = default;
+
+    private static Animator staticBlackScreenAnim = default;
 
 
     private void Awake()
     {
         //da alle stanze il riferimento al giocatore
         RoomsBehaviour.player = player;
-        //rende il riferimento al giocatore statico
-        staticPlayer = player;
         //ottiene il riferimento allo script della telecamera
         camBehaviour = cam.GetComponent<CameraBehaviour>();
-        //camStartPosition = staticCam.localPosition;
         //per ogni figlio del manager delle stanze, ne ottiene lo script da stanza
         rooms.Clear();
         foreach (Transform child in transform) { rooms.Add(child.GetComponent<RoomsBehaviour>()); }
         //riordina la lista di stanze in base all'ID
         RearrangeRoomsBasedOnID();
+        //rende il riferimento all'Animator statico
+        staticBlackScreenAnim = blackScreenAnim;
 
     }
 
@@ -53,8 +52,6 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         ActivateOnlyThisRoom(lastEnteredRoom);
         //ottiene il riferimento statico alla minimappa
         staticMiniMap = miniMap;
-        //fa muovere il puntino del personaggio nella stanza in cui è entrato
-        //staticMiniMap.MovePlayerDot(lastEnteredRoom);
 
 
 
@@ -114,7 +111,10 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         rooms = orderedRooms;
 
     }
-
+    /// <summary>
+    /// Attiva solo la stanza in cui si trova il giocatore
+    /// </summary>
+    /// <param name="roomToActivate"></param>
     private void ActivateOnlyThisRoom(int roomToActivate)
     {
         //cicla ogni stanza in lista
@@ -148,12 +148,18 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         }
 
     }
-
-    public static void ChangeRoom(DoorsBehaviour openedDoor)
+    /// <summary>
+    /// Cambia la stanza in cui il giocatore si trova
+    /// </summary>
+    /// <param name="openedDoor"></param>
+    public static IEnumerator ChangeRoom(DoorsBehaviour openedDoor)
     {
-
-        //FARE PRIMA DISSOLVENZA
-
+        //fa dissolvenza in entrata
+        staticBlackScreenAnim.SetTrigger("Dissolve");
+        //aspetta che la dissolvenza finisca
+        yield return new WaitForSeconds(2);
+        //fa dissolvenza in uscita
+        staticBlackScreenAnim.SetTrigger("Dissolve");
         //disattiva la stanza da cui si sta uscendo
         rooms[openedDoor.GetOwnRoomID()].gameObject.SetActive(false);
         //ordina alla stanza della porta accanto di posizionare il giocatore nella posizione della porta da cui si entra
@@ -161,30 +167,30 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         rooms[newRoomDoor.GetOwnRoomID()].PositionPlayer(newRoomDoor.GetDoorID());
         //ottiene l'indice della stanza in cui si è entrati
         lastEnteredRoom = newRoomDoor.GetOwnRoomID();
-
+        //se questa stanza è una stanza piccola...
         if (rooms[newRoomDoor.GetOwnRoomID()].IsSmallRoom())
         {
-
             //staticCam.parent = null;
             //staticCam.position = new Vector3(rooms[newRoomDoor.GetOwnRoomID()].transform.position.x,
             //    rooms[newRoomDoor.GetOwnRoomID()].transform.position.y, staticCam.position.z);
 
+            //...la telecamera non sarà figlia del giocatore
             camBehaviour.ChangeCamParent(null);
-
+            //...non avrà limiti(in quanto non si muoverà comunque)...
             camBehaviour.StopCameraLimits();
-
+            //...e viene posizionata al centro della stanza
             camBehaviour.ChangeCamPosition(new Vector3(rooms[newRoomDoor.GetOwnRoomID()].transform.position.x,
                 rooms[newRoomDoor.GetOwnRoomID()].transform.position.y, camBehaviour.transform.position.z));
 
         }
-        else
+        else //altrimenti è una stanza grande, quindi...
         {
-
             //staticCam.parent = staticPlayer;
             //staticCam.localPosition = camStartPosition;
 
+            //...la telecamera sarà figlia del giocatore...
             camBehaviour.MakePlayerParent();
-
+            //...e gli vengono imposti dei limiti
             camBehaviour.LimitCameraBounds(rooms[newRoomDoor.GetOwnRoomID()].GetRoomBounds(), rooms[newRoomDoor.GetOwnRoomID()].GetThisRoomSpriteRend().transform,
                 rooms[newRoomDoor.GetOwnRoomID()].GetRoomBoundsOffsetX(), rooms[newRoomDoor.GetOwnRoomID()].GetRoomBoundsOffsetY());
 
@@ -198,7 +204,10 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     /// </summary>
     /// <returns></returns>
     public static List<RoomsBehaviour> GetRoomsList() { return rooms; }
-
+    /// <summary>
+    /// Permette di ottenere l'ID dell'ultima stanza in cui il giocatore è entrato
+    /// </summary>
+    /// <returns></returns>
     public static int GetLastEnteredRoom() { return lastEnteredRoom; }
 
     public void UpdateData()
