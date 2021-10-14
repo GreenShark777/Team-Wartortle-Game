@@ -8,13 +8,13 @@ public class CameraBehaviour : MonoBehaviour
     private Transform player;
     //riferimanro alla posizione in cui la telecamera deve essere quando è figlia del giocatore
     private Vector3 startLocalPosition;
-
+    //indica di quanto i limiti devono essere diversi
     [SerializeField]
     private float xLimitsOffset = default,
         yLimitOffset = default;
-    
+    //indicano i limiti in cui la telecamera può andare
     private float rightLimit, leftLimit, topLimit, bottomLimit;
-    
+    //riferimento al centro della stanza
     private Transform camBoundsCenter;
 
 
@@ -29,7 +29,7 @@ public class CameraBehaviour : MonoBehaviour
 
     private void Update()
     {
-
+        //se il riferimento al centro della stanza non è nullo...
         if (camBoundsCenter != null)
         {
 
@@ -38,6 +38,8 @@ public class CameraBehaviour : MonoBehaviour
 
             //transform.position = new Vector3(Mathf.Clamp(player.position.x, -/*camBoundsLimit.x*/XLimit, /*camBoundsLimit.x*/XLimit), 
             //    Mathf.Clamp(player.position.y, -/*camBoundsLimit.y*/YLimit, /*camBoundsLimit.y*/YLimit), transform.position.z);
+
+            //...la posizione della telecamera viene limitata dai limiti imposti, seguendo tuttavia la posizione del giocatore
             transform.position = new Vector3(Mathf.Clamp(player.position.x, leftLimit, rightLimit),
                 Mathf.Clamp(player.position.y, bottomLimit, topLimit), transform.position.z);
 
@@ -79,7 +81,7 @@ public class CameraBehaviour : MonoBehaviour
         transform.parent = player;
         //riporta la telecamera nella posizione iniziale
         transform.localPosition = startLocalPosition;
-        Debug.Log("Player is parent again");
+        //Debug.Log("Player is parent again");
     }
     /// <summary>
     /// Permette di cambiare la posizione della telecamera tramite una data coordinara
@@ -104,8 +106,9 @@ public class CameraBehaviour : MonoBehaviour
         //imposta i limiti della telecamera
         //camBoundsLimit = newBounds;
 
+        //ottiene il riferimento al centro della stanza in cui si è appena entrati
         camBoundsCenter = boundsCenter;
-
+        //calcola i limiti in cui la telecamera può andare
         rightLimit = boundsCenter.position.x + (newBounds.x / xLimitsOffset);
         leftLimit = boundsCenter.position.x - (newBounds.x / xLimitsOffset);
         topLimit = boundsCenter.position.y + (newBounds.y / yLimitOffset);
@@ -115,6 +118,9 @@ public class CameraBehaviour : MonoBehaviour
         //camBoundsLimit = camBoundsCenter.position + camBoundsLimit;
 
     }
+    /// <summary>
+    /// Rimuove i limiti ai movimenti della telecamera
+    /// </summary>
     public void StopCameraLimits() { camBoundsCenter = null; }
 
 

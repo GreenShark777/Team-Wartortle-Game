@@ -28,6 +28,8 @@ public class MiniMap : MonoBehaviour
     [SerializeField]
     private List<int> doorsY = new List<int>();
 
+    private List<int> roomsY = new List<int>();
+
     //indica la nuova posizione dell'ancora di ogni nuova immagine di stanza
     //private List<Vector2> newAnchorsPosition = new List<Vector2>();
 
@@ -91,11 +93,11 @@ public class MiniMap : MonoBehaviour
                 if (doorIsActive)
                 {
 
-                    bool isNewDoor = true;
+                    //bool isNewDoor = true;
 
-                    foreach (int ID in doorsX) { if (thisDoor.GetOwnRoomID() == ID) { isNewDoor = false; break; } }
+                    //foreach (int ID in doorsX) { if (thisDoor.GetOwnRoomID() == ID) { isNewDoor = false; break; } }
 
-                    if (isNewDoor)
+                    if (/*isNewDoor*/doorsX.Count < allRoomImages.Count)
                     {
                         //...ottiene la posizione della porta nella UI...
                         doorsPositions.Add(thisDoor.transform.position);
@@ -103,6 +105,8 @@ public class MiniMap : MonoBehaviour
                         doorsX.Add(thisDoor.transform.GetSiblingIndex());
                         //...e aggiunge, alla lista di indici di porte d'uscita, l'ID della porta dopo
                         doorsY.Add(thisDoor.GetNextDoor().transform.GetSiblingIndex());
+
+                        roomsY.Add(thisDoor.GetNextDoor().GetOwnRoomID());
 
                     }
 
@@ -138,14 +142,18 @@ public class MiniMap : MonoBehaviour
     private void ChangeRoomImagesPosition()
     {
 
-        for (int i = 0; i < /*allRoomImages.Count*/2; i++)
+        for (int i = 0; i < allRoomImages.Count; i++)
         {
 
             newRoomPivot.position = allRoomImagesDoorsContainer[i].GetChild(doorsX[i]).position;
 
+            Debug.LogError("Alla stanza " + allRoomImages[i] + "viene dato come pivot: " + allRoomImagesDoorsContainer[i].GetChild(doorsX[i]));
+
             allRoomImages[i].SetParent(newRoomPivot, true);
 
-            if(i+1 != allRoomImagesDoorsContainer.Count) newRoomPivot.position = allRoomImagesDoorsContainer[i+1].GetChild(doorsY[i]).position;
+            //if(i+1 != allRoomImagesDoorsContainer.Count) newRoomPivot.position = allRoomImagesDoorsContainer[i+1].GetChild(doorsY[i]).position;
+
+            newRoomPivot.position = allRoomImagesDoorsContainer[roomsY[i]].GetChild(doorsY[i]).position;
 
             allRoomImages[i].SetParent(newRoomPivot.parent, true);
 
