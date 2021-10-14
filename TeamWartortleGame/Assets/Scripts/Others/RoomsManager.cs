@@ -140,7 +140,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
             else if (isPlayerRoom && !room.IsSmallRoom())
             {
                 //...alla telecamera vengono applicati dei limiti
-                camBehaviour.LimitCameraBounds(room.GetRoomBounds(), room.GetThisRoomSpriteRend().transform);
+                camBehaviour.LimitCameraBounds(room.GetRoomBounds(), room.GetThisRoomSpriteRend().transform, 
+                    room.GetRoomBoundsOffsetX(), room.GetRoomBoundsOffsetY());
 
             }
 
@@ -184,7 +185,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
 
             camBehaviour.MakePlayerParent();
 
-            camBehaviour.LimitCameraBounds(rooms[newRoomDoor.GetOwnRoomID()].GetRoomBounds(), rooms[newRoomDoor.GetOwnRoomID()].GetThisRoomSpriteRend().transform);
+            camBehaviour.LimitCameraBounds(rooms[newRoomDoor.GetOwnRoomID()].GetRoomBounds(), rooms[newRoomDoor.GetOwnRoomID()].GetThisRoomSpriteRend().transform,
+                rooms[newRoomDoor.GetOwnRoomID()].GetRoomBoundsOffsetX(), rooms[newRoomDoor.GetOwnRoomID()].GetRoomBoundsOffsetY());
 
         }
         //fa muovere il puntino del personaggio nella stanza in cui è entrato

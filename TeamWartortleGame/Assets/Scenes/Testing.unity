@@ -14802,6 +14802,14 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
+      propertyPath: xLimitsOffset
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
+      propertyPath: yLimitsOffset
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
       propertyPath: maxCameraLookX
       value: 22
       objectReference: {fileID: 0}
@@ -26929,6 +26937,14 @@ PrefabInstance:
     - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
       propertyPath: roomID
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
+      propertyPath: xLimitsOffset
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
+      propertyPath: yLimitsOffset
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
       propertyPath: maxCameraLookX
@@ -41714,6 +41730,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 401779643}
     m_Modifications:
+    - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
+      propertyPath: xLimitsOffset
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
+      propertyPath: yLimitsOffset
+      value: 3.1
+      objectReference: {fileID: 0}
     - target: {fileID: 12903458694684710, guid: 095fb071353ddec4cb4ebabd770b4892, type: 3}
       propertyPath: maxCameraLookX
       value: 22

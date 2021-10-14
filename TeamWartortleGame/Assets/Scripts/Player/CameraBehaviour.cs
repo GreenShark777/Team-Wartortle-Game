@@ -8,10 +8,6 @@ public class CameraBehaviour : MonoBehaviour
     private Transform player;
     //riferimanro alla posizione in cui la telecamera deve essere quando è figlia del giocatore
     private Vector3 startLocalPosition;
-    //indica di quanto i limiti devono essere diversi
-    [SerializeField]
-    private float xLimitsOffset = default,
-        yLimitOffset = default;
     //indicano i limiti in cui la telecamera può andare
     private float rightLimit, leftLimit, topLimit, bottomLimit;
     //riferimento al centro della stanza
@@ -101,7 +97,7 @@ public class CameraBehaviour : MonoBehaviour
     
     }
 
-    public void LimitCameraBounds(Vector2 newBounds, Transform boundsCenter)
+    public void LimitCameraBounds(Vector2 newBounds, Transform boundsCenter, float xBoundsOffset, float yBoundsOffset)
     {
         //imposta i limiti della telecamera
         //camBoundsLimit = newBounds;
@@ -109,10 +105,10 @@ public class CameraBehaviour : MonoBehaviour
         //ottiene il riferimento al centro della stanza in cui si è appena entrati
         camBoundsCenter = boundsCenter;
         //calcola i limiti in cui la telecamera può andare
-        rightLimit = boundsCenter.position.x + (newBounds.x / xLimitsOffset);
-        leftLimit = boundsCenter.position.x - (newBounds.x / xLimitsOffset);
-        topLimit = boundsCenter.position.y + (newBounds.y / yLimitOffset);
-        bottomLimit = boundsCenter.position.y - (newBounds.y / yLimitOffset);
+        rightLimit = boundsCenter.position.x + (newBounds.x / xBoundsOffset);
+        leftLimit = boundsCenter.position.x - (newBounds.x / xBoundsOffset);
+        topLimit = boundsCenter.position.y + (newBounds.y / yBoundsOffset);
+        bottomLimit = boundsCenter.position.y - (newBounds.y / yBoundsOffset);
 
         //camBoundsLimit += new Vector2(camBoundsCenter.position.x, camBoundsCenter.position.y);
         //camBoundsLimit = camBoundsCenter.position + camBoundsLimit;

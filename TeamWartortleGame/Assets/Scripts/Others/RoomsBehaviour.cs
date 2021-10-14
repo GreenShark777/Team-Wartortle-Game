@@ -25,6 +25,11 @@ public class RoomsBehaviour : MonoBehaviour
     [SerializeField]
     private float maxCameraLookX = default, 
         maxCameraLookY = default;
+    //indica di quanto i limiti devono essere diversi
+    [SerializeField]
+    private float xLimitsOffset = default,
+        yLimitsOffset = default;
+
     //indica il tipo di questa stanza
     // 0 - quadrata
     // 1 - rettangolare
@@ -147,6 +152,9 @@ public class RoomsBehaviour : MonoBehaviour
     public SpriteRenderer GetThisRoomSpriteRend() { return roomSprite; }
 
     public Vector2 GetRoomBounds() { return new Vector2(maxCameraLookX, maxCameraLookY); }
+
+    public float GetRoomBoundsOffsetX() { return xLimitsOffset; }
+    public float GetRoomBoundsOffsetY() { return yLimitsOffset; }
     /// <summary>
     /// Permette ad altri script di ottenere il riferimento al contenitore delle porte
     /// </summary>
