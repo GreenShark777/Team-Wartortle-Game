@@ -78,18 +78,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //Se collido con il player
-        if (collision.transform.CompareTag("Player"))
-        {
-            //Prendo la sua interface IDamageable che ha il metodo Damage
-            IDamageable temp = collision.transform.GetComponentInChildren<IDamageable>();
-            //e se non è null
-            if (temp != null)
-            {
-                //Richiamo il metodo damage e gli passo il danno di questo nemico
-                temp.Damage(dmg);
-            }
-        }
+        DamageTo(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -101,7 +90,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
             if (!eh.IsEnemyDefeated())
                 DamageTo(collision);
         }
-        //Altrimenti se è una trappola faccio continuamenter danno
+        //Altrimenti se è una trappola faccio continuamente danno
         else
             DamageTo(collision);
     }
@@ -183,7 +172,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
             if (temp != null)
             {
                 //Richiamo il metodo damage e gli passo il danno di questo nemico
-                temp.Damage(dmg);
+                temp.Damage(dmg, true, transform.position, 3f);
             }
         }
     }
@@ -200,7 +189,7 @@ public class EnemiesCollisionsManager : MonoBehaviour
             if (temp != null)
             {
                 //Richiamo il metodo damage e gli passo il danno di questo nemico
-                temp.Damage(dmg);
+                temp.Damage(dmg, true, transform.position, 3f);
             }
         }
     }

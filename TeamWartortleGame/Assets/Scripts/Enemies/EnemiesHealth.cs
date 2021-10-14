@@ -77,7 +77,7 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
     public virtual bool IsEnemyDefeated() { return defeated; }
 
     //Interfaccia di danno
-    public virtual void Damage(float value)
+    public virtual void Damage(float value, bool knockBack = false, Vector3 knockPos = default, float knockPower = 1)
     {
         //il nemico subisce danni in base al valore ricevuto
         enemyHp -= value;

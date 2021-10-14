@@ -42,6 +42,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     //Booleana che decide quando il player potrà essere danneggiato nuovamente
     private bool canDamage = true;
 
+    //Riferimento al Rigidbody per fargli eseguire il knockback
+    [SerializeField]
+    private Rigidbody2D playerRb;
+
+    //Riferimento allo script del player per bloccare il movimento per un attimo per effettuare il knockback
+    [SerializeField]
+    private Movement playerMovement;
     private void Start()
     {
         //Ottengo i cuori massimi con un childcount del parent
@@ -89,7 +96,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     }
 
     //Metodo per la gestione del danno
-    public void Damage(float value)
+    public void Damage(float value, bool knockBack = false, Vector3 knockPos = default, float knockPower = 1)
     {
         //Se posso essere nuovamente danneggiato
         if (canDamage)
@@ -111,9 +118,15 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             //Controllo che non mi stia invece curando perché in caso non cambio colore
             if (value > 0)
             {
+                //Faccio il knockback se mi viene passato dal nemico
+                if (knockBack) {
+
+                    playerMovement.Knockback(knockPos, knockPower);
+                }
                 //Attiva la coroutine che cambia il colore in rosso per un attimol
                 StartCoroutine(IHitColor());
             }
+
         }
     }
     //Metodo che gestisce i cuori interni ai container

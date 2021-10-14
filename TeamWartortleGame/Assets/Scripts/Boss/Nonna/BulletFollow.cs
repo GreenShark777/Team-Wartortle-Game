@@ -49,7 +49,7 @@ public class BulletFollow : MonoBehaviour
             //Chiamo il suo Damage
             IDamageable temp = collision.transform.parent.GetComponentInChildren<IDamageable>();
             if (temp != null)
-                temp.Damage(dmg);
+                temp.Damage(dmg, true, transform.position, 3f);
             Disable();
         }
         if (bulletName == "Scheggia2")

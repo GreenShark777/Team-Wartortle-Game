@@ -11,7 +11,7 @@ public class BossHealth : EnemiesHealth, IDamageable
     //Colori per la seconda fase
     [SerializeField]
     private Color rageColor, dmgRageColor;
-    public override void Damage(float value)
+    public override void Damage(float value, bool knockBack = false, Vector3 knockPos = default, float knockPower = 1)
     {
         //il nemico subisce danni in base al valore ricevuto
         enemyHp -= value;

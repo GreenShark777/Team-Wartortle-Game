@@ -45,7 +45,7 @@ public class NubeHealth : EnemiesHealth, IDamageable
 
     }
 
-    public override void Damage(float value)
+    public override void Damage(float value, bool knockBack, Vector3 knockPos, float knockPower)
     {
         //il nemico subisce danni in base al valore ricevuto
         enemyHp -= value;

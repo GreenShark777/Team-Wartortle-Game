@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private Rigidbody2D rb;
     //Posizione da raggiungere
-    private Vector2 movePos;
+    private Vector2 movePos, movePosRb;
 
     //Riferimento all'animator
     [SerializeField]
@@ -28,8 +28,11 @@ public class Movement : MonoBehaviour
         //Prendo il valore input degli assi orizzontali e verticali
         float horizontal = Input.GetAxisRaw("Horizontal"), vertical = Input.GetAxisRaw("Vertical");
 
-        //Passo i valori input di movimento alla posizione da raggiungere
+        //Passo i valori input di movimento alla posizione da raggiungere, questo servirà principalmente per gestire le animazioni
         movePos = new Vector2(horizontal, vertical);
+
+        //Altro vettore per inviare un movimento smooth
+        movePosRb = Vector2.Lerp(movePosRb, movePos, 14 * Time.deltaTime);
 
         //Setto l'animazione in base alla velocità di movimento
         SetAnimator();
@@ -39,7 +42,7 @@ public class Movement : MonoBehaviour
     private void FixedUpdate()
     {
         //Muovo il Personaggio sommando la posizione da raggiungere a quella corrente
-        rb.MovePosition(rb.position + (movePos * moveSpeed * Time.fixedDeltaTime));
+        rb.MovePosition(rb.position + (movePosRb * moveSpeed * Time.fixedDeltaTime));
     }
 
     //Metodo che imposta i valori float dell'animatore e decide la direzione, se in idle o in running
@@ -102,4 +105,30 @@ public class Movement : MonoBehaviour
         weaponContainer.EquipWeapon(value);
     }
 
+    //Metodo per knockback in cui chiamo la coroutine e gli passo i parametri
+    public void Knockback(Vector3 pos, float knockPower)
+    {
+        StartCoroutine(IKnockback(pos, knockPower));
+    }
+
+    //Coroutine di knockback
+    private IEnumerator IKnockback(Vector3 pos, float knockPower)
+    {
+        //Inizializzo un timer a 0
+        float timer = 0;
+        //Calcolo la direzione opposta all'attacco
+        Vector2 dir = -(pos-transform.position).normalized;
+
+        //Per 0.2 millesimi di secondo
+        while (timer < .2f)
+        {
+            //aumento il timer
+            timer += Time.deltaTime / 1f;
+            //Modifico verso la direzione di knockback il vettore di movimento
+            movePosRb = Vector2.Lerp(movePosRb, dir * knockPower, knockPower * Time.deltaTime);
+            yield return null;
+        }
+
+        yield return null;
+    }
 }

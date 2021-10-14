@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour
             //Chiamo il suo Damage
             IDamageable temp = collision.transform.parent.GetComponentInChildren<IDamageable>();
             if (temp != null)
-                temp.Damage(dmg);
+                temp.Damage(dmg, true, transform.position, 3f);
             //Lo riaggiungo all'object pooling
             ReAddToPool();
         }
@@ -50,7 +50,7 @@ public class Bullet : MonoBehaviour
             //Chiamo il suo Damage
             IDamageable temp = collision.transform.parent.GetComponentInChildren<IDamageable>();
             if (temp != null)
-                temp.Damage(dmg);
+                temp.Damage(dmg, true, transform.position, 3f);
         }
         //Lo riaggiungo all'object pooling
         ReAddToPool();
