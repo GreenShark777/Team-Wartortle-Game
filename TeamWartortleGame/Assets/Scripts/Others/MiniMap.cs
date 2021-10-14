@@ -6,29 +6,31 @@ using UnityEngine.UI;
 public class MiniMap : MonoBehaviour
 {
     //lista di tutte le stanze presenti
-    private List<RoomsBehaviour> listOfRooms;
+    private static List<RoomsBehaviour> listOfRooms;
     //riferimento all'immagine di stanza
     private GameObject roomImage;
-    //riferimento all'immagine di porta delle stanze
-    //private Image doorImage;
     //riferimento all'immagine che rappresenta la posizione del giocatore
     private Image playerDot;
-
+    //riferimento all'empty che fungerà da pivot per le immagini stanza durante il posizionamento
     private RectTransform newRoomPivot;
     //lista di riferimenti alle immagini di stanza create
     private List<Transform> allRoomImages = new List<Transform>();
-
+    //lista di tutti i contenitori di porte attivi delle immagini stanza
     [SerializeField]
     private List<Transform> allRoomImagesDoorsContainer = new List<Transform>();
+    
     //lista di tutte le posizioni delle porte
+    //[SerializeField]
+    //private List<Vector2> doorsPositions = new List<Vector2>();
+    
+    //lista degli ID delle porte che devono diventare per le proprie stanze(l'ID della stanza è uguale all'indice in cui si trova il valore)
     [SerializeField]
-    private List<Vector2> doorsPositions = new List<Vector2>();
+    private List<int> pivotDoors = new List<int>();
+    //lista degli ID delle porte che devono fungere da punto d'ancoraggio per le stanze pivot(gli indici indicano la porta pivot a cui faranno da ancora)
     [SerializeField]
-    private List<int> doorsX = new List<int>();
-    [SerializeField]
-    private List<int> doorsY = new List<int>();
-
-    private List<int> roomsY = new List<int>();
+    private List<int> anchorDoors = new List<int>();
+    //lista di tutti gli ID delle stanze delle porte d'ancoraggio
+    private List<int> anchorDoorsRooms = new List<int>();
 
     //indica la nuova posizione dell'ancora di ogni nuova immagine di stanza
     //private List<Vector2> newAnchorsPosition = new List<Vector2>();
@@ -46,17 +48,22 @@ public class MiniMap : MonoBehaviour
         listOfRooms = RoomsManager.GetRoomsList();
         //ottiene il riferimento all'immagine da duplicare ogni volta che viene creata una stanza nella minimappa
         roomImage = transform.GetChild(0).gameObject/*.GetComponent<Image>()*/;
+        //ottiene il riferimento all'empty che fungerà da pivot per le immagini stanza
         newRoomPivot = transform.GetChild(2).GetComponent<RectTransform>();
+
         //doorImage = transform.GetChild(1).GetComponent<Image>();
-        //playerDot = transform.GetChild(1).GetComponent<Image>();
+
         //genera la mini mappa
         GenerateMiniMap();
         //disattiva le immagini iniziali di porta e stanza, in quanto non servono più
         roomImage.gameObject.SetActive(false);
-        //doorImage.gameObject.SetActive(false);
+        //posiziona il pallino del giocatore nella stanza attuale
+        MovePlayerDot(RoomsManager.GetLastEnteredRoom());
 
     }
-
+    /// <summary>
+    /// Genera la minimappa
+    /// </summary>
     private void GenerateMiniMap()
     {
         //per ogni stanza nella lista di stanze...
@@ -72,6 +79,14 @@ public class MiniMap : MonoBehaviour
             //Image newRoomImage = newRoom.GetComponent<Image>();
             //...alla nuova immagine viene dato lo sprite di questa stanza...
             newRoomImage.transform.GetChild(0).GetComponent<Image>().sprite = room.GetThisRoomSprite();
+            //...ottiene il nome dello sprite della stanza...
+            string roomSpriteName = room.GetThisRoomSprite().name;
+
+            //...cambia la grandezza dell'immagine in base al nome dello sprite(bisogna farlo altrimenti alcune stanze vengono viste più grandi di come sono veramente)
+            if (roomSpriteName.Contains("quadrata")) { newRoomImage.transform.localScale = new Vector3(0.35f, 0.35f, 1); }
+            else if (roomSpriteName.Contains("rettangolo")) { newRoomImage.transform.localScale = new Vector3(0.64f, 0.64f, 1); }
+            else if (roomSpriteName.Contains("L")) { newRoomImage.transform.localScale = new Vector3(1.45f, 1.45f, 1); }
+
             //...aggiunge la nuova immagine alla lista...
             allRoomImages.Add(newRoomImage.transform);
             //...ottiene il contenitore delle porte di questa stanza...
@@ -97,16 +112,16 @@ public class MiniMap : MonoBehaviour
 
                     //foreach (int ID in doorsX) { if (thisDoor.GetOwnRoomID() == ID) { isNewDoor = false; break; } }
 
-                    if (/*isNewDoor*/doorsX.Count < allRoomImages.Count)
+                    if (/*isNewDoor*/pivotDoors.Count < allRoomImages.Count)
                     {
                         //...ottiene la posizione della porta nella UI...
-                        doorsPositions.Add(thisDoor.transform.position);
-                        //...aggiunge, alla lista di indici di porte di entrata, l'ID di questa porta...
-                        doorsX.Add(thisDoor.transform.GetSiblingIndex());
-                        //...e aggiunge, alla lista di indici di porte d'uscita, l'ID della porta dopo
-                        doorsY.Add(thisDoor.GetNextDoor().transform.GetSiblingIndex());
-
-                        roomsY.Add(thisDoor.GetNextDoor().GetOwnRoomID());
+                        //doorsPositions.Add(thisDoor.transform.position);
+                        //...aggiunge, alla lista di indici di porte pivot, l'ID di questa porta...
+                        pivotDoors.Add(thisDoor.transform.GetSiblingIndex());
+                        //...aggiunge, alla lista di indici di porte d'ancoraggio, l'ID della porta dopo...
+                        anchorDoors.Add(thisDoor.GetNextDoor().transform.GetSiblingIndex());
+                        //...e di quest'ultima porta ottiene l'ID della stanza di cui fa parte
+                        anchorDoorsRooms.Add(thisDoor.GetNextDoor().GetOwnRoomID());
 
                     }
 
@@ -124,40 +139,44 @@ public class MiniMap : MonoBehaviour
                 //}
 
             }
+            //infine, aggiunge alla lista di container di porte il contenitore di porte previamente preso in riferimento
             allRoomImagesDoorsContainer.Add(thisImageRoomDoors/*.GetComponent<RectTransform>()*/);
             Debug.Log("Creata, nella mini mappa, la stanza: " + room.name);
         }
 
-        roomImage.transform.SetAsLastSibling();
-        playerDot.transform.SetAsLastSibling();
+        //roomImage.transform.SetAsLastSibling();
+        //playerDot.transform.SetAsLastSibling();
 
         //infine, calcola la posizione di ogni stanza
         //foreach (Transform room in allRoomImages) { ChangeRoomImagePosition(room.GetComponent<RectTransform>()); }
-
+        //mette le stanze nelle posizioni adeguate, usando le liste di porte pivot e ancoraggio
         ChangeRoomImagesPosition();
-
         Debug.Log("Finita minimappa");
     }
-
+    /// <summary>
+    /// Si occupa di posizionare correttamente le immagini di stanze nella minimappa
+    /// </summary>
     private void ChangeRoomImagesPosition()
     {
-
+        //cicla ogni immagine di stanza creata
         for (int i = 0; i < allRoomImages.Count; i++)
         {
-
-            newRoomPivot.position = allRoomImagesDoorsContainer[i].GetChild(doorsX[i]).position;
-
-            Debug.LogError("Alla stanza " + allRoomImages[i] + "viene dato come pivot: " + allRoomImagesDoorsContainer[i].GetChild(doorsX[i]));
-
+            //l'empty che funge da pivot per le immagini di stanza viene posizionata nella porta che funge da pivot per questa stanza
+            newRoomPivot.position = allRoomImagesDoorsContainer[i].GetChild(pivotDoors[i]).position;
+            //Debug.LogError("Alla stanza " + allRoomImages[i] + " viene dato come pivot: " + allRoomImagesDoorsContainer[i].GetChild(pivotDoors[i]));
+            //l'empty diventa parent della stanza ciclata
             allRoomImages[i].SetParent(newRoomPivot, true);
-
             //if(i+1 != allRoomImagesDoorsContainer.Count) newRoomPivot.position = allRoomImagesDoorsContainer[i+1].GetChild(doorsY[i]).position;
-
-            newRoomPivot.position = allRoomImagesDoorsContainer[roomsY[i]].GetChild(doorsY[i]).position;
-
+            //l'empty che funge da pivot viene messo nella posizione della porta d'ancoraggio
+            newRoomPivot.position = allRoomImagesDoorsContainer[anchorDoorsRooms[i]].GetChild(anchorDoors[i]).position;
+            //l'immagine di stanza torna ad essere figlio della minimappa
             allRoomImages[i].SetParent(newRoomPivot.parent, true);
 
         }
+        //ogni immagine di stanza viene fatta diventare nuovamente figlia del pivot(bisogna farlo qua altrimenti nel ciclo qua sopra vengono cambiate le grandezze delle immagini)
+        foreach (Transform thisRoomImage in allRoomImages) { thisRoomImage.SetParent(newRoomPivot); }
+        //sposta il pivot, e tutte le immagini stanza ora sue figlie, al centro della minimappa
+        newRoomPivot.position = transform.position;
 
     }
 
@@ -245,7 +264,10 @@ public class MiniMap : MonoBehaviour
 
     }
     */
-
-    public void MovePlayerDot(int roomID) { /*playerDot.transform.position = allRoomImages[roomID].rectTransform.position; Debug.Log("Mosso Dot nella stanza: " + roomID);*/ }
+    /// <summary>
+    /// Permette di spostare il pallino del giocatore nella stanza specificata dall'ID ricevuto
+    /// </summary>
+    /// <param name="roomID"></param>
+    public void MovePlayerDot(int roomID) { playerDot.transform.position = allRoomImages[roomID].transform.position; Debug.Log("Mosso Dot nella stanza: " + roomID); }
 
 }

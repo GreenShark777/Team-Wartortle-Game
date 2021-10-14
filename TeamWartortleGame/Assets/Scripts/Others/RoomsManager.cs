@@ -32,11 +32,10 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     {
         //da alle stanze il riferimento al giocatore
         RoomsBehaviour.player = player;
-
+        //rende il riferimento al giocatore statico
         staticPlayer = player;
-
+        //ottiene il riferimento allo script della telecamera
         camBehaviour = cam.GetComponent<CameraBehaviour>();
-
         //camStartPosition = staticCam.localPosition;
         //per ogni figlio del manager delle stanze, ne ottiene lo script da stanza
         rooms.Clear();
@@ -55,7 +54,7 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         //ottiene il riferimento statico alla minimappa
         staticMiniMap = miniMap;
         //fa muovere il puntino del personaggio nella stanza in cui è entrato
-        staticMiniMap.MovePlayerDot(lastEnteredRoom);
+        //staticMiniMap.MovePlayerDot(lastEnteredRoom);
 
 
 
@@ -118,15 +117,32 @@ public class RoomsManager : MonoBehaviour, IUpdateData
 
     private void ActivateOnlyThisRoom(int roomToActivate)
     {
-        //attiva la stanza con l'indice ricevuto come parametro e disattiva tutte le altre
+        //cicla ogni stanza in lista
         foreach (RoomsBehaviour room in rooms)
         {
-
+            //controlla se il giocatore è nella stanza ciclata...
             bool isPlayerRoom = room.GetRoomID() == roomToActivate;
-
+            //...se lo è, la stanza viene attivata, altrimenti viene disattivata
             room.gameObject.SetActive(isPlayerRoom);
+            //se questa è la stanza in cui il giocatore si trova all'inizio ed è una stanza piccola...
+            if (isPlayerRoom && room.IsSmallRoom())
+            {
 
-            if (isPlayerRoom && room.IsSmallRoom()) { cam.parent = null; cam.position = room.transform.position; }
+                //cam.parent = null;
+
+                //cam.position = room.transform.position;
+                //...la telecamera non è più figlio del giocatore...
+                camBehaviour.ChangeCamParent(null);
+                //...e viene posizionata al centro della stanza
+                camBehaviour.ChangeCamPosition(room.transform.position);
+            
+            }//altrimenti, se è la stanza attiva ma non è piccola...
+            else if (isPlayerRoom && !room.IsSmallRoom())
+            {
+                //...alla telecamera vengono applicati dei limiti
+                camBehaviour.LimitCameraBounds(room.GetRoomBounds(), room.GetThisRoomSpriteRend().transform);
+
+            }
 
         }
 
@@ -171,7 +187,6 @@ public class RoomsManager : MonoBehaviour, IUpdateData
             camBehaviour.LimitCameraBounds(rooms[newRoomDoor.GetOwnRoomID()].GetRoomBounds(), rooms[newRoomDoor.GetOwnRoomID()].GetThisRoomSpriteRend().transform);
 
         }
-
         //fa muovere il puntino del personaggio nella stanza in cui è entrato
         staticMiniMap.MovePlayerDot(lastEnteredRoom);
 
@@ -181,6 +196,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     /// </summary>
     /// <returns></returns>
     public static List<RoomsBehaviour> GetRoomsList() { return rooms; }
+
+    public static int GetLastEnteredRoom() { return lastEnteredRoom; }
 
     public void UpdateData()
     {
