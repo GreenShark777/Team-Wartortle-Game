@@ -24,8 +24,10 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     //riferimento all'Animator dell'immagine che funge da dissolvenza
     [SerializeField]
     private Animator blackScreenAnim = default;
-
+    //riferimento all'Animator dell'immagine che funge da transizione
     private static Animator staticBlackScreenAnim = default;
+    //riferimento allo script di movimento del giocatore
+    private static Movement playerMov;
 
 
     private void Awake()
@@ -41,6 +43,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         RearrangeRoomsBasedOnID();
         //rende il riferimento all'Animator statico
         staticBlackScreenAnim = blackScreenAnim;
+        //ottiene il riferimento allo script di movimento del giocatore
+        playerMov = player.GetComponent<Movement>();
 
     }
 
@@ -156,10 +160,12 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     {
         //fa dissolvenza in entrata
         staticBlackScreenAnim.SetTrigger("Dissolve");
+        //il giocatore non potrà muoversi
+        playerMov.enabled = false;
         //aspetta che la dissolvenza finisca
-        yield return new WaitForSeconds(2);
-        //fa dissolvenza in uscita
-        staticBlackScreenAnim.SetTrigger("Dissolve");
+        yield return new WaitForSeconds(1.4f);
+        //il giocatore potrà nuovamente muoversi
+        playerMov.enabled = true;
         //disattiva la stanza da cui si sta uscendo
         rooms[openedDoor.GetOwnRoomID()].gameObject.SetActive(false);
         //ordina alla stanza della porta accanto di posizionare il giocatore nella posizione della porta da cui si entra
