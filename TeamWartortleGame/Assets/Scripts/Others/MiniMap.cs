@@ -17,6 +17,11 @@ public class MiniMap : MonoBehaviour
     private Color startImageRoomColor;
     //riferimento all'empty che fungerà da pivot per le immagini stanza durante il posizionamento
     private RectTransform newRoomPivot;
+
+    [SerializeField]
+    private Vector2 squareRoomScale = new Vector3(0.35f, 0.35f, 1),
+        rectangleRoomScale = new Vector3(0.64f, 0.64f, 1),
+        LRoomScale = new Vector3(1.45f, 1.45f, 1);
     //lista di riferimenti alle immagini di stanza create
     private List<Transform> allRoomImages = new List<Transform>();
     //lista di tutti i contenitori di porte attivi delle immagini stanza
@@ -54,6 +59,10 @@ public class MiniMap : MonoBehaviour
         roomImage = transform.GetChild(0).gameObject/*.GetComponent<Image>()*/;
         //ottiene il riferimento al colore iniziale delle stanze
         startImageRoomColor = roomImage.transform.GetChild(0).GetComponent<Image>().color;
+        //le dimensioni delle stanze vengono scalate alla grandezza dell'immagine stanza di riferimento
+        squareRoomScale = new Vector3(squareRoomScale.x * roomImage.transform.localScale.y, squareRoomScale.y * roomImage.transform.localScale.y, 1);
+        rectangleRoomScale = new Vector3(rectangleRoomScale.x * roomImage.transform.localScale.y, rectangleRoomScale.y * roomImage.transform.localScale.y, 1);
+        LRoomScale = new Vector3(LRoomScale.x * roomImage.transform.localScale.y, LRoomScale.y * roomImage.transform.localScale.y, 1);
         //ottiene il riferimento all'empty che fungerà da pivot per le immagini stanza
         newRoomPivot = transform.GetChild(2).GetComponent<RectTransform>();
 
@@ -87,12 +96,13 @@ public class MiniMap : MonoBehaviour
             newRoomImage.transform.GetChild(0).GetComponent<Image>().sprite = room.GetThisRoomSprite();
             //...ottiene il nome dello sprite della stanza...
             string roomSpriteName = room.GetThisRoomSprite().name;
-
             //...cambia la grandezza dell'immagine in base al nome dello sprite(bisogna farlo altrimenti alcune stanze vengono viste più grandi di come sono veramente)
-            if (roomSpriteName.Contains("quadrata")) { newRoomImage.transform.localScale = new Vector3(0.35f, 0.35f, 1); }
-            else if (roomSpriteName.Contains("rettangolo")) { newRoomImage.transform.localScale = new Vector3(0.64f, 0.64f, 1); }
-            else if (roomSpriteName.Contains("L")) { newRoomImage.transform.localScale = new Vector3(1.45f, 1.45f, 1); }
-
+            if (roomSpriteName.Contains("quadrata"))
+            { newRoomImage.transform.localScale = squareRoomScale; }
+            else if (roomSpriteName.Contains("rettangolo"))
+            { newRoomImage.transform.localScale = rectangleRoomScale; }
+            else if (roomSpriteName.Contains("L"))
+            { newRoomImage.transform.localScale = LRoomScale; }
             //...aggiunge la nuova immagine alla lista...
             allRoomImages.Add(newRoomImage.transform);
             //...ottiene il contenitore delle porte di questa stanza...
