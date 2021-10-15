@@ -18,6 +18,10 @@ public class BulletsBehaviour : MonoBehaviour
 
     private float speed = 1600;
 
+    //Nome del proiettile per re inserirlo nel object pooling giusto
+    [SerializeField]
+    private string gbName = "Bullets";
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -80,7 +84,7 @@ public class BulletsBehaviour : MonoBehaviour
         hitPS.transform.parent = transform;
         //Se il gameObject è attivo, quindi non è stato già inserito nell'object pooling lo inserisco
         if (gameObject.activeSelf)
-            ObjectPooling.inst.ReAddObjectToPool("Bullets", gameObject);
+            ObjectPooling.inst.ReAddObjectToPool(gbName, gameObject);
     }
 
 }
