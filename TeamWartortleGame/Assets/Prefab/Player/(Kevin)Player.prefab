@@ -4034,6 +4034,8 @@ MonoBehaviour:
   startColor: {r: 0, g: 0, b: 0, a: 0}
   dmgColor: {r: 0, g: 0, b: 0, a: 0}
   currentColor: {r: 0, g: 0, b: 0, a: 0}
+  playerRb: {fileID: 0}
+  playerMovement: {fileID: 0}
 --- !u!1 &3093557618661605241
 GameObject:
   m_ObjectHideFlags: 0

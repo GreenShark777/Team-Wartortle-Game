@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using static UnityEngine.Experimental.Rendering.Universal.Light2D;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,10 +24,34 @@ public class GameManager : MonoBehaviour
     //GameObject della purificazione(spada) e esecuzione(croce)
     [SerializeField]
     private GameObject spada, croce;
+
+    //Animator del messaggio che appare in alto quando aumenta il danno o il personaggio subisce una trasformazione
+    [SerializeField]
+    private Animator msgAn;
+
+    //Riferimenti alle weaponStats della pistola e della spada
+    [SerializeField]
+    private WeaponStats gunStats, swordStats;
+
+    //Array degli sprite correnti delle teste del giocatore
+    [SerializeField]
+    private SpriteRenderer[] currentHeads;
+
+    //Array delle faccie angelo e demone
+    [SerializeField]
+    private Sprite[] angelHeads, demonHeads;
+
+    //Booleana che dice se il personaggio si è transformato o no
+    [SerializeField]
+    private bool transformated = false;
+
+
     private void Start()
     {
         //Singleton pattern
         inst = this;
+
+        ChangeStats();
     }
 
     public Vector2 GetGunDirection()
@@ -151,5 +177,59 @@ public class GameManager : MonoBehaviour
         //Disattivo il nemico
         enemy.SetActive(false);
         yield return null;
+    }
+
+    //Gestisce il cambio di statistiche e la transformazione del personaggio in angelo o demone
+    public void ChangeStats(float gunDmg = 0, float swordDmg = 0, bool angel = false, bool demon = true, string msg = default)
+    {
+        //Se non mi devo transformare
+        if (!angel && !demon)
+        {
+            //Se il danno della pistola passato è più forte della spada vuol dire che sto modificando il danno della pistola
+            if (gunDmg > swordDmg)
+            {
+                //Aumento il danno della pistola
+                gunStats.ChangeAttackStat(gunDmg);
+            }
+            //Altrimenti sto aumentando il danno della spada
+            else 
+            {
+                //Aumento il danno della spada
+                swordStats.ChangeAttackStat(swordDmg);
+            }
+
+        }
+        //Altrimenti se sto subendo una transformazione e non sono già transformato
+        else if ((angel || demon) && !transformated)
+        {
+    
+            //La transformazione è avvenuta quindi non posso ripeterla
+            transformated = true;
+            //Se mi sto transformando in un angelo
+            if (angel)
+            {
+                //Per ogni testa(side, front e back)
+                for (int i=0; i<currentHeads.Length; i++)
+                {
+                    //Assegno in ordine le nuove teste angelo
+                    currentHeads[i].sprite = angelHeads[i];
+                }
+            }
+            //Altrimenti se mi sto transformando in un demone
+            else
+            {
+                //Per ogni testa(side, front e back)
+                for (int i = 0; i < currentHeads.Length; i++)
+                {
+                    //Assegno in ordine le nuove teste demone
+                    currentHeads[i].sprite = demonHeads[i];
+                }
+            }
+        }
+
+        //Mostro il messaggio passando la stringa 
+        msgAn.GetComponentInChildren<TextMeshProUGUI>().text = msg;
+        //Attivo inoltre l'animazione del texto
+        msgAn.SetTrigger("On");
     }
 }
