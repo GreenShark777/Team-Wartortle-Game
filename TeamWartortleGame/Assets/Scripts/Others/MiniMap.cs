@@ -9,8 +9,12 @@ public class MiniMap : MonoBehaviour
     private static List<RoomsBehaviour> listOfRooms;
     //riferimento all'immagine di stanza
     private GameObject roomImage;
+
     //riferimento all'immagine che rappresenta la posizione del giocatore
-    private Image playerDot;
+    //private Image playerDot;
+
+    //riferimento al colore iniziale delle stanze(ovvero quello di quando il giocatore non è all'interno di quella stanza)
+    private Color startImageRoomColor;
     //riferimento all'empty che fungerà da pivot per le immagini stanza durante il posizionamento
     private RectTransform newRoomPivot;
     //lista di riferimenti alle immagini di stanza create
@@ -39,7 +43,7 @@ public class MiniMap : MonoBehaviour
     private void Awake()
     {
         //ottiene il riferimento al pallino che indica la posizione del giocatore
-        playerDot = transform.GetChild(1).GetComponent<Image>();
+        //playerDot = transform.GetChild(1).GetComponent<Image>();
     }
 
     private void Start()
@@ -48,6 +52,8 @@ public class MiniMap : MonoBehaviour
         listOfRooms = RoomsManager.GetRoomsList();
         //ottiene il riferimento all'immagine da duplicare ogni volta che viene creata una stanza nella minimappa
         roomImage = transform.GetChild(0).gameObject/*.GetComponent<Image>()*/;
+        //ottiene il riferimento al colore iniziale delle stanze
+        startImageRoomColor = roomImage.transform.GetChild(0).GetComponent<Image>().color;
         //ottiene il riferimento all'empty che fungerà da pivot per le immagini stanza
         newRoomPivot = transform.GetChild(2).GetComponent<RectTransform>();
 
@@ -268,6 +274,34 @@ public class MiniMap : MonoBehaviour
     /// Permette di spostare il pallino del giocatore nella stanza specificata dall'ID ricevuto
     /// </summary>
     /// <param name="roomID"></param>
-    public void MovePlayerDot(int roomID) { playerDot.transform.position = allRoomImages[roomID].transform.position; Debug.Log("Mosso Dot nella stanza: " + roomID); }
+    public void MovePlayerDot(int roomID)
+    {
+
+        //playerDot.transform.position = allRoomImages[roomID].transform.position; Debug.Log("Mosso Dot nella stanza: " + roomID);
+
+        //indice che indica la porta a cui siamo arrivati nella lista
+        int i = 0;
+        //cicla ogni oggetto nella lista di immagini stanza
+        foreach (Transform imageOfRoom in allRoomImages)
+        {
+            //crea un nuovo colore, inizializzato al colore iniziale delle immagini stanza
+            Color newColor = startImageRoomColor;
+            //se questa stanza è quella in cui si trova il giocatore...
+            if (i == roomID)
+            {
+                //...il nuovo colore di questa stanza sarà il blu...
+                newColor = Color.blue;
+                //...e il suo alpha sarà uguale a quello di tutte le stanze
+                newColor.a = startImageRoomColor.a;
+            
+            }
+            //il colore di questa stanza verrà cambiato al nuovo colore ottenuto
+            imageOfRoom.GetChild(0).GetComponent<Image>().color = newColor;
+            //l'indice viene incrementato per continuare il controllo
+            i++;
+
+        }
+    
+    }
 
 }
