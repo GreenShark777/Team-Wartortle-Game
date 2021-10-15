@@ -1,4 +1,5 @@
 ﻿//Cambia la profondità del giocatore in base alla posizione degli oggetti con cui sta per collider
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -20,13 +21,15 @@ public class SetObjectsDepth : MonoBehaviour
     [SerializeField]
     private SetObjectsDepth otherManager = default;
     //riferimento al collider di questo gameObject
-    private Collider2D thisCol;
+    //private Collider2D thisCol;
+    //lista di tutti i collider a cui è stato cambiato il layer
+    private List<Collider2D> changedSortingColliders = new List<Collider2D>();
 
 
     private void Awake()
     {
         //ottiene il riferimento al collider di questo gameObject
-        thisCol = GetComponent<Collider2D>();
+        //thisCol = GetComponent<Collider2D>();
         //uno dei controllori della profondità del giocatore disattiva il padre, per evitare che ci siano errori di mancati riferimenti derivanti da PlayerSpriteManager
         transform.gameObject.SetActive(false);
     
@@ -71,32 +74,32 @@ public class SetObjectsDepth : MonoBehaviour
         //se si è colliso con un oggetto fisico...
         if (!collision.isTrigger/* || collision.CompareTag("Player")*/)
         {
-            Debug.LogError("Collider con cui si è colliso e che cambia il layer: " + collision.name);
+            //Debug.LogError("Collider con cui si è colliso e che cambia il layer: " + collision.name);
             //...viene creata la variabile che indicherà la profondità dell'oggetto con cui si ha colliso...
-            int objectLayerOrder = 0;
+            int objectLayerOrder = -100;
             //...viene inizializzato il riferimento allo sprite dell'oggetto con cui si ha colliso...
             SpriteRenderer objectSprite = null;
             //...ottiene il riferimento al SortingGroup dell'oggetto con cui si ha colliso...
             SortingGroup objectSG = ObtainObjectComponent<SortingGroup>(collision.transform);
-            Debug.Log("FINITA RICERCA DI SORTING GROUP");
+            //Debug.Log("FINITA RICERCA DI SORTING GROUP");
             //...e, se il riferimento è nullo, ne ottiene la profondità
-            if (objectSG != null) { objectLayerOrder = objectSG.sortingOrder; Debug.LogError("SORTING GROUP"); }
+            if (objectSG != null) { objectLayerOrder = objectSG.sortingOrder; /*Debug.LogError("SORTING GROUP");*/ }
             //altrimenti...
             else
             {
                 //...ottiene il riferimento allo SpriteRenderer dell'oggetto con cui si ha colliso...
                 objectSprite = ObtainObjectComponent<SpriteRenderer>(collision.transform);
-                Debug.Log("FINITA RICERCA DI SPRITE");
+                //Debug.Log("FINITA RICERCA DI SPRITE");
                 //...e ne ottiene la sua profondità, se si è trovato il riferimento
-                if (objectSprite != null) { objectLayerOrder = objectSprite.sortingOrder; }
-                else { Debug.LogError("Non è stato nemmeno trovato il riferimento allo sprite dell'oggetto"); }
-                Debug.Log("SPRITE");
+                if (objectSprite != null) { objectLayerOrder = objectSprite.sortingOrder; /*Debug.LogError("SPRITE");*/ }
+                //else { Debug.LogError("Non è stato nemmeno trovato il riferimento allo sprite dell'oggetto"); }
+
             }
-            Debug.LogError("Layer PG: " + playerLayerOrder + " Layer OBJ: " + objectLayerOrder);
+            //Debug.LogError("Layer PG: " + playerLayerOrder + " Layer OBJ: " + objectLayerOrder);
             //...infine, se la profondità dell'oggetto è uguale a quella del giocatore, ...
             if (objectLayerOrder == playerLayerOrder)
             {
-                Debug.LogError("Stesso Layer");
+                //Debug.LogError("Stesso Layer");
                 //...se bisogna ridurre la profondità...
                 if (lowersDepth)
                 {
@@ -110,7 +113,7 @@ public class SetObjectsDepth : MonoBehaviour
                         else { objectSprite.sortingOrder = psm.GetPlayerLayer() + 1; }
                         
                     }
-                    Debug.LogError("Diminuisce Layer");
+                    //Debug.LogError("Diminuisce Layer");
                 }
                 //...altrimenti, la aumenta
                 else
@@ -125,10 +128,12 @@ public class SetObjectsDepth : MonoBehaviour
                         else { objectSprite.sortingOrder = psm.GetPlayerLayer() - 1; }
 
                     }
-                    Debug.LogError("Aumenta Layer");
+                    //Debug.LogError("Aumenta Layer");
                 }
                 //infine, comunica che questo manager è occupato
                 occupied = true;
+                //aggiunge alla lista di collider con sorting group cambiato il collider appena entrato
+                changedSortingColliders.Add(collision);
                 //Debug.Log("Cambiata profondità in base a quella di " + collision.gameObject.name);
             }
             //Debug.Log("Player Layer = " + playerLayerOrder + " : Object Layer = " + objectLayerOrder);
@@ -139,11 +144,13 @@ public class SetObjectsDepth : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         //creiamo un int che indicherà quanti collider sono all'interno del nostro collider
-        int nCols = thisCol.Cast(Vector2.zero, new RaycastHit2D[1]);
+        //int nCols = thisCol.Cast(Vector2.zero, new RaycastHit2D[1]);
         //Debug.Log("N colliders dentro " + transform.parent.parent.name + " -> " + nCols);
+
+        /*
         //se l'oggetto uscito dal trigger era un oggetto fisico...
-        if ((!collision.isTrigger || collision.CompareTag("Player")) && nCols == 0)
-        {
+        //if (/*(!collision.isTrigger/* || collision.CompareTag("Player")) && nCols == 0)
+        /*{
             //...ottiene il riferimento al SortingGroup dell'oggetto...
             SortingGroup objectSG = ObtainObjectComponent<SortingGroup>(collision.transform);
             //...se non è nullo e la sua profondità è diversa da quella iniziale che dovrebbe avere, ritorna alla profondità iniziale
@@ -162,6 +169,33 @@ public class SetObjectsDepth : MonoBehaviour
             occupied = false;
 
         }
+        */
+        //indica se il collider uscito è stato uno a cui è stato cambiato il layer
+        bool isChangedColl = false;
+        //cicla ogni collider nella lista e, se uno di loro è uguale al collider che è appena uscito, comunica che deve essere riportato al layer iniziale
+        foreach (Collider2D coll in changedSortingColliders) { if (coll == collision) { isChangedColl = true; changedSortingColliders.Remove(coll); break; } }
+        //se è un collider di cui di è cambiato il layer...
+        if (isChangedColl)
+        {
+            //...ottiene il riferimento al SortingGroup dell'oggetto...
+            SortingGroup objectSG = ObtainObjectComponent<SortingGroup>(collision.transform);
+            //...se non è nullo e la sua profondità è diversa da quella iniziale che dovrebbe avere, ritorna alla profondità iniziale
+            if (!IsComponentOfTypeTNull(objectSG) && objectSG.sortingOrder != playerLayerOrder) { objectSG.sortingOrder = playerLayerOrder; }
+            //altrimenti...
+            else if (IsComponentOfTypeTNull(objectSG))
+            {
+                //...ottiene il riferimento allo sprite dell'oggetto...
+                SpriteRenderer objectSprite = ObtainObjectComponent<SpriteRenderer>(collision.transform);
+                //...se non è nullo e la sua profondità è diversa da quella iniziale che dovrebbe avere, ritorna alla profondità iniziale
+                if (!IsComponentOfTypeTNull(objectSprite) && objectSprite.sortingOrder != playerLayerOrder)
+                { objectSprite.sortingOrder = playerLayerOrder; }
+
+            }
+            //qualunque sia l'esito, questo manager non sarà più occupato
+            occupied = false;
+
+        }
+        //else { Debug.Log(collision + " non era un collider di cui si è cambiato layer order"); }
 
     }
     /// <summary>
@@ -335,9 +369,9 @@ public class SetObjectsDepth : MonoBehaviour
                                         obtainedComponent = objParent.GetComponentInChildren<T>(true);
                                         //Debug.Log("Cercato componente nei figli del padre dell'oggetto, che è: " + objParent);
                                         if (IsComponentOfTypeTNull(obtainedComponent)) { Debug.LogError("Componente non trovato, si rifa il ciclo"); }
-                                        else { Debug.Log("Componente ottenuto dai figli di: " + objParent); break; }
+                                        //else { Debug.Log("Componente ottenuto dai figli di: " + objParent); break; }
                                     }
-                                    else { Debug.Log("Componente ottenuto dal padre ciclato: " + objParent); }
+                                    //else { Debug.Log("Componente ottenuto dal padre ciclato: " + objParent); }
                                     //Debug.LogError("Ciclo provato");
                                 }
 
@@ -345,14 +379,14 @@ public class SetObjectsDepth : MonoBehaviour
                             while (IsComponentOfTypeTNull(obtainedComponent) && objParent != null);
                         
                         }
-                        else if (!IsComponentOfTypeTNull(obtainedComponent)) { Debug.Log("Componente ottenuto dai figli di: " + objParent); }
-                        else { Debug.LogError("Non esiste un padre di: " + objParent + " -> " + objParent.parent); }
+                        //else if (!IsComponentOfTypeTNull(obtainedComponent)) { Debug.Log("Componente ottenuto dai figli di: " + objParent); }
+                        //else { Debug.LogError("Non esiste un padre di: " + objParent + " -> " + objParent.parent); }
                     }
-                    else { Debug.Log("Componente ottenuto da: " + objParent); }
+                    //else { Debug.Log("Componente ottenuto da: " + objParent); }
                 }
-                else { Debug.Log("L'oggetto: " + obj + " non ha padri"); }
+                //else { Debug.Log("L'oggetto: " + obj + " non ha padri"); }
             }
-            else { Debug.Log("Componente ottenuto dai figli di: " + obj); }
+            //else { Debug.Log("Componente ottenuto dai figli di: " + obj); }
             /*
             foreach(T component in recipientForComponents)
             {
@@ -360,7 +394,7 @@ public class SetObjectsDepth : MonoBehaviour
             }
             */
         }
-        else{ Debug.Log("Componente ottenuto da: " + obj); }
+        //else{ Debug.Log("Componente ottenuto da: " + obj); }
 
         /*
         if (!IsComponentOfTypeTNull(obtainedComponent)) { Debug.Log("Il componente è: " + obtainedComponent); }
