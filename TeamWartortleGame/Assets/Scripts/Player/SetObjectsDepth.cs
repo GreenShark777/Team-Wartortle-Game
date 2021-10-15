@@ -1,4 +1,5 @@
 ﻿//Cambia la profondità del giocatore in base alla posizione degli oggetti con cui sta per collider
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -20,13 +21,15 @@ public class SetObjectsDepth : MonoBehaviour
     [SerializeField]
     private SetObjectsDepth otherManager = default;
     //riferimento al collider di questo gameObject
-    private Collider2D thisCol;
+    //private Collider2D thisCol;
+    //lista di tutti i collider a cui è stato cambiato il layer
+    private List<Collider2D> changedSortingColliders = new List<Collider2D>();
 
 
     private void Awake()
     {
         //ottiene il riferimento al collider di questo gameObject
-        thisCol = GetComponent<Collider2D>();
+        //thisCol = GetComponent<Collider2D>();
         //uno dei controllori della profondità del giocatore disattiva il padre, per evitare che ci siano errori di mancati riferimenti derivanti da PlayerSpriteManager
         transform.gameObject.SetActive(false);
     
@@ -73,7 +76,7 @@ public class SetObjectsDepth : MonoBehaviour
         {
             Debug.LogError("Collider con cui si è colliso e che cambia il layer: " + collision.name);
             //...viene creata la variabile che indicherà la profondità dell'oggetto con cui si ha colliso...
-            int objectLayerOrder = 0;
+            int objectLayerOrder = -100;
             //...viene inizializzato il riferimento allo sprite dell'oggetto con cui si ha colliso...
             SpriteRenderer objectSprite = null;
             //...ottiene il riferimento al SortingGroup dell'oggetto con cui si ha colliso...
@@ -88,9 +91,9 @@ public class SetObjectsDepth : MonoBehaviour
                 objectSprite = ObtainObjectComponent<SpriteRenderer>(collision.transform);
                 Debug.Log("FINITA RICERCA DI SPRITE");
                 //...e ne ottiene la sua profondità, se si è trovato il riferimento
-                if (objectSprite != null) { objectLayerOrder = objectSprite.sortingOrder; }
+                if (objectSprite != null) { objectLayerOrder = objectSprite.sortingOrder; Debug.Log("SPRITE"); }
                 else { Debug.LogError("Non è stato nemmeno trovato il riferimento allo sprite dell'oggetto"); }
-                Debug.Log("SPRITE");
+
             }
             Debug.LogError("Layer PG: " + playerLayerOrder + " Layer OBJ: " + objectLayerOrder);
             //...infine, se la profondità dell'oggetto è uguale a quella del giocatore, ...
@@ -129,6 +132,8 @@ public class SetObjectsDepth : MonoBehaviour
                 }
                 //infine, comunica che questo manager è occupato
                 occupied = true;
+
+                changedSortingColliders.Add(collision);
                 //Debug.Log("Cambiata profondità in base a quella di " + collision.gameObject.name);
             }
             //Debug.Log("Player Layer = " + playerLayerOrder + " : Object Layer = " + objectLayerOrder);
@@ -139,11 +144,13 @@ public class SetObjectsDepth : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         //creiamo un int che indicherà quanti collider sono all'interno del nostro collider
-        int nCols = thisCol.Cast(Vector2.zero, new RaycastHit2D[1]);
+        //int nCols = thisCol.Cast(Vector2.zero, new RaycastHit2D[1]);
         //Debug.Log("N colliders dentro " + transform.parent.parent.name + " -> " + nCols);
+
+        /*
         //se l'oggetto uscito dal trigger era un oggetto fisico...
-        if ((!collision.isTrigger || collision.CompareTag("Player")) && nCols == 0)
-        {
+        //if (/*(!collision.isTrigger/* || collision.CompareTag("Player")) && nCols == 0)
+        /*{
             //...ottiene il riferimento al SortingGroup dell'oggetto...
             SortingGroup objectSG = ObtainObjectComponent<SortingGroup>(collision.transform);
             //...se non è nullo e la sua profondità è diversa da quella iniziale che dovrebbe avere, ritorna alla profondità iniziale
@@ -162,6 +169,33 @@ public class SetObjectsDepth : MonoBehaviour
             occupied = false;
 
         }
+        */
+        //indica se il collider uscito è stato uno a cui è stato cambiato il layer
+        bool isChangedColl = false;
+        //cicla ogni collider nella lista e, se uno di loro è uguale al collider che è appena uscito, comunica che deve essere riportato al layer iniziale
+        foreach (Collider2D coll in changedSortingColliders) { if (coll == collision) { isChangedColl = true; changedSortingColliders.Remove(coll); break; } }
+        //se è un collider di cui di è cambiato il layer...
+        if (isChangedColl)
+        {
+            //...ottiene il riferimento al SortingGroup dell'oggetto...
+            SortingGroup objectSG = ObtainObjectComponent<SortingGroup>(collision.transform);
+            //...se non è nullo e la sua profondità è diversa da quella iniziale che dovrebbe avere, ritorna alla profondità iniziale
+            if (!IsComponentOfTypeTNull(objectSG) && objectSG.sortingOrder != playerLayerOrder) { objectSG.sortingOrder = playerLayerOrder; }
+            //altrimenti...
+            else if (IsComponentOfTypeTNull(objectSG))
+            {
+                //...ottiene il riferimento allo sprite dell'oggetto...
+                SpriteRenderer objectSprite = ObtainObjectComponent<SpriteRenderer>(collision.transform);
+                //...se non è nullo e la sua profondità è diversa da quella iniziale che dovrebbe avere, ritorna alla profondità iniziale
+                if (!IsComponentOfTypeTNull(objectSprite) && objectSprite.sortingOrder != playerLayerOrder)
+                { objectSprite.sortingOrder = playerLayerOrder; }
+
+            }
+            //qualunque sia l'esito, questo manager non sarà più occupato
+            occupied = false;
+
+        }
+        else { Debug.Log(collision + " non era un collider di cui si è cambiato layer order"); }
 
     }
     /// <summary>

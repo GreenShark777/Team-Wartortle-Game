@@ -2099,7 +2099,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -4
   m_Sprite: {fileID: 21300000, guid: b759ec5b48a5d0e43977d39a285e98c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3085,6 +3085,10 @@ PrefabInstance:
     - target: {fileID: 2742340099010771813, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
       propertyPath: m_Name
       value: Topo (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2742340099010771813, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2742340099010771814, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
       propertyPath: m_RootOrder
@@ -4746,6 +4750,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gufo
       objectReference: {fileID: 0}
+    - target: {fileID: 8653376158574841912, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8653376158574841913, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
       propertyPath: player
       value: 
@@ -6357,6 +6365,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -49.548
       objectReference: {fileID: 0}
+    - target: {fileID: 4518869171588399405, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_Size.x
+      value: 2.5904725
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518869171588399405, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_Size.y
+      value: 2.122142
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518869171588399405, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.045381904
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518869171588399405, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.37595424
+      objectReference: {fileID: 0}
     - target: {fileID: 4614938887522871877, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -6393,6 +6417,22 @@ PrefabInstance:
       propertyPath: m_BoneTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 2100460480796484410}
+    - target: {fileID: 5019034668792450712, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_Size.x
+      value: 2.5472336
+      objectReference: {fileID: 0}
+    - target: {fileID: 5019034668792450712, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_Size.y
+      value: 1.9116793
+      objectReference: {fileID: 0}
+    - target: {fileID: 5019034668792450712, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.022622168
+      objectReference: {fileID: 0}
+    - target: {fileID: 5019034668792450712, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_Offset.y
+      value: 3.6833487
+      objectReference: {fileID: 0}
     - target: {fileID: 5152966428036022711, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
       propertyPath: m_Bounds.m_Center.x
       value: 0.0029244423
@@ -7242,6 +7282,10 @@ PrefabInstance:
     - target: {fileID: 2742340099010771813, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
       propertyPath: m_Name
       value: Topo
+      objectReference: {fileID: 0}
+    - target: {fileID: 2742340099010771813, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2742340099010771814, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
       propertyPath: m_RootOrder
