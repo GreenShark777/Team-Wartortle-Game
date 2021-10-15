@@ -92,9 +92,11 @@ public class SetObjectsDepth : MonoBehaviour
                 else { Debug.LogError("Non è stato nemmeno trovato il riferimento allo sprite dell'oggetto"); }
                 Debug.Log("SPRITE");
             }
+            Debug.LogError("Layer PG: " + playerLayerOrder + " Layer OBJ: " + objectLayerOrder);
             //...infine, se la profondità dell'oggetto è uguale a quella del giocatore, ...
             if (objectLayerOrder == playerLayerOrder)
             {
+                Debug.LogError("Stesso Layer");
                 //...se bisogna ridurre la profondità...
                 if (lowersDepth)
                 {
@@ -108,7 +110,7 @@ public class SetObjectsDepth : MonoBehaviour
                         else { objectSprite.sortingOrder = psm.GetPlayerLayer() + 1; }
                         
                     }
-                
+                    Debug.LogError("Diminuisce Layer");
                 }
                 //...altrimenti, la aumenta
                 else
@@ -123,7 +125,7 @@ public class SetObjectsDepth : MonoBehaviour
                         else { objectSprite.sortingOrder = psm.GetPlayerLayer() - 1; }
 
                     }
-
+                    Debug.LogError("Aumenta Layer");
                 }
                 //infine, comunica che questo manager è occupato
                 occupied = true;

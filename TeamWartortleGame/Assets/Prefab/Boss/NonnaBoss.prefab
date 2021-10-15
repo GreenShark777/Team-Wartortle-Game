@@ -1725,6 +1725,7 @@ GameObject:
   - component: {fileID: 7264328580174464671}
   - component: {fileID: 7264328580174464668}
   - component: {fileID: 7264328580174464669}
+  - component: {fileID: 2681123295297633141}
   m_Layer: 0
   m_Name: NonnaBoss
   m_TagString: Untagged
@@ -1931,7 +1932,7 @@ MonoBehaviour:
   defeated: 0
   enemyCollider: {fileID: 8518130045572711882}
   enemySprites: []
-  spriteToIgnore: 
+  spriteToIgnore: ombra
   startColor: {r: 1, g: 1, b: 1, a: 1}
   dmgColor: {r: 1, g: 0.1894218, b: 0, a: 1}
   currentColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1939,6 +1940,17 @@ MonoBehaviour:
   secondPhase: 0
   rageColor: {r: 0.6886792, g: 0.11369702, b: 0.41127548, a: 1}
   dmgRageColor: {r: 1, g: 0.1854864, b: 0, a: 1}
+--- !u!210 &2681123295297633141
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7264328580174464658}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &7412991065124492191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2590,7 +2602,9 @@ MonoBehaviour:
   eh: {fileID: 7264328580174464669}
   gb: {fileID: 0}
   isBoss: 1
+  trap: 0
   player: {fileID: 0}
+  dmg: 1
 --- !u!1 &8518130045841372199
 GameObject:
   m_ObjectHideFlags: 0
