@@ -41,6 +41,7 @@ public class MiniMap : MonoBehaviour, IUpdateData
     [SerializeField]
     private List<int> anchorDoors = new List<int>();
     //lista di tutti gli ID delle stanze delle porte d'ancoraggio
+    [SerializeField]
     private List<int> anchorDoorsRooms = new List<int>();
     //riferimento al GameManag
     [SerializeField]
@@ -145,7 +146,7 @@ public class MiniMap : MonoBehaviour, IUpdateData
                         //...aggiunge, alla lista di indici di porte d'ancoraggio, l'ID della porta dopo...
                         anchorDoors.Add(thisDoor.GetNextDoor().transform.GetSiblingIndex());
                         //...e di quest'ultima porta ottiene l'ID della stanza di cui fa parte
-                        anchorDoorsRooms.Add(thisDoor.GetNextDoor().GetOwnRoomID());
+                        anchorDoorsRooms.Add(thisDoor.GetNextDoor().GetOwnRoomID()/*index*/);
 
                     }
 
@@ -195,7 +196,9 @@ public class MiniMap : MonoBehaviour, IUpdateData
             newRoomPivot.position = allRoomImagesDoorsContainer[anchorDoorsRooms[i]].GetChild(anchorDoors[i]).position;
             //l'immagine di stanza torna ad essere figlio della minimappa
             allRoomImages[i].SetParent(newRoomPivot.parent, true);
-
+            //Debug.LogError("Stanza indice " + i + " spostata nella posizione della porta " + allRoomImagesDoorsContainer[anchorDoorsRooms[i]].GetChild(anchorDoors[i]) +
+            //    " del contenitore porte " + allRoomImagesDoorsContainer[anchorDoorsRooms[i]] + " della stanza ad indice "
+            //    + allRoomImagesDoorsContainer[anchorDoorsRooms[i]].parent.parent.GetSiblingIndex());
         }
         //ogni immagine di stanza viene fatta diventare nuovamente figlia del pivot(bisogna farlo qua altrimenti nel ciclo qua sopra vengono cambiate le grandezze delle immagini)
         foreach (Transform thisRoomImage in allRoomImages) { thisRoomImage.SetParent(newRoomPivot); }
@@ -206,10 +209,10 @@ public class MiniMap : MonoBehaviour, IUpdateData
 
     private void ShowOnlySeenRooms()
     {
-
+        //cicla ogni immagine di stanza nella lista
         for (int i = 0; i < allRoomImages.Count; i++)
         {
-
+            //se la stanza a cui si riferisce non è stata ancora vista dal giocatore, viene disattivata
             if (!g.seenRooms[i]) { allRoomImages[i].gameObject.SetActive(false); }
 
         }

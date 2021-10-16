@@ -5,7 +5,6 @@ using UnityEngine;
 public class RoomsBehaviour : MonoBehaviour
 {
     //lista contenente tutti gli script delle porte di questa stanza
-    [SerializeField]
     private List<DoorsBehaviour> doors = new List<DoorsBehaviour>();
     
     private Transform doorsContainer, //riferimento al contenitore di tutte le porte
