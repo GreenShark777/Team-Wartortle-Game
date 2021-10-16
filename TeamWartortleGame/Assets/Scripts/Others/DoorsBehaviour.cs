@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+//Si occupa del comportamento delle porte, che faranno da tramite tra la propria stanza e il manager delle stanze
 using UnityEngine;
 
 public class DoorsBehaviour : MonoBehaviour

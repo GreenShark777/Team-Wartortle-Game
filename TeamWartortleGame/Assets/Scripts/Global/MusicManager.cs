@@ -61,7 +61,10 @@ public class MusicManager : MonoBehaviour
 
     }
     /// <summary>
-    /// Permette globalmente di cambiare la musica di gioco in sottofondo
+    /// Permette globalmente di cambiare la musica di gioco in sottofondo ->
+    /// 0 - BG normale |
+    /// 1 - Battaglia nemico comune |
+    /// 2 - Battaglia boss
     /// </summary>
     /// <param name="musicIndex"></param>
     public static void ChangeBackgroundMusic(int musicIndex)

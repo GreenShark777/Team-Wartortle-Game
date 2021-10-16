@@ -23,11 +23,13 @@ public class GufoBehaviour : MonoBehaviour
     //riferimento al collider del gufo
     [SerializeField]
     private Collider2D collGufo = default;
+    
     //riferimento al collider del giocatore
     //[SerializeField]
     //private Collider2D collPlayer = default;
+
     //riferimento al collider del punto di volo del gufo
-    private Collider2D collFlyingPoint;
+    //private Collider2D collFlyingPoint;
 
     [Header("Animators")]
 
@@ -84,10 +86,13 @@ public class GufoBehaviour : MonoBehaviour
         if (staticPlayer == null && player != null) { staticPlayer = player; }
         //ottiene il riferimento all'Animator del punto di volo
         flyingPointAnim = flyingPoint.GetComponent<Animator>();
+        
         //ottiene il riferimento al collider del punto di volo del gufo
-        collFlyingPoint = flyingPoint.GetComponent<Collider2D>();
+        //collFlyingPoint = flyingPoint.GetComponent<Collider2D>();
+
         //fa in modo che le collisioni tra il punto di volo del gufo e il giocatore vengano ignorate
         //Physics2D.IgnoreCollision(collFlyingPoint, collPlayer);
+
         //ottiene il riferimento all'Animator del gufo
         gufoAnimator = GetComponent<Animator>();
         //ottiene un array di tutte le animazioni del gufo
@@ -229,8 +234,10 @@ public class GufoBehaviour : MonoBehaviour
         isFlying = true;
         //il punto volante andrà in cerchio
         flyingPointAnim.SetBool("FlyingAround", true);
+
         //il collider del punto volante diventa solido, in modo che il gufo non vada fuori dai limiti della mappa durante il volo
-        collFlyingPoint.isTrigger = false;
+        //collFlyingPoint.isTrigger = false;
+
         //il gufo si muove verso il giocatore in volo
         StartCoroutine(FlyAround());
         //ottiene il tempo d'aspettare entro il range dei timer minimo e massimo
@@ -238,8 +245,10 @@ public class GufoBehaviour : MonoBehaviour
         //Debug.Log("In punto di volo. Tempo per attacco: " + randWaitTime);
         //aspetta il tempo calcolato
         yield return new WaitForSeconds(randWaitTime);
+
         //il collider del punto volante diventa di nuovo non solido, dato che ha finito di volare
-        collFlyingPoint.isTrigger = true;
+        //collFlyingPoint.isTrigger = true;
+
         //il gufo si tuffa verso il giocatore
         StartCoroutine(DiveAttack());
 

@@ -10083,8 +10083,8 @@ Transform:
   m_Children:
   - {fileID: 7855132639982525394}
   - {fileID: 4748928028558842706}
-  - {fileID: 6063946881922235508}
   - {fileID: 1406123688313238533}
+  - {fileID: 6063946881922235508}
   - {fileID: 4454749269204253483}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -10118,6 +10118,8 @@ MonoBehaviour:
   staticCamera: 0
   maxCameraLookX: 0
   maxCameraLookY: 0
+  xLimitsOffset: 0
+  yLimitsOffset: 0
 --- !u!1 &4472308240200022383
 GameObject:
   m_ObjectHideFlags: 0
@@ -13743,7 +13745,7 @@ Transform:
   m_Children:
   - {fileID: 6803769891685627126}
   m_Father: {fileID: 4454749270502605246}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6066740462688988650
 GameObject:
@@ -17872,7 +17874,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4454749270502605246}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7874542255597400132
 GameObject:

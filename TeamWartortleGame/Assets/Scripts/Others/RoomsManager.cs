@@ -1,3 +1,4 @@
+//Si occupa di gestire tutte le stanze presenti nella scena
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -168,13 +169,16 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         playerMov.enabled = true;
         //disattiva la stanza da cui si sta uscendo
         rooms[openedDoor.GetOwnRoomID()].gameObject.SetActive(false);
-        //ordina alla stanza della porta accanto di posizionare il giocatore nella posizione della porta da cui si entra
+        //ottiene il riferimento alla porta da cui si sta entrando
         DoorsBehaviour newRoomDoor = openedDoor.GetNextDoor();
-        rooms[newRoomDoor.GetOwnRoomID()].PositionPlayer(newRoomDoor.GetDoorID());
+        //ottiene il riferimento alla stanza della porta da cui si sta entrando
+        RoomsBehaviour newRoom = rooms[newRoomDoor.GetOwnRoomID()];
+        //ordina alla stanza della porta accanto di posizionare il giocatore nella posizione della porta da cui si entra
+        newRoom.PositionPlayer(newRoomDoor.GetDoorID());
         //ottiene l'indice della stanza in cui si è entrati
         lastEnteredRoom = newRoomDoor.GetOwnRoomID();
         //se questa stanza è una stanza piccola...
-        if (rooms[newRoomDoor.GetOwnRoomID()].IsSmallRoom())
+        if (newRoom.IsSmallRoom())
         {
             //staticCam.parent = null;
             //staticCam.position = new Vector3(rooms[newRoomDoor.GetOwnRoomID()].transform.position.x,
@@ -185,8 +189,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
             //...non avrà limiti(in quanto non si muoverà comunque)...
             camBehaviour.StopCameraLimits();
             //...e viene posizionata al centro della stanza
-            camBehaviour.ChangeCamPosition(new Vector3(rooms[newRoomDoor.GetOwnRoomID()].transform.position.x,
-                rooms[newRoomDoor.GetOwnRoomID()].transform.position.y, camBehaviour.transform.position.z));
+            camBehaviour.ChangeCamPosition(new Vector3(newRoom.transform.position.x,
+                newRoom.transform.position.y, camBehaviour.transform.position.z));
 
         }
         else //altrimenti è una stanza grande, quindi...
@@ -197,10 +201,14 @@ public class RoomsManager : MonoBehaviour, IUpdateData
             //...la telecamera sarà figlia del giocatore...
             camBehaviour.MakePlayerParent();
             //...e gli vengono imposti dei limiti
-            camBehaviour.LimitCameraBounds(rooms[newRoomDoor.GetOwnRoomID()].GetRoomBounds(), rooms[newRoomDoor.GetOwnRoomID()].GetThisRoomSpriteRend().transform,
-                rooms[newRoomDoor.GetOwnRoomID()].GetRoomBoundsOffsetX(), rooms[newRoomDoor.GetOwnRoomID()].GetRoomBoundsOffsetY());
+            camBehaviour.LimitCameraBounds(newRoom.GetRoomBounds(), newRoom.GetThisRoomSpriteRend().transform,
+                newRoom.GetRoomBoundsOffsetX(), newRoom.GetRoomBoundsOffsetY());
 
         }
+        //se ci sono nemici attivi nella stanza, cambia la musica di gioco con quella da battaglia
+        if (newRoom.AreThereEnemies()) { MusicManager.ChangeBackgroundMusic(1); }
+        //altrimenti, se non lo è già, la cambia in musica normale
+        else { MusicManager.ChangeBackgroundMusic(0); }
         //fa muovere il puntino del personaggio nella stanza in cui è entrato
         staticMiniMap.MovePlayerDot(lastEnteredRoom);
 

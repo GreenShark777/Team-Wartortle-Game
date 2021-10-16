@@ -1,4 +1,4 @@
-using System.Collections;
+//Si occupa delle stanze e di ciò che è contenuto al loro interno(nemici, porte, colliders, props, ecc...)
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +7,11 @@ public class RoomsBehaviour : MonoBehaviour
     //lista contenente tutti gli script delle porte di questa stanza
     [SerializeField]
     private List<DoorsBehaviour> doors = new List<DoorsBehaviour>();
-    //riferimento al contenitore di tutte le porte
-    private Transform doorsContainer, 
-        collidersContainer;
+    
+    private Transform doorsContainer, //riferimento al contenitore di tutte le porte
+        collidersContainer, //riferimento al contenitore dei collider per i vari tipi di stanze
+        enemiesContainer; //riferimento al contenitore di tutti i nemici nella stanza
+
     //riferimento al giocatore
     public static Transform player;
     //identificativo della stanza
@@ -25,7 +27,7 @@ public class RoomsBehaviour : MonoBehaviour
     [SerializeField]
     private float maxCameraLookX = default, 
         maxCameraLookY = default;
-    //indica di quanto i limiti devono essere diversi
+    //indica di quanto i limiti della telecamera devono essere minori di quelli della stanza
     [SerializeField]
     private float xLimitsOffset = default,
         yLimitsOffset = default;
@@ -43,6 +45,8 @@ public class RoomsBehaviour : MonoBehaviour
     {
         //ottiene il riferimento al contenitore dei collider delle stanze
         collidersContainer = transform.GetChild(1);
+        //ottiene il riferimento al contenitore dei nemici
+        enemiesContainer = transform.GetChild(2);
         //attiva il collider adatto alla stanza e ottiene il riferimento al suo contenitore di porte
         ActivateRoomColliderAndDoors();
         //indicherà il nuovo indice delle porte di questa stanza
@@ -148,12 +152,25 @@ public class RoomsBehaviour : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public Sprite GetThisRoomSprite() { return roomSprite.sprite; }
-
+    /// <summary>
+    /// Permette di ottenere il riferimento allo spriteRenderer dello sprite di questa stanza
+    /// </summary>
+    /// <returns></returns>
     public SpriteRenderer GetThisRoomSpriteRend() { return roomSprite; }
-
+    /// <summary>
+    /// Permette di ottenere i limiti di questa stanza
+    /// </summary>
+    /// <returns></returns>
     public Vector2 GetRoomBounds() { return new Vector2(maxCameraLookX, maxCameraLookY); }
-
+    /// <summary>
+    /// Permette di ottenere l'offset dei limiti della telecamera nell'asse X
+    /// </summary>
+    /// <returns></returns>
     public float GetRoomBoundsOffsetX() { return xLimitsOffset; }
+    /// <summary>
+    /// Permette di ottenere l'offset dei limiti della telecamera nell'asse Y
+    /// </summary>
+    /// <returns></returns>
     public float GetRoomBoundsOffsetY() { return yLimitsOffset; }
     /// <summary>
     /// Permette ad altri script di ottenere il riferimento al contenitore delle porte
@@ -165,6 +182,25 @@ public class RoomsBehaviour : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool IsSmallRoom() { return staticCamera; }
+    /// <summary>
+    /// Comunica se in questa stanza ci sono nemici o meno
+    /// </summary>
+    /// <returns></returns>
+    public bool AreThereEnemies()
+    {
+        //indica se ci sono nemici nella stanza
+        bool thereAreEnemies = false;
+        //se ci sono dei nemici nel container dei nemici...
+        if (enemiesContainer.childCount > 0)
+        {
+            //...cicla tutti i nemici e, se almeno uno di loro è attivo, comunica che ci sono nemici
+            foreach (Transform enemy in enemiesContainer) { if (enemy.gameObject.activeSelf) { thereAreEnemies = true; break; } }
+
+        }
+        //ritorna il valore ottenuto dal controllo
+        return thereAreEnemies;
+
+    }
 
     private void OnDrawGizmos()
     {
