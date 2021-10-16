@@ -1301,6 +1301,14 @@ PrefabInstance:
       propertyPath: healthParent
       value: 
       objectReference: {fileID: 795767948}
+    - target: {fileID: 165283489, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 760891483, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 760891484, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
       propertyPath: goodwillSlider
       value: 
@@ -1901,6 +1909,17 @@ Transform:
   m_Father: {fileID: 1787517328}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &112838390 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 950461387870015355, guid: e3d3d7d350f61904688dcef0628d51ec, type: 3}
+  m_PrefabInstance: {fileID: 82344009}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6da5fbde4d9674a8dc4160a716ee94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &114537448
 GameObject:
   m_ObjectHideFlags: 0
@@ -20251,7 +20270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 976377930}
   m_Layer: 5
-  m_Name: MiniMapRoom (2)
+  m_Name: TestMiniMapRoom (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25295,6 +25314,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+    - target: {fileID: 4844996045637074206, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
+      propertyPath: chooseGB
+      value: 
+      objectReference: {fileID: 82344010}
     - target: {fileID: 5184056275299455647, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -27745,9 +27768,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 165386210}
     - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
+      propertyPath: msgAn
+      value: 
+      objectReference: {fileID: 2049436434}
+    - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 2146829872}
+    - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
+      propertyPath: playerUI
+      value: 
+      objectReference: {fileID: 572138462}
+    - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
+      propertyPath: swordStats
+      value: 
+      objectReference: {fileID: 112838390}
     - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
       propertyPath: weaponContainer
       value: 
@@ -32656,7 +32691,7 @@ GameObject:
   - component: {fileID: 1799660501}
   - component: {fileID: 1799660502}
   m_Layer: 5
-  m_Name: MiniMapRoom (1)
+  m_Name: TestMiniMapRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40251,6 +40286,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2049281876}
   m_CullTransparentMesh: 1
+--- !u!95 &2049436434 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 230489946045119597, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
+  m_PrefabInstance: {fileID: 1136615541}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2059071233
 GameObject:
   m_ObjectHideFlags: 0
@@ -40500,6 +40540,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 909583851}
     m_Modifications:
+    - target: {fileID: 742102316, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
+      propertyPath: chooseGB
+      value: 
+      objectReference: {fileID: 82344010}
+    - target: {fileID: 742102316, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 2146829876}
     - target: {fileID: 438119901917374616, guid: cf7e2864e9981b94b8cc415b45dff753, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
