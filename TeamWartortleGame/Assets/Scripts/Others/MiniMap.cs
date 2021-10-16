@@ -1,9 +1,9 @@
-using System.Collections;
+//Si occupa della creazione e gestione della minimappa
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MiniMap : MonoBehaviour
+public class MiniMap : MonoBehaviour, IUpdateData
 {
     //lista di tutte le stanze presenti
     private static List<RoomsBehaviour> listOfRooms;
@@ -18,10 +18,12 @@ public class MiniMap : MonoBehaviour
     //riferimento all'empty che fungerà da pivot per le immagini stanza durante il posizionamento
     private RectTransform newRoomPivot;
 
+    //lista di tutte le grandezze che le immagini di stanze di diverso tipo devono avere
     [SerializeField]
-    private Vector2 squareRoomScale = new Vector3(0.35f, 0.35f, 1),
-        rectangleRoomScale = new Vector3(0.64f, 0.64f, 1),
-        LRoomScale = new Vector3(1.45f, 1.45f, 1);
+    private Vector2 squareRoomScale = new Vector3(0.35f, 0.35f, 1), //STANZE QUADRATE
+        rectangleRoomScale = new Vector3(0.64f, 0.64f, 1), //STANZE RETTANGOLARI
+        LRoomScale = new Vector3(1.45f, 1.45f, 1); //STANZE A L
+
     //lista di riferimenti alle immagini di stanza create
     private List<Transform> allRoomImages = new List<Transform>();
     //lista di tutti i contenitori di porte attivi delle immagini stanza
@@ -40,6 +42,9 @@ public class MiniMap : MonoBehaviour
     private List<int> anchorDoors = new List<int>();
     //lista di tutti gli ID delle stanze delle porte d'ancoraggio
     private List<int> anchorDoorsRooms = new List<int>();
+    //riferimento al GameManag
+    [SerializeField]
+    private GameManag g = default;
 
     //indica la nuova posizione dell'ancora di ogni nuova immagine di stanza
     //private List<Vector2> newAnchorsPosition = new List<Vector2>();
@@ -70,6 +75,8 @@ public class MiniMap : MonoBehaviour
 
         //genera la mini mappa
         GenerateMiniMap();
+        //disattiva le stanze non ancora esplorate dal giocatore
+        ShowOnlySeenRooms();
         //disattiva le immagini iniziali di porta e stanza, in quanto non servono più
         roomImage.gameObject.SetActive(false);
         //posiziona il pallino del giocatore nella stanza attuale
@@ -89,9 +96,10 @@ public class MiniMap : MonoBehaviour
             GameObject newRoomImage = Instantiate(roomImage, Vector2.zero, room.transform.rotation, transform);
 
             //FORSE CONVIENE CALCOLARE LA POSIZIONE DELLE STANZE UNA VOLTA CHE SONO STATE CREATE TUTTE
-            ///*newRoomImage.transform.localPosition = */CalculateRoomPosition(room.GetRoomID(), newRoomImage.rectTransform);
+            //*newRoomImage.transform.localPosition = */CalculateRoomPosition(room.GetRoomID(), newRoomImage.rectTransform);
 
             //Image newRoomImage = newRoom.GetComponent<Image>();
+
             //...alla nuova immagine viene dato lo sprite di questa stanza...
             newRoomImage.transform.GetChild(0).GetComponent<Image>().sprite = room.GetThisRoomSprite();
             //...ottiene il nome dello sprite della stanza...
@@ -196,6 +204,18 @@ public class MiniMap : MonoBehaviour
 
     }
 
+    private void ShowOnlySeenRooms()
+    {
+
+        for (int i = 0; i < allRoomImages.Count; i++)
+        {
+
+            if (!g.seenRooms[i]) { allRoomImages[i].gameObject.SetActive(false); }
+
+        }
+
+    }
+
     /*
     private void ChangeRoomImagePosition(RectTransform room)
     {
@@ -289,29 +309,53 @@ public class MiniMap : MonoBehaviour
 
         //playerDot.transform.position = allRoomImages[roomID].transform.position; Debug.Log("Mosso Dot nella stanza: " + roomID);
 
+        //ottiene il riferimento al GameObject dell'immagine della stanza appena entrata
+        GameObject enteredRoomImage = allRoomImages[roomID].gameObject;
+        //se è disattiva, la attiva
+        if (!enteredRoomImage.activeSelf) enteredRoomImage.SetActive(true);
         //indice che indica la porta a cui siamo arrivati nella lista
         int i = 0;
         //cicla ogni oggetto nella lista di immagini stanza
         foreach (Transform imageOfRoom in allRoomImages)
         {
-            //crea un nuovo colore, inizializzato al colore iniziale delle immagini stanza
-            Color newColor = startImageRoomColor;
-            //se questa stanza è quella in cui si trova il giocatore...
-            if (i == roomID)
+            //se l'immagine di stanze è attiva...
+            if (imageOfRoom.gameObject.activeSelf)
             {
-                //...il nuovo colore di questa stanza sarà il blu...
-                newColor = Color.blue;
-                //...e il suo alpha sarà uguale a quello di tutte le stanze
-                newColor.a = startImageRoomColor.a;
-            
+                //...crea un nuovo colore, inizializzato al colore iniziale delle immagini stanza...
+                Color newColor = startImageRoomColor;
+                //...se questa stanza è quella in cui si trova il giocatore...
+                if (i == roomID)
+                {
+                    //...il nuovo colore di questa stanza sarà il blu...
+                    newColor = Color.blue;
+                    //...e il suo alpha sarà uguale a quello di tutte le stanze
+                    newColor.a = startImageRoomColor.a;
+
+                }
+                //...e il colore di questa stanza verrà cambiato al nuovo colore ottenuto
+                imageOfRoom.GetChild(0).GetComponent<Image>().color = newColor;
             }
-            //il colore di questa stanza verrà cambiato al nuovo colore ottenuto
-            imageOfRoom.GetChild(0).GetComponent<Image>().color = newColor;
             //l'indice viene incrementato per continuare il controllo
             i++;
 
         }
     
+    }
+
+    public void UpdateData()
+    {
+
+        int index = 0;
+
+        foreach (Transform imageRoom in allRoomImages)
+        {
+
+            g.seenRooms[index] = imageRoom.gameObject.activeSelf;
+
+            index++;
+
+        }
+
     }
 
 }

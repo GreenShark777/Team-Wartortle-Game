@@ -77,6 +77,9 @@ public class GufoBehaviour : MonoBehaviour
     //indica il punto in cui il gufo deve atterrare
     private Vector2 divingPoint;
 
+    private Vector2 startPosition, //indica la posizione iniziale dell'intero gufo
+        spriteStartPosition; //indica la posizione iniziale dello sprite del gufo
+
 
     private void Awake()
     {
@@ -108,9 +111,19 @@ public class GufoBehaviour : MonoBehaviour
             if (AreAllTimersReady()) { /*Debug.Log("Trovate tutte le clip");*/ break; }
 
         }
+        //ottiene il riferimento alle posizioni inziali del gufo ed il suo sprite
+        startPosition = transform.position;
+        spriteStartPosition = spriteGufo.position;
         
     }
-    
+
+    private void OnEnable()
+    {
+        //ogni volta che il gufo viene abilitato, il suo stato viene inizializzato
+        InitializeGufo();
+
+    }
+
     private void Update()
     {
         //crea una variabile che indica quanto è lontano lo sprite del gufo dal punto
@@ -325,11 +338,32 @@ public class GufoBehaviour : MonoBehaviour
         if (!isStunned) PlayerSpotted();
 
     }
-
+    /// <summary>
+    /// Comunica se tutti i timer sono stati inizializzati alla durata delle loro rispettive clip
+    /// </summary>
+    /// <returns></returns>
     private bool AreAllTimersReady()
     {
         //comunica se tutti i timer sono stati inizializzati alla durata delle loro rispettive clip
         return jumpAnticipationTimer != default && diveAnticipationTimer != default;
+
+    }
+
+    private void InitializeGufo()
+    {
+        //riporta il gufo e il suo sprite alle posizioni iniziali
+        transform.position = startPosition;
+        spriteGufo.position = spriteStartPosition;
+        //riporta il gufo in idle
+        gufoAnimator.SetBool("Stunned", true);
+        gufoAnimator.SetTrigger("GetStunned");
+        gufoAnimator.SetBool("Stunned", false);
+        //riporta al loro valore originale le variabili di stato
+        isAttacking = false;
+        isFlying = false;
+        jumped = false;
+        isDiving = false;
+        isStunned = false;
 
     }
 

@@ -173,8 +173,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         DoorsBehaviour newRoomDoor = openedDoor.GetNextDoor();
         //ottiene il riferimento alla stanza della porta da cui si sta entrando
         RoomsBehaviour newRoom = rooms[newRoomDoor.GetOwnRoomID()];
-        //ordina alla stanza della porta accanto di posizionare il giocatore nella posizione della porta da cui si entra
-        newRoom.PositionPlayer(newRoomDoor.GetDoorID());
+        //attiva la stanza e gli fa effettuare i dovuti controlli
+        newRoom.ActivateThisRoom(newRoomDoor.GetDoorID());
         //ottiene l'indice della stanza in cui si è entrati
         lastEnteredRoom = newRoomDoor.GetOwnRoomID();
         //se questa stanza è una stanza piccola...

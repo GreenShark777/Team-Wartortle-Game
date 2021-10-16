@@ -97,15 +97,27 @@ public class RoomsBehaviour : MonoBehaviour
     /// Posiziona il giocatore davanti la porta indicata dal parametro indice ricevuto
     /// </summary>
     /// <param name="doorIndex"></param>
-    public void PositionPlayer(int doorIndex)
+    public void ActivateThisRoom(int doorIndex)
     {
         //attiva questa stanza
         gameObject.SetActive(true);
         //posiziona il giocatore nella posizione di spawn della porta da cui sta entrando
         player.position = doors[doorIndex].GetSpawnPosition();
 
-    }
+        /*
+        //se ci sono nemici attivi nella stanza...
+        if (AreThereEnemies())
+        {
+            //...ne inizializza lo stato
+            foreach () { }
 
+        }
+        */
+
+    }
+    /// <summary>
+    /// Attiva i collider di questa stanza in base allo sprite che sta usando
+    /// </summary>
     private void ActivateRoomColliderAndDoors()
     {
         //ottiene il nome dello sprite della stanza

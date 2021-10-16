@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class GameManag : MonoBehaviour
 {
+    //costante che indica il numero di stanze presenti nel gioco
+    private const int N_ROOMS = 50;
+
     //indica se vogliamo caricare i dati ad inizio scena o meno(PER DEBUG, COMMENTARE A GIOCO FINITO)
     [SerializeField]
     private bool loadData = true;
@@ -19,6 +22,8 @@ public class GameManag : MonoBehaviour
 
     //indica l'ID dell'ultima stanza in cui il giocatore ha salvato la partita
     public int lastRoomID = 0;
+    //array che indica per ogni stanza se è stata visitata dal giocatore o meno(l'indice dell'array indica l'ID della stanza a cui si riferisce)
+    public bool[] seenRooms = new bool[N_ROOMS];
 
     //riferimento a tutti gli script che usano l'interfaccia per l'aggiornamento dei dati nel GameManag
     public static List<IUpdateData> dataToSave = new List<IUpdateData>();
@@ -71,6 +76,7 @@ public class GameManag : MonoBehaviour
             activeCheckpoint = sd.activeCheckpoint;
             maliciousness = sd.maliciousness;
             lastRoomID = sd.lastRoomID;
+            seenRooms = sd.seenRooms;
 
             Debug.Log("Caricati dati salvati");
         } //altrimenti, tutti i dati vengono messi al loro valore originale, in quanto non si è trovato un file di salvataggio
@@ -103,7 +109,8 @@ public class GameManag : MonoBehaviour
     {
         //variabile di controllo che indicherà quanti cicli hanno fatto i cicli for sottostanti
         //int nControl = 0;
-        //for (int i = 0; i < CountDellaLista; i++) { Svuotare Lista /*nControl++;*/ }
+        //l'array di indici di stanze viste dal giocatore viene svuotato(riportandolo ai valori originali)
+        for (int i = 0; i < seenRooms.Length; i++) { seenRooms[i] = false; /*nControl++;*/ }
         //Debug.Log("Cicli fatti per i frammenti ottenuti: " + nControl); nControl = 0;
     }
     /// <summary>
@@ -111,8 +118,8 @@ public class GameManag : MonoBehaviour
     /// </summary>
     private void InizializeEmptyArrays()
     {
-        //se l'array delle stelle ottenute nei livelli è nullo, lo inizializza come array int di n livelli
-        //if (lista == null) { lista = new tipoLista[NCONTENUTI]; /*Debug.Log("Lista");*/ }
+        //se l'array di indici di stanze viste dal giocatore è nullo, viene inizializzato
+        if (seenRooms == null) { seenRooms = new bool[N_ROOMS]; /*Debug.Log("Lista");*/ }
 
     }
     /// <summary>
