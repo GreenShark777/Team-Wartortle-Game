@@ -32,7 +32,7 @@ public class Movement : MonoBehaviour
         movePos = new Vector2(horizontal, vertical);
 
         //Altro vettore per inviare un movimento smooth
-        movePosRb = Vector2.Lerp(movePosRb, movePos, 14 * Time.deltaTime);
+        movePosRb = Vector2.Lerp(movePosRb, movePos, 11 * Time.deltaTime);
 
         //Setto l'animazione in base alla velocità di movimento
         SetAnimator();
@@ -109,6 +109,11 @@ public class Movement : MonoBehaviour
     public void Knockback(Vector3 pos, float knockPower)
     {
         StartCoroutine(IKnockback(pos, knockPower));
+    }
+
+    public void Fendente()
+    {
+        weaponContainer.ShootFendente();
     }
 
     //Coroutine di knockback

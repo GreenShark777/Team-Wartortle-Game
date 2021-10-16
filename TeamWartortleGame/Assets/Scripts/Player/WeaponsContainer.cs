@@ -237,6 +237,16 @@ public class WeaponsContainer : MonoBehaviour
     public void SpawnBullet()
     {
         ObjectPooling.inst.SpawnFromPool("Bullets", shootPos.position, transform.rotation);
+        //Se sono un angelo sparo inoltre altri due proiettili in spread
+        if (GameManager.inst.angel) {
+            for (int i = 0; i < 2; i++)
+            {
+                Vector3 temp = transform.localEulerAngles;
+                transform.rotation = (i == 0 ? Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z - 15) : Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z + 15));
+                ObjectPooling.inst.SpawnFromPool("Bullets", shootPos.position, transform.rotation);
+                transform.rotation = Quaternion.Euler(temp);
+            }
+        }
     }
 
     public void EquipWeapon(int value)
@@ -262,6 +272,13 @@ public class WeaponsContainer : MonoBehaviour
             //cambia la UI in modo da indicare al giocatore l'avvenuto cambiamento d'armi
             playerUIManag.ChangeWeaponInUse(gunOut);
         }
+    }
+
+    public void ShootFendente()
+    {
+        //Se sono un demone posso sparare il fendente dalla spada
+        if (GameManager.inst.demon)
+            ObjectPooling.inst.SpawnFromPool("Fendente", shootPos.position, transform.rotation);
     }
 
 }

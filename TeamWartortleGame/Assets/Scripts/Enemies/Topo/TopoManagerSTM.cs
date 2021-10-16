@@ -33,6 +33,9 @@ public class TopoManagerSTM : MonoBehaviour
     //Direzione corrente
     private Vector2 movePos;
 
+    //Posizione iniziale
+    private Vector2 startPos;
+
     //Riferimento allo script della vita per capire se il nemico è stato sconfitto o no
     [HideInInspector]
     public EnemiesHealth enHealth;
@@ -53,6 +56,14 @@ public class TopoManagerSTM : MonoBehaviour
 
     private void Start()
     {
+        //Memorizzo la posizione iniziale
+        startPos = transform.position;
+    }
+
+    private void OnEnable()
+    {
+        //Lo sposto nella sua posizione inziale
+        transform.position = startPos;
         //Assegno come STM iniziale l'idle
         currentState = topoIdle;
         //Chiamo il suo metodo start visto che mi trovo nel metodo start

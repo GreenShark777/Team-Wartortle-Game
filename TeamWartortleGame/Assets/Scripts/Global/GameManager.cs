@@ -45,13 +45,20 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool transformated = false;
 
+    //Booleane delle transformazioni
+    public bool angel = false, demon = false;
+
+    //Riferimento allo UI manager per effettuare i cambi visivi delle statistiche
+    [SerializeField]
+    private PlayerUIManager playerUI;
+
+    //Riferimento alla couroitine della decisione del nemico per poterla interrompere quella precedente per richiamarla di nuovo così da evitare conflitti
+    private Coroutine enemyDecisionCor = default;
 
     private void Start()
     {
         //Singleton pattern
         inst = this;
-
-        ChangeStats();
     }
 
     public Vector2 GetGunDirection()
@@ -66,7 +73,8 @@ public class GameManager : MonoBehaviour
     //Metodo per la scelta che il giocatore prende per il nemico, viene passato il nemico e il valore(0 purificazione e 1 per esecuzione)
     public void SceltaPerNemico(GameObject enemy, int value, EnemiesHealth enHealth)
     {
-        StartCoroutine(IEnemyDecision(enemy, value, enHealth));
+        if (enemyDecisionCor == null)
+            enemyDecisionCor = StartCoroutine(IEnemyDecision(enemy, value, enHealth));
     }
 
     private IEnumerator IEnemyDecision(GameObject enemy, int value, EnemiesHealth enHealth)
@@ -82,6 +90,9 @@ public class GameManager : MonoBehaviour
         //Se ho scelto purificazione
         if (value == 0)
         {
+            //Diminuisco la malizia di 25
+            playerUI.ChangeMaliciousnessBar(playerUI.GetMaliciousness() - 25);
+            //Eseguo l'animazione
             anPlayer.SetTrigger("Execution");
             //Attivo la croce
             croce.SetActive(true);
@@ -113,6 +124,8 @@ public class GameManager : MonoBehaviour
         //Altrimenti se ho scelto Esecuzione
         else 
         {
+            //Aumento la malizia di 25
+            playerUI.ChangeMaliciousnessBar(playerUI.GetMaliciousness() + 25);
             anPlayer.SetTrigger("Purify");
             //Attivo la spada
             spada.SetActive(true);
@@ -176,11 +189,13 @@ public class GameManager : MonoBehaviour
         if (croce.activeSelf) croce.SetActive(false);
         //Disattivo il nemico
         enemy.SetActive(false);
+        //Resetto la coroutine corrente a null così da poter essere richiamata
+        enemyDecisionCor = null;
         yield return null;
     }
 
     //Gestisce il cambio di statistiche e la transformazione del personaggio in angelo o demone
-    public void ChangeStats(float gunDmg = 0, float swordDmg = 0, bool angel = false, bool demon = true, string msg = default)
+    public void ChangeStats(float gunDmg = 0, float swordDmg = 0, bool angel = false, bool demon = false, string msg = default)
     {
         //Se non mi devo transformare
         if (!angel && !demon)
@@ -208,6 +223,10 @@ public class GameManager : MonoBehaviour
             //Se mi sto transformando in un angelo
             if (angel)
             {
+                //Imposto la booleana della transformazione della angelo a true
+                this.angel = angel;
+                //Metto il demone al contrario invece
+                this.demon = !angel;
                 //Per ogni testa(side, front e back)
                 for (int i=0; i<currentHeads.Length; i++)
                 {
@@ -218,6 +237,10 @@ public class GameManager : MonoBehaviour
             //Altrimenti se mi sto transformando in un demone
             else
             {
+                //Imposto la booleana della transformazione della angelo a true
+                this.demon = demon;
+                //Metto il demone al contrario invece
+                this.angel = !demon;
                 //Per ogni testa(side, front e back)
                 for (int i = 0; i < currentHeads.Length; i++)
                 {
@@ -231,5 +254,16 @@ public class GameManager : MonoBehaviour
         msgAn.GetComponentInChildren<TextMeshProUGUI>().text = msg;
         //Attivo inoltre l'animazione del texto
         msgAn.SetTrigger("On");
+    }
+
+    //Metodo chiamato dallo script enemy decision per controllare se la coroutine che applica la sorte di un nemico e finita o no
+    //se è finita ritornerà true e potrà quindi apparire di nuovo il pannello per la decisione
+    public bool CanActiveForDecision()
+    {
+        //Se la coroutine non c'è in questo momento ritorna true
+        if (enemyDecisionCor == null)
+            return true;
+        //Altrimenti ritorna false perché vuol dire che si sta eseguendo
+        else return false;
     }
 }

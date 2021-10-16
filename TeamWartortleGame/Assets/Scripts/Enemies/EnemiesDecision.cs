@@ -35,8 +35,8 @@ public class EnemiesDecision : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //Se il nemico è stato sconfitto
-        if (enHealth.IsEnemyDefeated())
+        //Se il nemico è stato sconfitto e controllo se posso attivare il pannello della decisione
+        if (enHealth.IsEnemyDefeated() && GameManager.inst.CanActiveForDecision())
         {
             //Prendo il nemico corrente dal GameManager
             GameObject currentEnemy = GameManager.inst.currentEnemy;
