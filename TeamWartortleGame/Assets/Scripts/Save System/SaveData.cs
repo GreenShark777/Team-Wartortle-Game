@@ -3,6 +3,9 @@
 [System.Serializable]
 public class SaveData {
 
+    //costante che indica il numero di stanze presenti nel gioco
+    private const int N_ROOMS = 50;
+
     public float savedMasterVolume, //indica il valore del volume generale scelto dal giocatore l'ultima volta che è stato salvato
         savedMusicVolume, //indica il valore del volume della musica scelto dal giocatore l'ultima volta che è stato salvato
         savedSfxVolume; //indica il valore del volume degli effetti sonori scelto dal giocatore l'ultima volta che è stato salvato
@@ -13,6 +16,10 @@ public class SaveData {
 
     //indica l'ID dell'ultima stanza in cui il giocatore ha salvato la partita
     public int lastRoomID = 0;
+    //array che indica per ogni stanza se è stata visitata dal giocatore o meno(l'indice dell'array indica l'ID della stanza a cui si riferisce)
+    public bool[] seenRooms = new bool[N_ROOMS];
+    //array che indica per ogni stanza se tutti i nemici sono stati sconfitti o meno(l'indice dell'array indica l'ID della stanza a cui si riferisce)
+    public bool[] defeatedAllEnemies = new bool[N_ROOMS];
 
 
     public SaveData(GameManag g)
@@ -25,6 +32,8 @@ public class SaveData {
         activeCheckpoint = g.activeCheckpoint;
         maliciousness = g.maliciousness;
         lastRoomID = g.lastRoomID;
+        seenRooms = g.seenRooms;
+        defeatedAllEnemies = g.defeatedAllEnemies;
 
     }
 

@@ -23,11 +23,13 @@ public class GufoBehaviour : MonoBehaviour
     //riferimento al collider del gufo
     [SerializeField]
     private Collider2D collGufo = default;
+    
     //riferimento al collider del giocatore
     //[SerializeField]
     //private Collider2D collPlayer = default;
+
     //riferimento al collider del punto di volo del gufo
-    private Collider2D collFlyingPoint;
+    //private Collider2D collFlyingPoint;
 
     [Header("Animators")]
 
@@ -75,6 +77,9 @@ public class GufoBehaviour : MonoBehaviour
     //indica il punto in cui il gufo deve atterrare
     private Vector2 divingPoint;
 
+    private Vector2 startPosition, //indica la posizione iniziale dell'intero gufo
+        spriteStartPosition; //indica la posizione iniziale dello sprite del gufo
+
 
     private void Awake()
     {
@@ -84,10 +89,13 @@ public class GufoBehaviour : MonoBehaviour
         if (staticPlayer == null && player != null) { staticPlayer = player; }
         //ottiene il riferimento all'Animator del punto di volo
         flyingPointAnim = flyingPoint.GetComponent<Animator>();
+        
         //ottiene il riferimento al collider del punto di volo del gufo
-        collFlyingPoint = flyingPoint.GetComponent<Collider2D>();
+        //collFlyingPoint = flyingPoint.GetComponent<Collider2D>();
+
         //fa in modo che le collisioni tra il punto di volo del gufo e il giocatore vengano ignorate
         //Physics2D.IgnoreCollision(collFlyingPoint, collPlayer);
+
         //ottiene il riferimento all'Animator del gufo
         gufoAnimator = GetComponent<Animator>();
         //ottiene un array di tutte le animazioni del gufo
@@ -103,9 +111,19 @@ public class GufoBehaviour : MonoBehaviour
             if (AreAllTimersReady()) { /*Debug.Log("Trovate tutte le clip");*/ break; }
 
         }
+        //ottiene il riferimento alle posizioni inziali del gufo ed il suo sprite
+        startPosition = transform.position;
+        spriteStartPosition = spriteGufo.position;
         
     }
-    
+
+    private void OnEnable()
+    {
+        //ogni volta che il gufo viene abilitato, il suo stato viene inizializzato
+        InitializeGufo();
+
+    }
+
     private void Update()
     {
         //crea una variabile che indica quanto è lontano lo sprite del gufo dal punto
@@ -229,8 +247,10 @@ public class GufoBehaviour : MonoBehaviour
         isFlying = true;
         //il punto volante andrà in cerchio
         flyingPointAnim.SetBool("FlyingAround", true);
+
         //il collider del punto volante diventa solido, in modo che il gufo non vada fuori dai limiti della mappa durante il volo
-        collFlyingPoint.isTrigger = false;
+        //collFlyingPoint.isTrigger = false;
+
         //il gufo si muove verso il giocatore in volo
         StartCoroutine(FlyAround());
         //ottiene il tempo d'aspettare entro il range dei timer minimo e massimo
@@ -238,8 +258,10 @@ public class GufoBehaviour : MonoBehaviour
         //Debug.Log("In punto di volo. Tempo per attacco: " + randWaitTime);
         //aspetta il tempo calcolato
         yield return new WaitForSeconds(randWaitTime);
+
         //il collider del punto volante diventa di nuovo non solido, dato che ha finito di volare
-        collFlyingPoint.isTrigger = true;
+        //collFlyingPoint.isTrigger = true;
+
         //il gufo si tuffa verso il giocatore
         StartCoroutine(DiveAttack());
 
@@ -316,11 +338,34 @@ public class GufoBehaviour : MonoBehaviour
         if (!isStunned) PlayerSpotted();
 
     }
-
+    /// <summary>
+    /// Comunica se tutti i timer sono stati inizializzati alla durata delle loro rispettive clip
+    /// </summary>
+    /// <returns></returns>
     private bool AreAllTimersReady()
     {
         //comunica se tutti i timer sono stati inizializzati alla durata delle loro rispettive clip
         return jumpAnticipationTimer != default && diveAnticipationTimer != default;
+
+    }
+    /// <summary>
+    /// Riporta il gufo al suo stato originale
+    /// </summary>
+    private void InitializeGufo()
+    {
+        //riporta il gufo e il suo sprite alle posizioni iniziali
+        transform.position = startPosition;
+        spriteGufo.position = spriteStartPosition;
+        //riporta il gufo in idle
+        gufoAnimator.SetBool("Stunned", true);
+        gufoAnimator.SetTrigger("GetStunned");
+        gufoAnimator.SetBool("Stunned", false);
+        //riporta al loro valore originale le variabili di stato
+        isAttacking = false;
+        isFlying = false;
+        jumped = false;
+        isDiving = false;
+        isStunned = false;
 
     }
 

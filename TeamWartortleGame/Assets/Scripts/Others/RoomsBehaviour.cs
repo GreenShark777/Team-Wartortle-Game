@@ -1,14 +1,17 @@
-using System.Collections;
+//Si occupa delle stanze e di ciò che è contenuto al loro interno(nemici, porte, colliders, props, ecc...)
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomsBehaviour : MonoBehaviour
 {
     //lista contenente tutti gli script delle porte di questa stanza
+    [SerializeField]
     private List<DoorsBehaviour> doors = new List<DoorsBehaviour>();
-    //riferimento al contenitore di tutte le porte
-    private Transform doorsContainer, 
-        collidersContainer;
+    
+    private Transform doorsContainer, //riferimento al contenitore di tutte le porte
+        collidersContainer, //riferimento al contenitore dei collider per i vari tipi di stanze
+        enemiesContainer; //riferimento al contenitore di tutti i nemici nella stanza
+
     //riferimento al giocatore
     public static Transform player;
     //identificativo della stanza
@@ -24,6 +27,11 @@ public class RoomsBehaviour : MonoBehaviour
     [SerializeField]
     private float maxCameraLookX = default, 
         maxCameraLookY = default;
+    //indica di quanto i limiti della telecamera devono essere minori di quelli della stanza
+    [SerializeField]
+    private float xLimitsOffset = default,
+        yLimitsOffset = default;
+
     //indica il tipo di questa stanza
     // 0 - quadrata
     // 1 - rettangolare
@@ -35,30 +43,35 @@ public class RoomsBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        //ottiene il riferimento al contenitore di tutte le porte
-        doorsContainer = transform.GetChild(0);
+        //ottiene il riferimento al contenitore dei collider delle stanze
+        collidersContainer = transform.GetChild(1);
+        //ottiene il riferimento al contenitore dei nemici
+        enemiesContainer = transform.GetChild(2);
+        //attiva il collider adatto alla stanza e ottiene il riferimento al suo contenitore di porte
+        ActivateRoomColliderAndDoors();
         //indicherà il nuovo indice delle porte di questa stanza
         int newID = 0;
         //per ogni figlio nel contenitore delle porte...
         foreach(Transform child in doorsContainer)
         {
-            //...ne ottiene lo script da porta...
-            DoorsBehaviour door = child.GetComponent<DoorsBehaviour>();
-            //...lo aggiunge alla lista di porte...
-            doors.Add(door);
-            //...gli da un ID unico...
-            door.SetDoorID(newID);
-            //...e gli comunica a quale stanza appartiene...
-            door.SetOwnRoomID(roomID);
-            Debug.Log("Porta: " + door.transform.name + " con indice: " + newID);
-            //...infine, incrementa l'indice in modo che la prossima porta abbia un ID diverso
-            newID++;
+            //...se il figlio è attivo...
+            if (child.gameObject.activeSelf)
+            {
+                //...ne ottiene lo script da porta...
+                DoorsBehaviour door = child.GetComponent<DoorsBehaviour>();
+                //...lo aggiunge alla lista di porte...
+                doors.Add(door);
+                //...gli da un ID unico...
+                door.SetDoorID(newID);
+                //...e gli comunica a quale stanza appartiene...
+                door.SetOwnRoomID(roomID);
+                Debug.Log("Porta: " + door.transform.name + " con indice: " + newID);
+                //...infine, incrementa l'indice in modo che la prossima porta abbia un ID diverso
+                newID++;
+
+            }
 
         }
-        //ottiene il riferimento al contenitore dei collider delle stanze
-        collidersContainer = transform.GetChild(1);
-        //attiva il collider adatto alla stanza
-        ActivateRoomCollider();
 
 
 
@@ -84,36 +97,51 @@ public class RoomsBehaviour : MonoBehaviour
     /// Posiziona il giocatore davanti la porta indicata dal parametro indice ricevuto
     /// </summary>
     /// <param name="doorIndex"></param>
-    public void PositionPlayer(int doorIndex)
+    public void ActivateThisRoom(int doorIndex)
     {
         //attiva questa stanza
         gameObject.SetActive(true);
         //posiziona il giocatore nella posizione di spawn della porta da cui sta entrando
         player.position = doors[doorIndex].GetSpawnPosition();
 
-    }
+        //L'INIZIALIZZAMENTO DEI NEMICI VIENE FATTO DENTRO IL LORO SCRIPT NELLA FUNZIONE ONENABLE
+        /*
+        //se ci sono nemici attivi nella stanza...
+        if (AreThereEnemies())
+        {
+            //...ne inizializza lo stato
+            foreach () { }
 
-    private void ActivateRoomCollider()
+        }
+        */
+
+    }
+    /// <summary>
+    /// Attiva i collider di questa stanza in base allo sprite che sta usando
+    /// </summary>
+    private void ActivateRoomColliderAndDoors()
     {
         //ottiene il nome dello sprite della stanza
         string roomSpriteName = roomSprite.sprite.name;
         //indice che indica il collider da attivare
-        int collToActivate;
+        int indexToActivate;
         //se lo sprite della stanza è quello della stanza quadrata, bisogna attivare il collider ad indice 0
-        if (roomSpriteName.Contains("quadrata")) { collToActivate = 0; }
+        if (roomSpriteName.Contains("quadrata")) { indexToActivate = 0; }
         //altrimenti,se lo sprite della stanza è quello della stanza rettangolare, bisogna attivare il collider ad indice 1
-        else if (roomSpriteName.Contains("rettangolare")) { collToActivate = 1; }
+        else if (roomSpriteName.Contains("rettangolare")) { indexToActivate = 1; }
         //altrimenti,se lo sprite della stanza è quello della stanza a T, bisogna attivare il collider ad indice 2
-        else if (roomSpriteName.Contains("T")) { collToActivate = 2; }
+        else if (roomSpriteName.Contains("T")) { indexToActivate = 2; }
         //altrimenti,se lo sprite della stanza è quello della stanza a L, bisogna attivare il collider ad indice 3
-        else if (roomSpriteName.Contains("L")) { collToActivate = 3; }
+        else if (roomSpriteName.Contains("L")) { indexToActivate = 3; }
         //altrimenti, sarà la stanza del boss, quindi attiva il collider all'indice 4
-        else { collToActivate = 4; }
+        else { indexToActivate = 4; }
         //attiva il collider figlio del contenitore dei collider all'indice ottenuto
-        collidersContainer.GetChild(collToActivate).gameObject.SetActive(true);
+        collidersContainer.GetChild(indexToActivate).gameObject.SetActive(true);
+        //ottiene il riferimento al contenitore di tutte le porte di questo tipo di stanza
+        doorsContainer = transform.GetChild(0).GetChild(indexToActivate);
         //ottiene il tipo di questa stanza
         //roomType = collToActivate;
-        Debug.Log("Nome sprite: " + roomSpriteName + " -> coll: " + collToActivate);
+        Debug.Log("Nome sprite: " + roomSpriteName + " -> coll: " + indexToActivate);
     }
     /// <summary>
     /// Permette ad altri script di ottenere l'ID di questa stanza
@@ -138,6 +166,26 @@ public class RoomsBehaviour : MonoBehaviour
     /// <returns></returns>
     public Sprite GetThisRoomSprite() { return roomSprite.sprite; }
     /// <summary>
+    /// Permette di ottenere il riferimento allo spriteRenderer dello sprite di questa stanza
+    /// </summary>
+    /// <returns></returns>
+    public SpriteRenderer GetThisRoomSpriteRend() { return roomSprite; }
+    /// <summary>
+    /// Permette di ottenere i limiti di questa stanza
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetRoomBounds() { return new Vector2(maxCameraLookX, maxCameraLookY); }
+    /// <summary>
+    /// Permette di ottenere l'offset dei limiti della telecamera nell'asse X
+    /// </summary>
+    /// <returns></returns>
+    public float GetRoomBoundsOffsetX() { return xLimitsOffset; }
+    /// <summary>
+    /// Permette di ottenere l'offset dei limiti della telecamera nell'asse Y
+    /// </summary>
+    /// <returns></returns>
+    public float GetRoomBoundsOffsetY() { return yLimitsOffset; }
+    /// <summary>
     /// Permette ad altri script di ottenere il riferimento al contenitore delle porte
     /// </summary>
     /// <returns></returns>
@@ -147,6 +195,34 @@ public class RoomsBehaviour : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool IsSmallRoom() { return staticCamera; }
+    /// <summary>
+    /// Comunica se in questa stanza ci sono nemici o meno
+    /// </summary>
+    /// <returns></returns>
+    public bool AreThereEnemies()
+    {
+        //indica se ci sono nemici nella stanza
+        bool thereAreEnemies = false;
+        //se ci sono dei nemici nel container dei nemici...
+        if (enemiesContainer.childCount > 0)
+        {
+            //...cicla tutti i nemici e, se almeno uno di loro è attivo, comunica che ci sono nemici
+            foreach (Transform enemy in enemiesContainer) { if (enemy.gameObject.activeSelf) { thereAreEnemies = true; break; } }
+
+        }
+        //ritorna il valore ottenuto dal controllo
+        return thereAreEnemies;
+
+    }
+    /// <summary>
+    /// Disattiva tutti i nemici in questa stanza
+    /// </summary>
+    public void DeactivateAllEnemies()
+    {
+        //disattiva tutti nemici nel container di nemici
+        foreach (Transform enemy in enemiesContainer) { enemy.gameObject.SetActive(false); }
+        Debug.LogError("Disattivati nemici stanza: " + name);
+    }
 
     private void OnDrawGizmos()
     {
