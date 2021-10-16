@@ -16,6 +16,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     //riferimento al GameManag di scena
     [SerializeField]
     private GameManag g = default;
+    //array statico di bool che indicano in quali stanze sono stati sconfitti tutti i nemici o meno
+    private static bool[] defeatedRooms;
     //riferimento allo script della minimappa
     [SerializeField]
     private MiniMap miniMap = default;
@@ -53,6 +55,10 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     {
         //ottiene l'ID dell'ultima stanza in cui il giocatore era entrato quando ha salvato il gioco
         lastEnteredRoom = g.lastRoomID;
+        //ottiene la lista salvata di bool di tutte le stanze in cui il giocatore ha sconfitto tutti i nemici
+        defeatedRooms = g.defeatedAllEnemies;
+        //controlla per ogni stanza se i nemici all'interno sono stati sconfitti o meno
+        CheckRoomsEnemies();
         //attiva solo la stanza in cui il giocatore è entato per l'ultima volta prima di salvare
         ActivateOnlyThisRoom(lastEnteredRoom);
         //ottiene il riferimento statico alla minimappa
@@ -116,6 +122,23 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         rooms = orderedRooms;
 
     }
+
+    private void CheckRoomsEnemies()
+    {
+        //indice che indica l'indice della stanza che si sta controllando
+        int index = 0;
+        //cicla ogni stanza nella lista di stanze
+        foreach (RoomsBehaviour room in rooms)
+        {
+            //se nella stanza ciclata sono stati sconfitti tutti i nemici, vengono disattivati 
+            if (g.defeatedAllEnemies[index]) { room.DeactivateAllEnemies(); }
+            //incrementa l'indice per continuare il ciclo
+            index++;
+
+        }
+
+    }
+
     /// <summary>
     /// Attiva solo la stanza in cui si trova il giocatore
     /// </summary>
@@ -167,8 +190,12 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         yield return new WaitForSeconds(1.4f);
         //il giocatore potrà nuovamente muoversi
         playerMov.enabled = true;
+        //ottiene il riferimento alla stanza da cui il giocatore sta uscendo
+        RoomsBehaviour previousRoom = rooms[openedDoor.GetOwnRoomID()];
         //disattiva la stanza da cui si sta uscendo
-        rooms[openedDoor.GetOwnRoomID()].gameObject.SetActive(false);
+        previousRoom.gameObject.SetActive(false);
+        //aggiorna la lista indicandogli all'indice corretto se tutti i nemici sono stati sconfitti o meno
+        defeatedRooms[previousRoom.GetRoomID()] = !previousRoom.AreThereEnemies();
         //ottiene il riferimento alla porta da cui si sta entrando
         DoorsBehaviour newRoomDoor = openedDoor.GetNextDoor();
         //ottiene il riferimento alla stanza della porta da cui si sta entrando
@@ -228,6 +255,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     {
         //aggiorna l'ID dell'ultima stanza in cui il giocatore è entrato
         g.lastRoomID = lastEnteredRoom;
+        //aggiorna la lista di nemici sconfitti nelle varie stanze
+        g.defeatedAllEnemies = defeatedRooms;
         //Debug.Log("Aggiornata ultima stanza entrata: " + lastEnteredRoom);
     }
 }

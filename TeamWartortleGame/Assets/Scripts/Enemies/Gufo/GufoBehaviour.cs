@@ -348,7 +348,9 @@ public class GufoBehaviour : MonoBehaviour
         return jumpAnticipationTimer != default && diveAnticipationTimer != default;
 
     }
-
+    /// <summary>
+    /// Riporta il gufo al suo stato originale
+    /// </summary>
     private void InitializeGufo()
     {
         //riporta il gufo e il suo sprite alle posizioni iniziali

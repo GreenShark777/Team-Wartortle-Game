@@ -104,6 +104,7 @@ public class RoomsBehaviour : MonoBehaviour
         //posiziona il giocatore nella posizione di spawn della porta da cui sta entrando
         player.position = doors[doorIndex].GetSpawnPosition();
 
+        //L'INIZIALIZZAMENTO DEI NEMICI VIENE FATTO DENTRO IL LORO SCRIPT NELLA FUNZIONE ONENABLE
         /*
         //se ci sono nemici attivi nella stanza...
         if (AreThereEnemies())
@@ -212,6 +213,15 @@ public class RoomsBehaviour : MonoBehaviour
         //ritorna il valore ottenuto dal controllo
         return thereAreEnemies;
 
+    }
+    /// <summary>
+    /// Disattiva tutti i nemici in questa stanza
+    /// </summary>
+    public void DeactivateAllEnemies()
+    {
+        //disattiva tutti nemici nel container di nemici
+        foreach (Transform enemy in enemiesContainer) { enemy.gameObject.SetActive(false); }
+        Debug.LogError("Disattivati nemici stanza: " + name);
     }
 
     private void OnDrawGizmos()

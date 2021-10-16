@@ -24,6 +24,8 @@ public class GameManag : MonoBehaviour
     public int lastRoomID = 0;
     //array che indica per ogni stanza se è stata visitata dal giocatore o meno(l'indice dell'array indica l'ID della stanza a cui si riferisce)
     public bool[] seenRooms = new bool[N_ROOMS];
+    //array che indica per ogni stanza se tutti i nemici sono stati sconfitti o meno(l'indice dell'array indica l'ID della stanza a cui si riferisce)
+    public bool[] defeatedAllEnemies = new bool[N_ROOMS];
 
     //riferimento a tutti gli script che usano l'interfaccia per l'aggiornamento dei dati nel GameManag
     public static List<IUpdateData> dataToSave = new List<IUpdateData>();
@@ -77,6 +79,7 @@ public class GameManag : MonoBehaviour
             maliciousness = sd.maliciousness;
             lastRoomID = sd.lastRoomID;
             seenRooms = sd.seenRooms;
+            defeatedAllEnemies = sd.defeatedAllEnemies;
 
             Debug.Log("Caricati dati salvati");
         } //altrimenti, tutti i dati vengono messi al loro valore originale, in quanto non si è trovato un file di salvataggio
@@ -109,8 +112,10 @@ public class GameManag : MonoBehaviour
     {
         //variabile di controllo che indicherà quanti cicli hanno fatto i cicli for sottostanti
         //int nControl = 0;
-        //l'array di indici di stanze viste dal giocatore viene svuotato(riportandolo ai valori originali)
+        //l'array di stanze viste dal giocatore viene svuotato(riportando tutte le stanze a non viste)
         for (int i = 0; i < seenRooms.Length; i++) { seenRooms[i] = false; /*nControl++;*/ }
+        //l'array di stanze in cui i nemici sono stati sconfitti viene svuotato(riportando tutte le stanze a non sconfitte)
+        for (int i = 0; i < defeatedAllEnemies.Length; i++) { defeatedAllEnemies[i] = false; /*nControl++;*/ }
         //Debug.Log("Cicli fatti per i frammenti ottenuti: " + nControl); nControl = 0;
     }
     /// <summary>
@@ -118,8 +123,10 @@ public class GameManag : MonoBehaviour
     /// </summary>
     private void InizializeEmptyArrays()
     {
-        //se l'array di indici di stanze viste dal giocatore è nullo, viene inizializzato
+        //se l'array di stanze viste dal giocatore è nullo, viene inizializzato
         if (seenRooms == null) { seenRooms = new bool[N_ROOMS]; /*Debug.Log("Lista");*/ }
+        //se l'array di stanze in cui i nemici sono stati sconfitti è nullo, viene inizializzato
+        if (defeatedAllEnemies == null) { defeatedAllEnemies = new bool[N_ROOMS]; /*Debug.Log("Lista");*/ }
 
     }
     /// <summary>

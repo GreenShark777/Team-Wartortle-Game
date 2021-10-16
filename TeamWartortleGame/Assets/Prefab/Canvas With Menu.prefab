@@ -1888,7 +1888,7 @@ RectTransform:
   m_GameObject: {fileID: 255525149391174585}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 432331822688462984}
   - {fileID: 6006312728139047380}
@@ -2626,9 +2626,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91adf992bbf640e47a98897141758e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  squareRoomScale: {x: 0.35, y: 0.35}
+  rectangleRoomScale: {x: 0.64, y: 0.64}
+  LRoomScale: {x: 1.45, y: 1.45}
   allRoomImagesDoorsContainer: []
   pivotDoors: 
   anchorDoors: 
+  g: {fileID: 0}
 --- !u!1 &1089122865689509813
 GameObject:
   m_ObjectHideFlags: 0
@@ -15896,7 +15900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

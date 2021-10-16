@@ -18,6 +18,8 @@ public class SaveData {
     public int lastRoomID = 0;
     //array che indica per ogni stanza se è stata visitata dal giocatore o meno(l'indice dell'array indica l'ID della stanza a cui si riferisce)
     public bool[] seenRooms = new bool[N_ROOMS];
+    //array che indica per ogni stanza se tutti i nemici sono stati sconfitti o meno(l'indice dell'array indica l'ID della stanza a cui si riferisce)
+    public bool[] defeatedAllEnemies = new bool[N_ROOMS];
 
 
     public SaveData(GameManag g)
@@ -31,6 +33,7 @@ public class SaveData {
         maliciousness = g.maliciousness;
         lastRoomID = g.lastRoomID;
         seenRooms = g.seenRooms;
+        defeatedAllEnemies = g.defeatedAllEnemies;
 
     }
 
