@@ -221,7 +221,7 @@ public class RoomsBehaviour : MonoBehaviour
     {
         //disattiva tutti nemici nel container di nemici
         foreach (Transform enemy in enemiesContainer) { enemy.gameObject.SetActive(false); }
-        Debug.LogError("Disattivati nemici stanza: " + name);
+        //Debug.LogError("Disattivati nemici stanza: " + name);
     }
 
     private void OnDrawGizmos()
