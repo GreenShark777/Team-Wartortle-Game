@@ -93,5 +93,10 @@ public class GroundCheck : MonoBehaviour
         otherGC.IsThereNoGround(false);
 
     }
+    /// <summary>
+    /// Ritorna il Transform del giocatore
+    /// </summary>
+    /// <returns></returns>
+    public Transform GetPlayer() { return player; }
 
 }

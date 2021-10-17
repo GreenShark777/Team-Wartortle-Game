@@ -8,7 +8,49 @@ public class PiattaformaSemovente : MonoBehaviour
     //riferimento al buco su cui questa piattaforma sta volando
     [SerializeField]
     private HoleBehaviour hole = default;
+    //array di Transform dei punti in cui deve andare la piattaforma
+    [SerializeField]
+    private Transform[] route = default;
+    //array di float che indica quanto deve aspettare la piattaforma per andare da una posizione ad un'altra
+    [SerializeField]
+    private float[] timeToWait = default;
+    //indica quanto velocemente la piattaforma va verso una nuova posizione
+    [SerializeField]
+    private float speed = 3;
+    //indica quanto lontano può essere il centro della piattaforma alla posizione d'arrivo per andare a quella successiva
+    [SerializeField]
+    private float acceptableDistance = 0.2f;
+    //indica verso quale posizione d'arrivo la piattaforma sta andando
+    private int actualRoute = 0;
+    //indica se si sta aspettando per una nuova posizione
+    private bool waiting = false;
 
+
+
+    private void Awake()
+    {
+        //sparenta tutte le posizioni, in modo che non seguano il movimento della piattaforma
+        route[0].parent.parent = null;
+
+    }
+
+    private void Update()
+    {
+        //crea un float per la distanza tra piattaforma e posizione d'arrivo
+        float distance = 100;
+        //se non si sta aspettando per una nuova posizione, calcola la distanza tra piattaforma e posizione d'arrivo
+        if (!waiting) { distance = Vector2.Distance(transform.position, route[actualRoute].position); }
+        //se la distanza è minore della distanza accettabile...
+        if (distance < acceptableDistance)
+        {
+            //...sceglie il nuovo percorso in cui andare
+            StartCoroutine(GoToNextRoute());
+            Debug.Log(distance + " : " + acceptableDistance);
+        }
+        //altrimenti, continua a far avvicinare la piattaforma al punto d'arrivo
+        else { transform.position = Vector3.Lerp(transform.position, route[actualRoute].position, speed * Time.deltaTime); }
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,8 +61,10 @@ public class PiattaformaSemovente : MonoBehaviour
         {
             //...comunica al buco che il giocatore è sopra la piattaforma e non può cadere...
             hole.SetPlayerOnPlatform(true);
-            //...e comunica al GroundCheck che è per terra
+            //...e comunica al GroundCheck che è per terra...
             gc.IsThereNoGround(false);
+            //...infine, imparenta il giocatore a questa piattaforma
+            gc.GetPlayer().parent = transform;
             //Debug.LogError("Giocatore nella piattaforma");
         }
 
@@ -41,8 +85,11 @@ public class PiattaformaSemovente : MonoBehaviour
                 //...e se anche l'altro GroundCheck non è per terra...
                 if (gc.GetOtherNoFloor())
                 {
-                    //...comunica al buco che il giocatore non è più nella piattaforma
+                    //...comunica al buco che il giocatore non è più nella piattaforma...
                     hole.SetPlayerOnPlatform(false, collision);
+                    //...e sparenta il giocatore da questa piattaforma
+                    gc.GetPlayer().parent = null;
+
                     //Debug.LogError("Giocatore non più nella piattaforma");
                 }
 
@@ -54,6 +101,8 @@ public class PiattaformaSemovente : MonoBehaviour
                 {
                     //...comunica al buco che il giocatore non è più nella piattaforma, ma non gli passa il collisore(impedendogli di far cadere il giocatore)
                     hole.SetPlayerOnPlatform(false);
+                    //...e sparenta il giocatore da questa piattaforma
+                    gc.GetPlayer().parent = null;
                     //Debug.LogError("Giocatore non più nella piattaforma");
                 }
 
@@ -94,6 +143,21 @@ public class PiattaformaSemovente : MonoBehaviour
         //    }
 
         //}
+
+    }
+
+    private IEnumerator GoToNextRoute()
+    {
+        //comunica che sta aspettando
+        waiting = true;
+        //aspetta un po'
+        yield return new WaitForSeconds(timeToWait[actualRoute]);
+        //incrementa l'indice del punto d'arrivo in cui la piattaforma dovrà andare
+        actualRoute++;
+        //se l'indice supera il limite dell'array di posizioni, torna alla prima posizione
+        if (actualRoute >= route.Length) { actualRoute = 0; }
+        //comunica che non si sta più aspettando
+        waiting = false;
 
     }
 
