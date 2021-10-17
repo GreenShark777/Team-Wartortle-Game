@@ -15,6 +15,9 @@ public class DoorsBehaviour : MonoBehaviour
     private Vector2 spawnPosition;
     //indica a quale stanza appartiene questa porta
     private int ownRoomID;
+    //riferimento al buco che si trova nella stanza di cui questa porta fa parte
+    [SerializeField]
+    private HoleBehaviour hole = default;
 
 
     private void Awake()
@@ -26,8 +29,15 @@ public class DoorsBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //se il giocatore entra in questa porta, comunica al manager delle stanze che bisogna cambiare stanza
-        if (collision.CompareTag("Player")) { StartCoroutine(RoomsManager.ChangeRoom(this)); }
+        //se il giocatore entra in questa porta...
+        if (collision.CompareTag("Player"))
+        {
+            //...comunica al manager delle stanze che bisogna cambiare stanza...
+            StartCoroutine(RoomsManager.ChangeRoom(this));
+            //...e comunica al buco di cui si ha riferimento(se esiste) dove mettere il suo punto di respawn
+            if (nextDoor.GetHoleInTheRoom()) { nextDoor.GetHoleInTheRoom().SetRespawnPosition(nextDoor.GetSpawnPosition()); }
+        
+        }
 
     }
 
@@ -50,7 +60,7 @@ public class DoorsBehaviour : MonoBehaviour
     /// Ritorna la porta a cui questa porta deve portare
     /// </summary>
     /// <returns></returns>
-    public DoorsBehaviour GetNextDoor() { return nextDoor; }
+    public DoorsBehaviour GetNextDoor() { /*Debug.Log(this + " : " + RoomsManager.GetRoomsList()[ownRoomID] + " : " + nextDoor);*/ return nextDoor; }
     /// <summary>
     /// Permette di impostare l'ID della stanza d'appartenenza
     /// </summary>
@@ -61,5 +71,10 @@ public class DoorsBehaviour : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public int GetOwnRoomID() { return ownRoomID; }
+    /// <summary>
+    /// Ritorna il riferimento al buco nella stanza di questa porta, se c'è
+    /// </summary>
+    /// <returns></returns>
+    public HoleBehaviour GetHoleInTheRoom() { return hole; }
 
 }
