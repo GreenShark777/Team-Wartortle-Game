@@ -35,17 +35,20 @@ public class MiniMap : MonoBehaviour, IUpdateData
     //private List<Vector2> doorsPositions = new List<Vector2>();
     
     //lista degli ID delle porte che devono diventare per le proprie stanze(l'ID della stanza è uguale all'indice in cui si trova il valore)
-    [SerializeField]
+    [SerializeField] //SERIALIZZATA PER CONTROLLO DA EDITOR
     private List<int> pivotDoors = new List<int>();
     //lista degli ID delle porte che devono fungere da punto d'ancoraggio per le stanze pivot(gli indici indicano la porta pivot a cui faranno da ancora)
-    [SerializeField]
+    [SerializeField] //SERIALIZZATA PER CONTROLLO DA EDITOR
     private List<int> anchorDoors = new List<int>();
     //lista di tutti gli ID delle stanze delle porte d'ancoraggio
-    [SerializeField]
+    [SerializeField] //SERIALIZZATA PER CONTROLLO DA EDITOR
     private List<int> anchorDoorsRooms = new List<int>();
     //riferimento al GameManag
     [SerializeField]
     private GameManag g = default;
+    //array di riferimenti agli sprite delle immagini stanza
+    [SerializeField]
+    private Sprite[] imageRoomsSprites;
 
     //indica la nuova posizione dell'ancora di ogni nuova immagine di stanza
     //private List<Vector2> newAnchorsPosition = new List<Vector2>();
@@ -101,14 +104,23 @@ public class MiniMap : MonoBehaviour, IUpdateData
 
             //Image newRoomImage = newRoom.GetComponent<Image>();
 
-            //...alla nuova immagine viene dato lo sprite di questa stanza...
-            newRoomImage.transform.GetChild(0).GetComponent<Image>().sprite = room.GetThisRoomSprite();
             //...ottiene il nome dello sprite della stanza...
             string roomSpriteName = room.GetThisRoomSprite().name;
+            
+            int imageRoomsSpriteIndex;
+
+            if (roomSpriteName.Contains("quadrata")) { imageRoomsSpriteIndex = 0; }
+            else if (roomSpriteName.Contains("rettangolare")) { imageRoomsSpriteIndex = (!roomSpriteName.Contains("gigante")) ? 1 : 5; }
+            else if (roomSpriteName.Contains("T")) { imageRoomsSpriteIndex = 2; }
+            else if (roomSpriteName.Contains("L")) { imageRoomsSpriteIndex = 3; }
+            else { imageRoomsSpriteIndex = 4; }
+            
+            //...alla nuova immagine viene dato lo sprite di questa stanza...
+            newRoomImage.transform.GetChild(0).GetComponent<Image>().sprite = imageRoomsSprites[imageRoomsSpriteIndex]/*room.GetThisRoomSprite()*/;
             //...cambia la grandezza dell'immagine in base al nome dello sprite(bisogna farlo altrimenti alcune stanze vengono viste più grandi di come sono veramente)
             if (roomSpriteName.Contains("quadrata"))
             { newRoomImage.transform.localScale = squareRoomScale; }
-            else if (roomSpriteName.Contains("rettangolo"))
+            else if (roomSpriteName.Contains("rettangolo") && !roomSpriteName.Contains("gigante"))
             { newRoomImage.transform.localScale = rectangleRoomScale; }
             else if (roomSpriteName.Contains("L"))
             { newRoomImage.transform.localScale = LRoomScale; }
