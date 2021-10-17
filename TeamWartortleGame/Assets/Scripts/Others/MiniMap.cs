@@ -77,7 +77,7 @@ public class MiniMap : MonoBehaviour, IUpdateData
         //genera la mini mappa
         GenerateMiniMap();
         //disattiva le stanze non ancora esplorate dal giocatore
-        ShowOnlySeenRooms();
+        //ShowOnlySeenRooms();
         //disattiva le immagini iniziali di porta e stanza, in quanto non servono più
         roomImage.gameObject.SetActive(false);
         //posiziona il pallino del giocatore nella stanza attuale
@@ -92,7 +92,7 @@ public class MiniMap : MonoBehaviour, IUpdateData
         //per ogni stanza nella lista di stanze...
         foreach (RoomsBehaviour room in listOfRooms)
         {
-            Debug.Log("RoomImage: " + roomImage);
+            Debug.Log("RoomImage di stanza: " + room);
             //...crea una nuova immagine di stanza, ne calcola la posizione e rotazione e lo rende figlio di questo gameobject...
             GameObject newRoomImage = Instantiate(roomImage, Vector2.zero, room.transform.rotation, transform);
 
@@ -120,6 +120,8 @@ public class MiniMap : MonoBehaviour, IUpdateData
             Transform thisImageRoomDoors = newRoomImage.transform.GetChild(1).GetChild(thisRoomDoorsContainer.GetSiblingIndex());
             //Debug.LogError("Contenitore Stanza: " + thisRoomDoorsContainer);
             thisImageRoomDoors.gameObject.SetActive(true);
+            //...crea una variabile che indica la stanza della porta d'ancoraggio scelta...
+            int doorRoomChosen = -1;
             //...e per ogni porta nei contenitori...
             for (int door = 0; door < thisRoomDoorsContainer.childCount; door++)
             {
@@ -127,9 +129,9 @@ public class MiniMap : MonoBehaviour, IUpdateData
                 DoorsBehaviour thisDoor = thisRoomDoorsContainer.GetChild(door).GetComponent<DoorsBehaviour>();
                 //...controlla se la porta è attiva o meno...
                 bool doorIsActive = thisDoor.gameObject.activeSelf;
-                //...se è la porta è attiva viene mostrata nella minimappa, altrimenti viene disattivata
+                //...se la porta è attiva, viene mostrata nella minimappa, altrimenti viene disattivata...
                 thisImageRoomDoors.GetChild(door).gameObject.SetActive(doorIsActive);
-                //..se la porta è attiva...
+                //...inoltre, se la porta è attiva...
                 if (doorIsActive)
                 {
 
@@ -137,18 +139,38 @@ public class MiniMap : MonoBehaviour, IUpdateData
 
                     //foreach (int ID in doorsX) { if (thisDoor.GetOwnRoomID() == ID) { isNewDoor = false; break; } }
 
-                    if (/*isNewDoor*/pivotDoors.Count < allRoomImages.Count)
+                    //...e questa stanza non ha già trovato una porta d'ancoraggio...
+                    if (/*isNewDoor*/ /*pivotDoors.Count < allRoomImages.Count*/ doorRoomChosen == -1)
                     {
                         //...ottiene la posizione della porta nella UI...
                         //doorsPositions.Add(thisDoor.transform.position);
+
                         //...aggiunge, alla lista di indici di porte pivot, l'ID di questa porta...
                         pivotDoors.Add(thisDoor.transform.GetSiblingIndex());
                         //...aggiunge, alla lista di indici di porte d'ancoraggio, l'ID della porta dopo...
                         anchorDoors.Add(thisDoor.GetNextDoor().transform.GetSiblingIndex());
-                        //...e di quest'ultima porta ottiene l'ID della stanza di cui fa parte
-                        anchorDoorsRooms.Add(thisDoor.GetNextDoor().GetOwnRoomID()/*index*/);
+                        //...e di quest'ultima porta ottiene l'ID della stanza di cui fa parte...
+                        anchorDoorsRooms.Add(thisDoor.GetNextDoor().GetOwnRoomID());
+                        //...infine, aggiorna l'ID della stanza della porta d'ancoraggio trovata
+                        doorRoomChosen = thisDoor.GetNextDoor().GetOwnRoomID();
+
+                    } //altrimenti, se è stata trovata una porta d'ancoraggio di una stanza con indice più basso, ...
+                    else if (thisDoor.GetNextDoor().GetOwnRoomID() < doorRoomChosen)
+                    {
+                        //...cambia l'ID della porta che funge da pivot trovata per questa immagine stanza...
+                        pivotDoors[pivotDoors.Count - 1] = thisDoor.transform.GetSiblingIndex();
+                        //...cambia l'ID della porta d'ancoraggio trovata per questa immagine stanza...
+                        anchorDoors[anchorDoors.Count - 1] = thisDoor.GetNextDoor().transform.GetSiblingIndex();
+                        //...e cambia l'ID della stanza di cui fa parte la porta d'ancoraggio
+                        anchorDoorsRooms[anchorDoorsRooms.Count - 1] = thisDoor.GetNextDoor().GetOwnRoomID();
+                        //...infine, aggiorna l'ID della stanza della porta d'ancoraggio trovata
+                        doorRoomChosen = thisDoor.GetNextDoor().GetOwnRoomID();
 
                     }
+                    /*
+                     * QUESTO CONTROLLO ELSE-IF VIENE FATTO PERCHE' POTREBBE SUCCEDERE CHE VIENE TROVATA UNA PORTA D'ANCORAGGIO DI UNA STANZA NON ANCORA CREATA...
+                     * ...CHE PORTA AD UN NON CORRETTO POSIZIONAMENTO DELLE STANZE NELLA MINIMAPPA 
+                    */
 
                 }
 
