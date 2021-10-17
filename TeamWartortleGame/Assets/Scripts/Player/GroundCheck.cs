@@ -59,6 +59,11 @@ public class GroundCheck : MonoBehaviour
     /// <returns></returns>
     public bool GetNoFloor() { return noFloor; }
     /// <summary>
+    /// Ritorna lo stato di caduta dell'altro GroundCheck
+    /// </summary>
+    /// <returns></returns>
+    public bool GetOtherNoFloor() { return otherGC.noFloor; }
+    /// <summary>
     /// Si occupa del tempismo di caduta
     /// </summary>
     /// <param name="hole"></param>
