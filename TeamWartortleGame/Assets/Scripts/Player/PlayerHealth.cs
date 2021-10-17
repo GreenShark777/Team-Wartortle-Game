@@ -176,6 +176,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         else return false;
     }
 
+    public bool isTotalHealthReached()
+    {
+        //Se la vita massima ha raggiunto il massimo totale ritorna true, così che non si possono sbloccare nuovi cuori
+        return (maxHealth >= maxTotalHealth);
+    }
+
     private IEnumerator IHitColor()
     {
         //Imposto che non posso essere danneggiato attraverso la booleana canDamage

@@ -378,8 +378,8 @@ MonoBehaviour:
   - {fileID: 2794598075821390246}
   - {fileID: 2080538154599936375}
   m_Bounds:
-    m_Center: {x: 0.00014148653, y: -0.0011698008, z: 0}
-    m_Extent: {x: 0.19983932, y: 1.0610399, z: 0}
+    m_Center: {x: 0.0001424402, y: -0.0011701584, z: 0}
+    m_Extent: {x: 0.19983932, y: 1.0610402, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &1004403866386778692
@@ -514,7 +514,7 @@ MonoBehaviour:
   - {fileID: 3833938613398684765}
   - {fileID: 2951435641678819792}
   m_Bounds:
-    m_Center: {x: 0.00011178851, y: 0.0013645887, z: 0}
+    m_Center: {x: 0.00011178851, y: 0.0013650656, z: 0}
     m_Extent: {x: 0.4448902, y: 0.403035, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -1081,7 +1081,7 @@ MonoBehaviour:
   - {fileID: 2259622149480362785}
   - {fileID: 3911054531736561926}
   m_Bounds:
-    m_Center: {x: -0.008110225, y: -0.00008523464, z: 0}
+    m_Center: {x: -0.008108318, y: -0.00008499622, z: 0}
     m_Extent: {x: 0.46688986, y: 1.1779246, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -1377,8 +1377,8 @@ MonoBehaviour:
   - {fileID: 147179663692093147}
   - {fileID: 4317576301055771709}
   m_Bounds:
-    m_Center: {x: -0.006313801, y: -0.009740114, z: 0}
-    m_Extent: {x: 1.178676, y: 1.9502497, z: 0}
+    m_Center: {x: -0.006313324, y: -0.009739876, z: 0}
+    m_Extent: {x: 1.1786755, y: 1.9502497, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &2459740536250705641
@@ -1584,8 +1584,8 @@ MonoBehaviour:
   - {fileID: 5360540618018840429}
   - {fileID: 2951435641678819792}
   m_Bounds:
-    m_Center: {x: -0.00058579445, y: -0.00000035762787, z: 0}
-    m_Extent: {x: 1.7641747, y: 1.2099899, z: 0}
+    m_Center: {x: -0.0005838871, y: -0.00000035762787, z: 0}
+    m_Extent: {x: 1.7641747, y: 1.20999, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &2717554341720424792
@@ -1826,7 +1826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b448c4aba87eec4f84d46a19d7c7553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHp: 1
+  enemyHp: 7
   maxHP: 0
   defeated: 0
   enemyCollider: {fileID: 4801721269894419237}
@@ -3425,8 +3425,8 @@ MonoBehaviour:
   - {fileID: 1418183280197951062}
   - {fileID: 2951435641678819792}
   m_Bounds:
-    m_Center: {x: -0.0036090016, y: 0.0013408661, z: 0}
-    m_Extent: {x: 0.63138914, y: 1.1127601, z: 0}
+    m_Center: {x: -0.0036070943, y: 0.00134027, z: 0}
+    m_Extent: {x: 0.63138914, y: 1.1127597, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &6008686176815112597
@@ -4651,7 +4651,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 1786122896894195505}
   m_Bounds:
-    m_Center: {x: 0.00082695484, y: 0.00258407, z: 0}
+    m_Center: {x: 0.00082695484, y: 0.002584666, z: 0}
     m_Extent: {x: 0.539175, y: 0.45741504, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -5353,7 +5353,7 @@ MonoBehaviour:
   - {fileID: 2336676103841542630}
   - {fileID: 1786122896894195505}
   m_Bounds:
-    m_Center: {x: -0.0008100271, y: -0.017890215, z: 0}
+    m_Center: {x: -0.0008100271, y: -0.017889977, z: 0}
     m_Extent: {x: 1.53542, y: 2.54289, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1

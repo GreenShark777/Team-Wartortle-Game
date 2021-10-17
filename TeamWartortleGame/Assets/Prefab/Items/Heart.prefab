@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 421846260363393917}
   - component: {fileID: 593767918}
   - component: {fileID: 593767919}
+  - component: {fileID: 6155247006739709621}
+  - component: {fileID: 7628460754427259550}
   m_Layer: 0
   m_Name: Heart
   m_TagString: Untagged
@@ -65,7 +67,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fullHeart: {fileID: 21300000, guid: c99c7f9d189cef047b7defb611275b7d, type: 3}
   halfHeart: {fileID: 21300000, guid: b2d2e9b781143804eb826d29855c45fa, type: 3}
-  playerHealth: {fileID: 0}
 --- !u!210 &593767918
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -96,6 +97,42 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &6155247006739709621
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381931115625522148}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &7628460754427259550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381931115625522148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89eb769a8bfbafd4cacce2831f6c9d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 6155247006739709621}
+  toPush: 1
+  slowSpeed: 1
 --- !u!1 &5916107154405920010
 GameObject:
   m_ObjectHideFlags: 0

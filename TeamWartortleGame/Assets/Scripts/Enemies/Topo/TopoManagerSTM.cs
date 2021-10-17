@@ -42,6 +42,9 @@ public class TopoManagerSTM : MonoBehaviour
 
     private void Awake()
     {
+        //Memorizzo la posizione iniziale
+        startPos = transform.position;
+
         //Aggiungo tutti gli stm al gameObject
         topoIdle = GetComponent<TopoIdle>();
         topoMovement = GetComponent<TopoMovement>();
@@ -52,12 +55,6 @@ public class TopoManagerSTM : MonoBehaviour
 
         //Prendo il riferimento dello script EnemiesHealth
         enHealth = GetComponent<EnemiesHealth>();
-    }
-
-    private void Start()
-    {
-        //Memorizzo la posizione iniziale
-        startPos = transform.position;
     }
 
     private void OnEnable()
@@ -78,11 +75,11 @@ public class TopoManagerSTM : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
-        //Chiamo il metodo FixedUpdate dello stato corrente visto che mi trovo nel FixedUpdate
-        currentState.StateFixedUpdate();
-    }
+    //private void FixedUpdate()
+    //{
+    //    //Chiamo il metodo FixedUpdate dello stato corrente visto che mi trovo nel FixedUpdate
+    //    currentState.StateFixedUpdate();
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

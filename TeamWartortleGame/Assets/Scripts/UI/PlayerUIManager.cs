@@ -11,7 +11,7 @@ public class PlayerUIManager : MonoBehaviour
 
     //indica qual'è il valore minimo che gli slider possono avere(in modo da far rimanere almeno una piccola tacca anche quando si è al minimo)
     [SerializeField]
-    private float minSlidersValue = 4.5f;
+    private float minSlidersValue = 0f;
     //riferimenti alle immagini da cambiare per indicare al giocatore l'arma in uso
     [SerializeField]
     private Image weaponInUseImage = default,
@@ -25,14 +25,28 @@ public class PlayerUIManager : MonoBehaviour
 
     float lastMaliciounessValue = default;
 
+    //Boolenaa che controlla se il valore massimo di una delle due barre è stato raggiunto
+    private bool maxValueReached = false;
+
+    //Valori da raggiungere per effetuare un potenziamento
+    float maliciousnessTarget, goodWillTarget;
+
     private void Start()
     {
         lastMaliciounessValue = goodwillSlider.value;
+        //Il target da raggiungere per ottenere il potenziamento è del valore iniziale + 50
+        maliciousnessTarget = maliciousnessSlider.value + 20;
+        goodWillTarget = goodwillSlider.value + 20;
+
+
     }
-    //private void Update()
-    //{
-    //    Debug.Log(goodwillSlider.value);
-    //}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ChangeMaliciousnessBar(GetMaliciousness() - 5);
+        } else if (Input.GetKeyDown(KeyCode.N)) ChangeMaliciousnessBar(GetMaliciousness() + 5);
+    }
     /// <summary>
     /// Cambia il valore della barra della malizia, cambiando di conseguenza anche quella della bontà
     /// </summary>
@@ -40,58 +54,85 @@ public class PlayerUIManager : MonoBehaviour
     public void ChangeMaliciousnessBar(float newMaliciousness)
     {
 
-        //Debug.Log("Goodwill calculated: " + newMaliciousness + " - " + maliciousnessSlider.value + " -> "
-        //+ (goodwillSlider.value - (newMaliciousness - maliciousnessSlider.value)));
-
-        //calcola il valore che la barra della bontà deve avere
-        goodwillSlider.value -= newMaliciousness - maliciousnessSlider.value;
-        goodwillSlider.value = Mathf.Clamp(goodwillSlider.value, minSlidersValue, goodwillSlider.maxValue);
-
-        //calcola il valore che la barra della malizia deve avere
-        maliciousnessSlider.value = newMaliciousness;
-        maliciousnessSlider.value = Mathf.Clamp(maliciousnessSlider.value, minSlidersValue, maliciousnessSlider.maxValue);
-
-        //Se la nuova malizia è maggiore dell'ultima vuol dire che sto potenziando la malizia
-        if (newMaliciousness > lastMaliciounessValue)
+        //Se una delle due barre non ha raggiunto il valore massimo posso ancora modificare le statistiche
+        if (!maxValueReached)
         {
-            //Se la barra del cattivo è maggiore posso aumentare la caratteristica da demone
-            if (maliciousnessSlider.value > goodwillSlider.value)
+            //Debug.Log("Goodwill calculated: " + newMaliciousness + " - " + maliciousnessSlider.value + " -> "
+            //+ (goodwillSlider.value - (newMaliciousness - maliciousnessSlider.value)));
+
+            //calcola il valore che la barra della bontà deve avere
+            goodwillSlider.value -= newMaliciousness - maliciousnessSlider.value;
+            goodwillSlider.value = Mathf.Clamp(goodwillSlider.value, minSlidersValue, goodwillSlider.maxValue);
+
+            //calcola il valore che la barra della malizia deve avere
+            maliciousnessSlider.value = newMaliciousness;
+            maliciousnessSlider.value = Mathf.Clamp(maliciousnessSlider.value, minSlidersValue, maliciousnessSlider.maxValue);
+
+            Debug.Log(maliciousnessSlider.value);
+
+      
+            //Se la nuova malizia è maggiore dell'ultima vuol dire che sto potenziando la malizia
+            if (newMaliciousness > lastMaliciounessValue)
             {
-                Debug.Log("Divisione: " + maliciousnessSlider.maxValue / 1.5f);
-                //Se il valore di bontà superà i tre quarti e non sono già un demone, posso transformarmi  in un'demone
-                if (maliciousnessSlider.value > maliciousnessSlider.maxValue / 1.5f && !GameManager.inst.demon)
+                //Se la malizia ha raggiunto il target per potenziare il personaggio
+                if (maliciousnessSlider.value >= maliciousnessTarget)
                 {
-                    //Mi posso transformare in un demone e aumento il danno della spada
-                    GameManager.inst.ChangeStats(0, .5f, false, true, "You became an demon!");
-                }
-                //Altrimenti aumento solo la statistica di danno della spada
-                else
-                {
-                    GameManager.inst.ChangeStats(0, .5f, false, false, "Your sword gets stronger!");
+                    //Se la barra del cattivo è maggiore posso aumentare la caratteristica da demone
+                    if (maliciousnessSlider.value > goodwillSlider.value)
+                    {
+                        Debug.Log("isDemon: " + GameManager.inst.demon);
+                        //Se il valore di bontà superà è a metà e non sono già un demone, posso transformarmi  in un'demone
+                        if (maliciousnessSlider.value >= 160f && !GameManager.inst.demon)
+                        {
+                            //Mi posso transformare in un demone e aumento il danno della spada
+                            GameManager.inst.ChangeStats(0, 2f, false, true, "You turned into a demon!");
+                        }
+                        //Altrimenti aumento solo la statistica di danno della spada
+                        else
+                        {
+                            GameManager.inst.ChangeStats(0, 2f, false, false, "Your sword gets stronger!");
+                        }
+                    }
+                    //Imposto il prossimo target per raggiungere il potenziamento
+                    maliciousnessTarget = maliciousnessSlider.value + 20;
+                    //Cntrollo se la barra è al massimo
+                    if (maliciousnessSlider.value == maliciousnessSlider.maxValue)
+                        maxValueReached = true;
                 }
             }
-        }
-        else if (newMaliciousness < lastMaliciounessValue)
-        {
-            //Se il valore di bontà e maggiore di quello cattivo
-            if (goodwillSlider.value > maliciousnessSlider.value)
+            else if (newMaliciousness < lastMaliciounessValue)
             {
-                Debug.Log("Divisione: " + goodwillSlider.maxValue / 1.5f);
-                //Se il valore di bontà superà i tre quarti e non sono già un angelo, posso transformarmi  in un'angelo
-                if (goodwillSlider.value > goodwillSlider.maxValue / 1.5f && !GameManager.inst.angel)
-                {
-                    //Mi posso transformare in un angelo e aumento il danno della pistola
-                    GameManager.inst.ChangeStats(.5f, 0, true, false, "You became an angel!");
-                }
-                //Altrimenti aumento solo la statistica di danno della pistola
-                else
-                {
-                    GameManager.inst.ChangeStats(.5f, 0, false, false, "Your gun gets stronger!");
-                }
-            }
-        }
+                //Se il karma buono ha raggiunto il target per potenziare il personaggio
 
-        lastMaliciounessValue = newMaliciousness;
+                Debug.Log("goodWill: " + goodwillSlider.value);
+                Debug.Log("goodWillTarget: " + goodWillTarget);
+                if (goodwillSlider.value >= goodWillTarget)
+                {
+                    //Se il valore di bontà e maggiore di quello cattivo
+                    if (goodwillSlider.value > maliciousnessSlider.value)
+                    {
+                        Debug.Log("isAngel: " + GameManager.inst.angel);
+                        //Se il valore di bontà superà i tre quarti e non sono già un angelo, posso transformarmi  in un'angelo
+                        if (goodwillSlider.value >= 160f && !GameManager.inst.angel)
+                        {
+                            //Mi posso transformare in un angelo e aumento il danno della pistola
+                            GameManager.inst.ChangeStats(1f, 0, true, false, "You turned into an angel!");
+                        }
+                        //Altrimenti aumento solo la statistica di danno della pistola
+                        else
+                        {
+                            GameManager.inst.ChangeStats(1f, 0, false, false, "Your gun gets stronger!");
+                        }
+                    }
+                    //Imposto il prossimo target per raggiungere il potenziamento
+                    goodWillTarget = goodwillSlider.value + 20;
+                }
+                if (goodwillSlider.value == goodwillSlider.maxValue)
+                    maxValueReached = true;
+            }
+
+            lastMaliciounessValue = newMaliciousness;
+        }
     }
     /// <summary>
     /// Permette ad altri script di ottenere il riferimento alla attuale malizia del giocatore

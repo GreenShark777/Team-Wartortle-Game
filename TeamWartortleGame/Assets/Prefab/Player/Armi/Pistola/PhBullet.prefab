@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6da5fbde4d9674a8dc4160a716ee94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackStat: 10.5
+  attackStat: 1
   pushForceStat: 0
   stunTime: 0.2
   thisWeapon: 1
@@ -69,6 +69,7 @@ MonoBehaviour:
   goesThroughSolids: 0
   speed: 16
   gbName: Bullets
+  animator: {fileID: 0}
 --- !u!50 &7289809786999007921
 Rigidbody2D:
   serializedVersion: 4

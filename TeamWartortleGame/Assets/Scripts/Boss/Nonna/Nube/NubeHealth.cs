@@ -16,7 +16,7 @@ public class NubeHealth : EnemiesHealth, IDamageable
 
     //Velocità dello smooth
     [SerializeField]
-    private float smoothTime = 0.3F;
+    private float smoothTime = 2F;
 
     public override void Awake()
     {

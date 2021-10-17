@@ -82,6 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7185962082019715349}
   - component: {fileID: 7185962082019715348}
+  - component: {fileID: 1742284352920133972}
   m_Layer: 0
   m_Name: finestra
   m_TagString: Untagged
@@ -155,3 +156,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1742284352920133972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7185962082019715351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce4ca0eacf6145b42877f784758a5a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorEvil: {r: 0.85882354, g: 0.15294118, b: 0, a: 1}
+  currentLight: {fileID: 7185962081661781544}

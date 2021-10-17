@@ -106,11 +106,14 @@ public class TopoMovement : TopoAbstract
                 StartCoroutine(IGetPosition());
             }
             //Muovo il rigidBody nella posizione stabilita sommando alla posizione corrente la destinazione
-            rb.MovePosition(rb.position + this.movePos.normalized * (speed * Time.fixedDeltaTime));
+            //rb.MovePosition(rb.position + this.movePos.normalized * (speed * Time.fixedDeltaTime));
+            rb.velocity = this.movePos.normalized * speed;
             yield return null;
         }
         //Blocco il movimento
         this.movePos = Vector2.zero;
+        //Blocco anche la velocità del rigidBody
+        rb.velocity = Vector2.zero;
         //Aggiorno l'animazione(si aggiornerà solo lo script velocità in questo caso in cui il vettore diventa a 0, quindi si passerà solo da running ad idle) 
         topoManager.CheckAnimation(this.movePos);
         //Torno allo stato idle e ripeto il ciclo idle-running

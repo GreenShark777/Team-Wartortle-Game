@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     //Riferimento al player
     [SerializeField]
-    private GameObject player;
+    public GameObject player;
 
     //Nemico corrente per la decisione(esecuzione o purificazione)
     [HideInInspector]
@@ -49,16 +49,30 @@ public class GameManager : MonoBehaviour
     public bool angel = false, demon = false;
 
     //Riferimento allo UI manager per effettuare i cambi visivi delle statistiche
-    [SerializeField]
-    private PlayerUIManager playerUI;
+    public PlayerUIManager playerUI;
 
     //Riferimento alla couroitine della decisione del nemico per poterla interrompere quella precedente per richiamarla di nuovo così da evitare conflitti
     private Coroutine enemyDecisionCor = default;
+
+    //Collezionabili 
+    [HideInInspector]
+    public int soul = 0, key = 0;
+
+    //Testo dei collezionabili da aggiornare quando vengono modificati
+    [SerializeField]
+    private TextMeshProUGUI soulText, keyText;
+
+    //Valore da superare in anime per ottenere un cuore
+    [HideInInspector]
+    public int soulValue = 30;
 
     private void Start()
     {
         //Singleton pattern
         inst = this;
+
+        //Inizializzo l'HUD degli item
+        UpdateItemHUG();
     }
 
     public Vector2 GetGunDirection()
@@ -77,6 +91,85 @@ public class GameManager : MonoBehaviour
             enemyDecisionCor = StartCoroutine(IEnemyDecision(enemy, value, enHealth));
     }
 
+    //Gestisce il cambio di statistiche e la transformazione del personaggio in angelo o demone
+    public void ChangeStats(float gunDmg = 0, float swordDmg = 0, bool angel = false, bool demon = false, string msg = default)
+    {
+        //Se non mi devo transformare
+        if (!angel && !demon)
+        {
+            //Se il danno della pistola passato è più forte della spada vuol dire che sto modificando il danno della pistola
+            if (gunDmg > swordDmg)
+            {
+                //Aumento il danno della pistola
+                gunStats.ChangeAttackStat(gunDmg);
+            }
+            //Altrimenti sto aumentando il danno della spada
+            else
+            {
+                //Aumento il danno della spada
+                swordStats.ChangeAttackStat(swordDmg);
+            }
+
+        }
+        //Altrimenti se sto subendo una transformazione e non sono già transformato
+        else if ((angel || demon))
+        {
+
+            //La transformazione è avvenuta quindi non posso ripeterla
+            //transformated = true;
+            //Se mi sto transformando in un angelo
+            if (angel)
+            {
+                //Imposto la booleana della transformazione della angelo a true
+                this.angel = angel;
+                //Metto il demone al contrario invece
+                this.demon = !angel;
+                //Per ogni testa(side, front e back)
+                for (int i = 0; i < currentHeads.Length; i++)
+                {
+                    //Assegno in ordine le nuove teste angelo
+                    currentHeads[i].sprite = angelHeads[i];
+                }
+            }
+            //Altrimenti se mi sto transformando in un demone
+            else
+            {
+                //Imposto la booleana della transformazione della angelo a true
+                this.demon = demon;
+                //Metto il demone al contrario invece
+                this.angel = !demon;
+                //Per ogni testa(side, front e back)
+                for (int i = 0; i < currentHeads.Length; i++)
+                {
+                    //Assegno in ordine le nuove teste demone
+                    currentHeads[i].sprite = demonHeads[i];
+                }
+            }
+        }
+
+        //Mostro il messaggio passando la stringa 
+        msgAn.GetComponentInChildren<TextMeshProUGUI>().text = msg;
+        //Attivo inoltre l'animazione del texto
+        msgAn.SetTrigger("On");
+    }
+
+    //Metodo chiamato dallo script enemy decision per controllare se la coroutine che applica la sorte di un nemico e finita o no
+    //se è finita ritornerà true e potrà quindi apparire di nuovo il pannello per la decisione
+    public bool CanActiveForDecision()
+    {
+        //Se la coroutine non c'è in questo momento ritorna true
+        if (enemyDecisionCor == null)
+            return true;
+        //Altrimenti ritorna false perché vuol dire che si sta eseguendo
+        else return false;
+    }
+
+    public void UpdateItemHUG()
+    {
+        soulText.text = ":" + " " + soul;
+        keyText.text = ":" + " " + key;
+    }
+
     private IEnumerator IEnemyDecision(GameObject enemy, int value, EnemiesHealth enHealth)
     {
         //Riferimento all'animator del player
@@ -91,7 +184,7 @@ public class GameManager : MonoBehaviour
         if (value == 0)
         {
             //Diminuisco la malizia di 25
-            playerUI.ChangeMaliciousnessBar(playerUI.GetMaliciousness() - 25);
+            playerUI.ChangeMaliciousnessBar(playerUI.GetMaliciousness() - 5);
             //Eseguo l'animazione
             anPlayer.SetTrigger("Execution");
             //Attivo la croce
@@ -125,7 +218,7 @@ public class GameManager : MonoBehaviour
         else 
         {
             //Aumento la malizia di 25
-            playerUI.ChangeMaliciousnessBar(playerUI.GetMaliciousness() + 25);
+            playerUI.ChangeMaliciousnessBar(playerUI.GetMaliciousness() + 5);
             anPlayer.SetTrigger("Purify");
             //Attivo la spada
             spada.SetActive(true);
@@ -194,76 +287,4 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    //Gestisce il cambio di statistiche e la transformazione del personaggio in angelo o demone
-    public void ChangeStats(float gunDmg = 0, float swordDmg = 0, bool angel = false, bool demon = false, string msg = default)
-    {
-        //Se non mi devo transformare
-        if (!angel && !demon)
-        {
-            //Se il danno della pistola passato è più forte della spada vuol dire che sto modificando il danno della pistola
-            if (gunDmg > swordDmg)
-            {
-                //Aumento il danno della pistola
-                gunStats.ChangeAttackStat(gunDmg);
-            }
-            //Altrimenti sto aumentando il danno della spada
-            else 
-            {
-                //Aumento il danno della spada
-                swordStats.ChangeAttackStat(swordDmg);
-            }
-
-        }
-        //Altrimenti se sto subendo una transformazione e non sono già transformato
-        else if ((angel || demon) && !transformated)
-        {
-    
-            //La transformazione è avvenuta quindi non posso ripeterla
-            transformated = true;
-            //Se mi sto transformando in un angelo
-            if (angel)
-            {
-                //Imposto la booleana della transformazione della angelo a true
-                this.angel = angel;
-                //Metto il demone al contrario invece
-                this.demon = !angel;
-                //Per ogni testa(side, front e back)
-                for (int i=0; i<currentHeads.Length; i++)
-                {
-                    //Assegno in ordine le nuove teste angelo
-                    currentHeads[i].sprite = angelHeads[i];
-                }
-            }
-            //Altrimenti se mi sto transformando in un demone
-            else
-            {
-                //Imposto la booleana della transformazione della angelo a true
-                this.demon = demon;
-                //Metto il demone al contrario invece
-                this.angel = !demon;
-                //Per ogni testa(side, front e back)
-                for (int i = 0; i < currentHeads.Length; i++)
-                {
-                    //Assegno in ordine le nuove teste demone
-                    currentHeads[i].sprite = demonHeads[i];
-                }
-            }
-        }
-
-        //Mostro il messaggio passando la stringa 
-        msgAn.GetComponentInChildren<TextMeshProUGUI>().text = msg;
-        //Attivo inoltre l'animazione del texto
-        msgAn.SetTrigger("On");
-    }
-
-    //Metodo chiamato dallo script enemy decision per controllare se la coroutine che applica la sorte di un nemico e finita o no
-    //se è finita ritornerà true e potrà quindi apparire di nuovo il pannello per la decisione
-    public bool CanActiveForDecision()
-    {
-        //Se la coroutine non c'è in questo momento ritorna true
-        if (enemyDecisionCor == null)
-            return true;
-        //Altrimenti ritorna false perché vuol dire che si sta eseguendo
-        else return false;
-    }
 }

@@ -24,66 +24,26 @@ public class TopoDefeated : TopoAbstract
 
     public override void StateEnter()
     {
-        topoManager.rb.MovePosition(topoManager.rb.position);
-        //Ottengo i riferimenti via codice
-        //fillPurifica = chooseGB.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        //fillEsecuzione = chooseGB.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        topoManager.rb.velocity = Vector3.zero;
+        topoManager.rb.angularVelocity = 0;
+
     }
 
     public override void StateUpdate()
     {
-        //Controllo che il gameobject di scelta sia attivo e che quindi sia abbastanza vicino da effettuarla
-        //if (chooseGB.activeSelf)
-        //{
-        //    //Registro il tempo corrente se sto iniziando a premere uno dei due pulsanti o li sto rilasciando
-        //    if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.E))
-        //    {
-        //        //Azzero tutto
-        //        timerConverted = 0;
-        //        fillPurifica.fillAmount = 0;
-        //        fillEsecuzione.fillAmount = 0;
-        //    }
+        topoManager.rb.velocity = Vector3.zero;
+        topoManager.rb.angularVelocity = 0;
+        Debug.Log("Prova");
 
-        //    //Se sono sotto il primo secondo
-        //    if (timerConverted < 1f)
-        //    {
-        //        //Aumento la barra di Q se sto premendo Q(Purificazione)
-        //        if (Input.GetKey(KeyCode.Q))
-        //        {
-        //            //Lerpo il fill della purificazione e mezzo secondo
-        //            timerConverted += Time.deltaTime / .5f;
-        //            fillPurifica.fillAmount = Mathf.Lerp(0, 1, timerConverted);
-        //        //Altrimenti aumento la barra di E se sto premendo E(Esecuzione)
-        //        } else if (Input.GetKey(KeyCode.E))
-        //        {
-        //            //Lerpo il fill della purificazione e mezzo secondo
-        //            timerConverted += Time.deltaTime / .5f;
-        //            fillEsecuzione.fillAmount = Mathf.Lerp(0, 1, timerConverted);
-        //        }
-        //    }
-        //    //altrimenti, se il timer è stato superato
-        //    else
-        //    {
-        //        chooseGB.SetActive(false);
-        //        canActiveChoose = false;
-        //        if (fillPurifica.fillAmount > fillEsecuzione.fillAmount) GameManager.inst.SceltaPerNemico(this.gameObject,0, topoManager.enHealth);
-        //        else GameManager.inst.SceltaPerNemico(this.gameObject, 1, topoManager.enHealth);
-        //    }
-        //}
     }
 
     public override void StateFixedUpdate() { }
 
     public override void StateTriggerEnter(Collider2D collision) {
-        //    //Attivo il GameObject delle scelte, nel caso in cui non sia già attivato
-        //    if (collision.CompareTag("Player") && canActiveChoose)
-        //        if (!chooseGB.activeSelf) chooseGB.SetActive(true);
+
     }
 
     public override void StateTriggerExit(Collider2D collision) {
-        //Dasattivo il GameObject delle scelte, nel caso in cui non sia già disattivato
-        //if (collision.CompareTag("Player"))
-        //    if (chooseGB.activeSelf) chooseGB.SetActive(false);
     }
 
     public override void StateCollisionEnter(Collision2D collision) { }
