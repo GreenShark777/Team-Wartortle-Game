@@ -60,7 +60,7 @@ public class DoorsBehaviour : MonoBehaviour
     /// Ritorna la porta a cui questa porta deve portare
     /// </summary>
     /// <returns></returns>
-    public DoorsBehaviour GetNextDoor() { return nextDoor; }
+    public DoorsBehaviour GetNextDoor() { /*Debug.Log(this + " : " + RoomsManager.GetRoomsList()[ownRoomID] + " : " + nextDoor);*/ return nextDoor; }
     /// <summary>
     /// Permette di impostare l'ID della stanza d'appartenenza
     /// </summary>

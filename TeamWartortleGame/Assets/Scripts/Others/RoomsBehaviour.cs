@@ -127,7 +127,7 @@ public class RoomsBehaviour : MonoBehaviour
         //se lo sprite della stanza è quello della stanza quadrata, bisogna attivare il collider ad indice 0
         if (roomSpriteName.Contains("quadrata")) { indexToActivate = 0; }
         //altrimenti,se lo sprite della stanza è quello della stanza rettangolare, bisogna attivare il collider ad indice 1
-        else if (roomSpriteName.Contains("rettangolare")) { indexToActivate = 1; }
+        else if (roomSpriteName.Contains("rettangolare")) { indexToActivate = (!roomSpriteName.Contains("gigante")) ? 1 : 5; }
         //altrimenti,se lo sprite della stanza è quello della stanza a T, bisogna attivare il collider ad indice 2
         else if (roomSpriteName.Contains("T")) { indexToActivate = 2; }
         //altrimenti,se lo sprite della stanza è quello della stanza a L, bisogna attivare il collider ad indice 3
