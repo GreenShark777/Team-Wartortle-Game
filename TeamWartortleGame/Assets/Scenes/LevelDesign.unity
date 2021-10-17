@@ -8207,6 +8207,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &863053911 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 747096969, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
+  m_PrefabInstance: {fileID: 1136615541}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &909583850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9148,6 +9159,17 @@ MonoBehaviour:
   slashSequenceResetCD: 0.2
   playerUIManag: {fileID: 0}
   animator: {fileID: 0}
+--- !u!114 &1113561806 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 294239239, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
+  m_PrefabInstance: {fileID: 1136615541}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1115835793
 GameObject:
   m_ObjectHideFlags: 0
@@ -10737,9 +10759,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2146829872}
     - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
+      propertyPath: keyText
+      value: 
+      objectReference: {fileID: 1113561806}
+    - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
       propertyPath: playerUI
       value: 
       objectReference: {fileID: 572138462}
+    - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
+      propertyPath: soulText
+      value: 
+      objectReference: {fileID: 863053911}
     - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
       propertyPath: swordStats
       value: 
