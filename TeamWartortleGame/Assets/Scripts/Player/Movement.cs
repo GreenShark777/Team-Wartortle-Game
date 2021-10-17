@@ -42,7 +42,9 @@ public class Movement : MonoBehaviour
     private void FixedUpdate()
     {
         //Muovo il Personaggio sommando la posizione da raggiungere a quella corrente
-        rb.MovePosition(rb.position + (movePosRb * moveSpeed * Time.fixedDeltaTime));
+        //rb.MovePosition(rb.position + (movePosRb * moveSpeed * Time.fixedDeltaTime));
+        rb.velocity = movePosRb * moveSpeed;
+
     }
 
     //Metodo che imposta i valori float dell'animatore e decide la direzione, se in idle o in running
@@ -116,6 +118,13 @@ public class Movement : MonoBehaviour
         weaponContainer.ShootFendente();
     }
 
+    private void OnDisable()
+    {
+
+        rb.velocity = Vector2.zero;
+
+    }
+
     //Coroutine di knockback
     private IEnumerator IKnockback(Vector3 pos, float knockPower)
     {
@@ -136,4 +145,5 @@ public class Movement : MonoBehaviour
 
         yield return null;
     }
+
 }

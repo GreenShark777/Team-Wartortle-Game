@@ -5,6 +5,7 @@ using UnityEngine;
 public class GroundCheck : MonoBehaviour
 {
     //indica se questo collider è per terra
+    [SerializeField]
     private bool noFloor = false;
     //riferimento all'altro GroundCheck
     [SerializeField]

@@ -150,7 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3015699616375610514}
   - component: {fileID: 3015699616375610513}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ColliderPiattaformaSemovente
   m_TagString: Untagged
   m_Icon: {fileID: 0}
