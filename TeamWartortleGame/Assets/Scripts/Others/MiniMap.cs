@@ -140,6 +140,9 @@ public class MiniMap : MonoBehaviour, IUpdateData
                 DoorsBehaviour thisDoor = thisRoomDoorsContainer.GetChild(door).GetComponent<DoorsBehaviour>();
                 //...controlla se la porta è attiva o meno...
                 bool doorIsActive = thisDoor.gameObject.activeSelf;
+
+                Debug.LogError(thisImageRoomDoors + " : " + door);
+
                 //...se la porta è attiva, viene mostrata nella minimappa, altrimenti viene disattivata...
                 thisImageRoomDoors.GetChild(door).gameObject.SetActive(doorIsActive);
                 //...inoltre, se la porta è attiva...
