@@ -162,7 +162,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
                 //...la telecamera non è più figlio del giocatore...
                 camBehaviour.ChangeCamParent(null);
                 //...e viene posizionata al centro della stanza
-                camBehaviour.ChangeCamPosition(room.transform.position);
+                Vector3 temp = new Vector3(room.transform.position.x, room.transform.position.y, -10);
+                camBehaviour.ChangeCamPosition(temp);
             
             }//altrimenti, se è la stanza attiva ma non è piccola...
             else if (isPlayerRoom && !room.IsSmallRoom())
@@ -257,6 +258,6 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         g.lastRoomID = lastEnteredRoom;
         //aggiorna la lista di nemici sconfitti nelle varie stanze
         g.defeatedAllEnemies = defeatedRooms;
-        //Debug.Log("Aggiornata ultima stanza entrata: " + lastEnteredRoom);
+        Debug.Log("Aggiornata ultima stanza entrata: " + lastEnteredRoom);
     }
 }
