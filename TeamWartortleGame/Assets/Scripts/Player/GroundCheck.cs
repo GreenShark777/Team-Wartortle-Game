@@ -82,6 +82,10 @@ public class GroundCheck : MonoBehaviour
     {
         //fa partire l'animazione di dissolvenza dello schermo in nero
         blackScreenAnim.SetTrigger("Dissolve");
+        //ottiene la velocità iniziale dell'animazione di fadeIn
+        float startSpeedAnim = blackScreenAnim.speed;
+        //dimezza la velocità d'animazione del fadeIn
+        blackScreenAnim.speed /= 2;
         //impedisce al giocatore di muoversi
         playerMovement.enabled = false;
         //fa cominciare l'animazione di caduta
@@ -92,6 +96,8 @@ public class GroundCheck : MonoBehaviour
         isFalling = true;
         //aspetta del tempo
         yield return new WaitForSeconds(fallingTime);
+        //riporta la velocità d'animazione di fadeIn alla velocità normale
+        blackScreenAnim.speed = startSpeedAnim;
         //fa finire l'animazione di caduta
         playerAnim.SetBool("Falling", false);
         //permette al giocatore di camminare nuovamente

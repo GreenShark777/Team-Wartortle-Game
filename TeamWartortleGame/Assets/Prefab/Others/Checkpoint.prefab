@@ -49,7 +49,7 @@ MonoBehaviour:
   saveUI: {fileID: 0}
   player: {fileID: 0}
   g: {fileID: 0}
-  IDCheckpoint: 0
+  IDCheckpoint: 1
 --- !u!70 &451038701000077985
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
 --- !u!1 &1331302710287394540
 GameObject:
   m_ObjectHideFlags: 0
