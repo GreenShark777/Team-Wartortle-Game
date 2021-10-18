@@ -32,6 +32,9 @@ public class RoomsManager : MonoBehaviour, IUpdateData
     //riferimento allo script di movimento del giocatore
     private static Movement playerMov;
 
+    [SerializeField]
+    private List<RoomsBehaviour> DebugRooms = new List<RoomsBehaviour>();
+
 
     private void Awake()
     {
@@ -48,6 +51,8 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         staticBlackScreenAnim = blackScreenAnim;
         //ottiene il riferimento allo script di movimento del giocatore
         playerMov = player.GetComponent<Movement>();
+
+        DebugRooms = rooms;
 
     }
 
