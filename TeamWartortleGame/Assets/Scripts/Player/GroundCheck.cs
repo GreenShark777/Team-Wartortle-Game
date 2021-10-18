@@ -1,5 +1,5 @@
+//Si occupa di controllare se il giocatore sta cadendo o se ha i piedi per terra
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
@@ -17,6 +17,9 @@ public class GroundCheck : MonoBehaviour
     private Animator playerAnim;
     //riferimento allo script di movimento del giocatore
     private Movement playerMovement;
+    //riferimento allo script della vita del giocatore
+    [SerializeField]
+    private PlayerHealth ph = default;
     //indica quanto tempo bisogna aspettare per respawnare dopo essere caduti
     [SerializeField]
     private float fallingTime = 1.4f;
@@ -104,6 +107,8 @@ public class GroundCheck : MonoBehaviour
         playerMovement.enabled = true;
         //fa respawnare il giocatore
         hole.Respawn(player);
+        //fa subire danno al giocatore
+        ph.Damage(1);
         //comunica che non si sta più cadendo
         isFalling = false;
         //comunica ad entrambi i GroundCheck che si sta toccando di nuovo terra

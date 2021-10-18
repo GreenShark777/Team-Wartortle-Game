@@ -61,7 +61,7 @@ public class BulletFollow : MonoBehaviour
 
     private void Disable()
     {
-        Debug.Log("Disable");
+        //Debug.Log("Disable");
 
         //Re inserisco il gameobject nell'object pooling passando il nome registrato
         if (gameObject.activeSelf)

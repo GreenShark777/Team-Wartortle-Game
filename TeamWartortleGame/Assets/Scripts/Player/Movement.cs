@@ -171,4 +171,12 @@ public class Movement : MonoBehaviour
 
         yield return null;
     }
+
+    private void OnDisable()
+    {
+        //quando questo script viene disabilitato, il giocatore non deve muoversi, quindi toglie tutte le forze che agiscono sul suo Rigidbody
+        rb.velocity = Vector2.zero;
+
+    }
+
 }
