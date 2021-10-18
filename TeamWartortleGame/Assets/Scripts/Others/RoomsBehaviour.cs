@@ -14,7 +14,7 @@ public class RoomsBehaviour : MonoBehaviour
     //riferimento al giocatore
     public static Transform player;
     //identificativo della stanza
-    [SerializeField]
+    //[SerializeField]
     private int roomID = 0;
     //riferimento allo sprite della stanza
     [SerializeField]
@@ -40,15 +40,15 @@ public class RoomsBehaviour : MonoBehaviour
     //private int roomType;
 
     //indice da dare ad ogni stanza ad Awake(in modo che sia sempre differente)
-    //private static int newRoomID = -1;
+    private static int newRoomID = -1;
 
 
     private void Awake()
     {
         //viene incrementato il nuovo ID da dare alle stanze
-        //newRoomID++;
+        newRoomID++;
         //la stanza ottiene un nuovo ID unico
-        //roomID = newRoomID;
+        roomID = newRoomID;
 
         //ottiene il riferimento al contenitore dei collider delle stanze
         collidersContainer = transform.GetChild(1);
