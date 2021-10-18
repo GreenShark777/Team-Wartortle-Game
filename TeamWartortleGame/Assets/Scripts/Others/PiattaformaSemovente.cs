@@ -52,7 +52,7 @@ public class PiattaformaSemovente : MonoBehaviour
         {
             //...sceglie il nuovo percorso in cui andare
             StartCoroutine(GoToNextRoute());
-            Debug.Log(distance + " : " + acceptableDistance);
+            //Debug.Log(distance + " : " + acceptableDistance);
         }
         //altrimenti, continua a far avvicinare la piattaforma al punto d'arrivo
         else { transform.position = Vector2.MoveTowards(transform.position, route[actualRoute].position, speed * Time.deltaTime); }
