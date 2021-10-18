@@ -39,8 +39,6 @@ public class PushRandom : MonoBehaviour
         {
             //Lerpo a 0 il vettore di spinta
             rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, slowSpeed * Time.deltaTime);
-
-            Debug.Log(rb.velocity);
             yield return null;
         }
         rb.velocity = Vector2.zero;

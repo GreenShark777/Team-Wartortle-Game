@@ -1714,7 +1714,7 @@ MonoBehaviour:
     m_Bits: 8
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
   speed: 5
   animator: {fileID: 2742340099010771816}
   rb: {fileID: 2742340099010771815}
@@ -1844,9 +1844,9 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2742340099010771813}
   m_Enabled: 1
-  m_SortingLayerID: -1265213571
-  m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &2742340099195206423
 GameObject:
   m_ObjectHideFlags: 0

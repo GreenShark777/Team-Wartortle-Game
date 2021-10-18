@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossHealth : EnemiesHealth, IDamageable
 {
+    //Parent della vita dell'HUD della vita del boss
+    [SerializeField]
+    private GameObject bossHealth;
+    //Slider della vita del boss
+    private Slider fillBarSlider;
+
     //Booleana che controlla se ci si trova alla seconda fase
     [HideInInspector]
     public bool secondPhase = false;
@@ -11,10 +18,27 @@ public class BossHealth : EnemiesHealth, IDamageable
     //Colori per la seconda fase
     [SerializeField]
     private Color rageColor, dmgRageColor;
+
+    private void Start()
+    {
+        //Attivo la vita del boss
+        bossHealth.SetActive(true);
+
+        //Trovo lo slider della fillbar del boss attraverso i suoi figli
+        fillBarSlider = bossHealth.GetComponentInChildren<Slider>();
+
+        //Setto i valori dello slider della vita del boss
+        fillBarSlider.maxValue  = maxHP;
+        fillBarSlider.value = maxHP;
+
+
+    }
     public override void Damage(float value, bool knockBack = false, Vector3 knockPos = default, float knockPower = 1)
     {
         //il nemico subisce danni in base al valore ricevuto
         enemyHp -= value;
+        //Assegno la vita allo slider
+        fillBarSlider.value = enemyHp;
         //se la vita del boss è metà o sotto, secondPhase diventa true se è false
         if (enemyHp <= maxHP / 2 && !secondPhase) SecondPhase();
         //Altrimenti se la vita è sotto zero il boss è sconfitto

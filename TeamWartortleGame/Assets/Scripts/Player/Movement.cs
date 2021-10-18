@@ -7,7 +7,10 @@ public class Movement : MonoBehaviour
     #region variabili
     //Variabile per la velocità di movimento
     [SerializeField]
-    private float moveSpeed;
+    private float moveSpeed, maxSpeed;
+    //Velocità inziale che viene memorizzata in questa variabile
+    private float startSpeed;
+
     //Riferimento al RigidBody per la gestione del movimento
     [SerializeField]
     private Rigidbody2D rb;
@@ -22,6 +25,12 @@ public class Movement : MonoBehaviour
     private WeaponsContainer weaponContainer;
 
     #endregion
+
+    private void Start()
+    {
+        //Memorizzo la velocità iniziale per poterla riassegnare
+        startSpeed = moveSpeed;
+    }
 
     void Update()
     {
@@ -95,11 +104,13 @@ public class Movement : MonoBehaviour
         animator.SetFloat(b, 0);
     }
 
+    //Metodo per sparare il proiettile
     public void SpawnBullet()
     {
         weaponContainer.SpawnBullet();
     }
 
+    //Metodo per equipaggiare un'arma
     public void EquipWeapon(int value)
     {
         weaponContainer.EquipWeapon(value);
@@ -111,9 +122,22 @@ public class Movement : MonoBehaviour
         StartCoroutine(IKnockback(pos, knockPower));
     }
 
+    //Metodo che spara un fendente(per demone)
     public void Fendente()
     {
         weaponContainer.ShootFendente();
+    }
+
+    //Metodo che velocizza il movimento
+    public void SpeedPowerUp()
+    {
+        moveSpeed = maxSpeed;
+    }
+
+    //Metodo che resetta la velocità a quella iniziale
+    public void ResetSpeed()
+    {
+        moveSpeed = startSpeed;
     }
 
     //Coroutine di knockback

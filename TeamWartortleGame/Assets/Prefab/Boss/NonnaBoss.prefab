@@ -1937,6 +1937,7 @@ MonoBehaviour:
   dmgColor: {r: 1, g: 0.1894218, b: 0, a: 1}
   currentColor: {r: 1, g: 1, b: 1, a: 1}
   enAnim: {fileID: 7264328580174464613}
+  bossHealth: {fileID: 0}
   secondPhase: 0
   rageColor: {r: 0.6886792, g: 0.11369702, b: 0.41127548, a: 1}
   dmgRageColor: {r: 1, g: 0.1854864, b: 0, a: 1}
@@ -1950,7 +1951,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
 --- !u!1 &7412991065124492191
 GameObject:
   m_ObjectHideFlags: 0

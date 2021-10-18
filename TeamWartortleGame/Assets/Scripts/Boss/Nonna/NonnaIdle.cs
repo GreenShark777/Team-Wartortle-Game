@@ -34,7 +34,7 @@ public class NonnaIdle : NonnaAbstract
             secondPhase = true;
         }
         //Controllo se il timer di attacco è stato raggiunto
-        if (Time.time - startTime >= timerToReach)
+        else if (Time.time - startTime >= timerToReach)
         {
           
             //Chiamo l'attacco passando la seconda fase come booleana

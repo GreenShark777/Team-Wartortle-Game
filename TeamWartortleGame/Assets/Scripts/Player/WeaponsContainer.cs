@@ -243,7 +243,8 @@ public class WeaponsContainer : MonoBehaviour
             {
                 Vector3 temp = transform.localEulerAngles;
                 transform.rotation = (i == 0 ? Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z - 15) : Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z + 15));
-                ObjectPooling.inst.SpawnFromPool("Bullets", shootPos.position, transform.rotation);
+                GameObject bullet = ObjectPooling.inst.SpawnFromPool("YellowBullets", shootPos.position, transform.rotation);
+                bullet.GetComponent<WeaponStats>().SetAttackStat(2);
                 transform.rotation = Quaternion.Euler(temp);
             }
         }

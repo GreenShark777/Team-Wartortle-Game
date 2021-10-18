@@ -7,9 +7,13 @@ public class WeaponStats : MonoBehaviour
 {
 
     [SerializeField]
-    private float attackStat = 1, //indica quanto danno fa quest'arma
-        pushForceStat = 10, //indica quanto spinge indietro i nemici con un colpo
+    private float pushForceStat = 10, //indica quanto spinge indietro i nemici con un colpo
         stunTime = 0.2f; //indica per quanto tempo un nemico colpito da quest'arma viene stordito
+
+    public float attackStat = 1;
+
+    [SerializeField]
+    private bool resetDmg = false;
 
     //enumeratore per il tipo di arma di questo script
     public enum WeaponType
@@ -17,13 +21,21 @@ public class WeaponStats : MonoBehaviour
 
         Sword,
 
-        Bullet
+        Bullet,
+
+        FlyingSlash
 
     }
     //indica il tipo di quest'arma
     [SerializeField]
     private WeaponType thisWeapon = default;
 
+    private void Start()
+    {
+        //Resetto il danno a quello iniziale visto che viene salvato quando lo modifico a runtime
+        if (thisWeapon == WeaponType.Bullet && resetDmg)
+            attackStat = 1;
+    }
 
     /// <summary>
     /// Permette ad altri script di ottenere la potenza d'attacco di quest'arma
@@ -59,6 +71,8 @@ public class WeaponStats : MonoBehaviour
     /// Permette ad altri script di sapere a che arma corrispondono queste statistiche
     /// </summary>
     /// <returns></returns>
+    /// 
+    public void SetAttackStat(float value) { attackStat = value; }
     public WeaponType GetWeaponType() { return thisWeapon; }
 
 }

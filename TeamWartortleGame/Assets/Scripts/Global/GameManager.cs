@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using static UnityEngine.Experimental.Rendering.Universal.Light2D;
 
@@ -30,8 +31,7 @@ public class GameManager : MonoBehaviour
     private Animator msgAn;
 
     //Riferimenti alle weaponStats della pistola e della spada
-    [SerializeField]
-    private WeaponStats gunStats, swordStats;
+    public WeaponStats swordStats;
 
     //Array degli sprite correnti delle teste del giocatore
     [SerializeField]
@@ -65,6 +65,14 @@ public class GameManager : MonoBehaviour
     //Valore da superare in anime per ottenere un cuore
     [HideInInspector]
     public int soulValue = 30;
+
+    //Valore numero di danno della pistola
+    [HideInInspector]
+    public int gunDmg = 1;
+
+    //Slider del powerUp della velocità
+    [SerializeField]
+    private Slider scarpaSlider;
 
     private void Start()
     {
@@ -101,7 +109,7 @@ public class GameManager : MonoBehaviour
             if (gunDmg > swordDmg)
             {
                 //Aumento il danno della pistola
-                gunStats.ChangeAttackStat(gunDmg);
+                this.gunDmg++;
             }
             //Altrimenti sto aumentando il danno della spada
             else
@@ -168,6 +176,48 @@ public class GameManager : MonoBehaviour
     {
         soulText.text = ":" + " " + soul;
         keyText.text = ":" + " " + key;
+    }
+
+    //Metodo che aumenta la velocità del player per un limite di tempo
+    public void SpeedPowerUp()
+    {
+        StartCoroutine(ISpeedPowerUp());
+    }
+
+    private IEnumerator ISpeedPowerUp()
+    {
+        //Aumento la velocità del player
+        Movement playerMovement = player.GetComponent<Movement>();
+
+        //Metto la velocità massima
+        playerMovement.SpeedPowerUp();
+
+        //Inizializzo il timer
+        float timer = 0, timerToReach = 6;
+
+        //Imposto il CoolDown a 0
+        scarpaSlider.value = 0;
+
+        //Valore iniziale dello slider da usare nel lerp
+        float startValue = scarpaSlider.value;
+
+        //Fiché il timer non ha raggiunto il target
+        while(timer < timerToReach)
+        {
+            //Aumento il timer
+            timer += Time.deltaTime;
+            //Lo aggiungo all'inverse lerp che normalizza il timer tra start value e 1
+            scarpaSlider.value = Mathf.Lerp(startValue, 1, timer / timerToReach);
+            yield return null;
+        }
+
+        //Imposto il valore al massimo dello slider
+        scarpaSlider.value = 1;
+
+        //Ritorno alla velocità iniziale
+        playerMovement.ResetSpeed();
+
+        yield return null;
     }
 
     private IEnumerator IEnemyDecision(GameObject enemy, int value, EnemiesHealth enHealth)
@@ -246,9 +296,6 @@ public class GameManager : MonoBehaviour
             enHealth.currentColor = currentColor;
             //Riazzero il timer per poterlo riutilizzare
             timer = 0;
-            
-
-
         }
 
         //Aspetto un secondo
@@ -284,6 +331,9 @@ public class GameManager : MonoBehaviour
         enemy.SetActive(false);
         //Resetto la coroutine corrente a null così da poter essere richiamata
         enemyDecisionCor = null;
+        //Faccio apparire randomicamente uno scudo o una scarpa
+        if (Random.value <= .10f) ObjectPooling.inst.SpawnObjectFromPool("Scarpe", enemy.transform.position, Quaternion.identity);
+        else if (Random.value <= .20f) ObjectPooling.inst.SpawnObjectFromPool("Shields", enemy.transform.position, Quaternion.identity);
         yield return null;
     }
 

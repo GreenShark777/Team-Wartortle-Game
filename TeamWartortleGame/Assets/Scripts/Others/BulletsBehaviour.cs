@@ -44,6 +44,7 @@ public class BulletsBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
+
         Invoke("AddToPool",3f);
         //Ottengo la direzione corrente dell'arma
         Vector2 direction = default;

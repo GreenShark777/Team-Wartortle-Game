@@ -287,7 +287,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
 --- !u!114 &742102316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 8653376158657852146}
   - component: {fileID: 8653376158657852156}
   - component: {fileID: 8653376158657852147}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyCollisionsManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}

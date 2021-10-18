@@ -169,7 +169,7 @@ public class NonnaContext : MonoBehaviour
                 //Posso cominciare a muovermi verso una direzione, inizialmente destra e creare il raycast per controllare se sto toccando un muro
                 rb.velocity = new Vector3(dir * speed, 0, 0);
                 //Controllo se il raycast sta toccando un muro e in caso cambio direzione e lo flippo
-                ray = Physics2D.Raycast(transform.position, Vector2.right * dir, 2f, groundMask);
+                ray = Physics2D.Raycast(transform.position, Vector2.right * dir, 1f, groundMask);
                 //Se ray è a true, quindi sta toccando un muro
                 if (ray)
                 {

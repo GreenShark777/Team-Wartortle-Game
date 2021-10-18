@@ -49,6 +49,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     //Riferimento allo script del player per bloccare il movimento per un attimo per effettuare il knockback
     [SerializeField]
     private Movement playerMovement;
+
+    //Riferimento al GameObject dello scudo
+    [SerializeField]
+    private GameObject shield;
     private void Start()
     {
         //Ottengo i cuori massimi con un childcount del parent
@@ -98,36 +102,52 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     //Metodo per la gestione del danno
     public void Damage(float value, bool knockBack = false, Vector3 knockPos = default, float knockPower = 1)
     {
-        //Se posso essere nuovamente danneggiato
-        if (canDamage)
+        //Se lo scudo è attivo mi proteggo da un danno
+        if (!shield.activeSelf)
         {
-            //Converto in int il valore passato
-            health -= Mathf.FloorToInt(value);
-            health = Mathf.Clamp(health, 0, maxHealth * 2);
-            //Se la vita è sotto zero muoio e reimposto sempre la vit a 0
-            if (health <= 0)
+            //Se posso essere nuovamente danneggiato
+            if (canDamage)
             {
-                Debug.Log("Morto");
-            }
-            //Chiamo metodo che gestisce i cuori interni ai container
-            SetHealth();
-
-            //Metodo che gestisce la lineart dei cuori
-            SetHeartLineart();
-
-            //Controllo che non mi stia invece curando perché in caso non cambio colore
-            if (value > 0)
-            {
-                //Faccio il knockback se mi viene passato dal nemico
-                if (knockBack) {
-
-                    playerMovement.Knockback(knockPos, knockPower);
+                //Converto in int il valore passato
+                health -= Mathf.FloorToInt(value);
+                health = Mathf.Clamp(health, 0, maxHealth * 2);
+                //Se la vita è sotto zero muoio e reimposto sempre la vit a 0
+                if (health <= 0)
+                {
+                    Debug.Log("Morto");
                 }
-                //Attiva la coroutine che cambia il colore in rosso per un attimol
-                StartCoroutine(IHitColor());
-            }
+                //Chiamo metodo che gestisce i cuori interni ai container
+                SetHealth();
 
+                //Metodo che gestisce la lineart dei cuori
+                SetHeartLineart();
+
+                //Controllo che non mi stia invece curando perché in caso non cambio colore
+                if (value > 0)
+                {
+                    //Faccio il knockback se mi viene passato dal nemico
+                    if (knockBack)
+                    {
+
+                        playerMovement.Knockback(knockPos, knockPower);
+                    }
+                    //Attiva la coroutine che cambia il colore in rosso per un attimol
+                    StartCoroutine(IHitColor());
+                }
+
+            }
         }
+        //Disattivo lo scudo se invece è attivo
+        else {
+            canDamage = false;
+            shield.SetActive(false);
+            Invoke("CanGetDamageAgain",.5f);
+        }
+    }
+
+    private void CanGetDamageAgain()
+    {
+        canDamage = true;
     }
     //Metodo che gestisce i cuori interni ai container
     private void SetHealth()

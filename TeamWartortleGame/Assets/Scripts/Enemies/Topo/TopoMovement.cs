@@ -102,6 +102,10 @@ public class TopoMovement : TopoAbstract
             RaycastHit2D hit = (Physics2D.Raycast(transform.position, this.movePos.normalized, 1, obstacleMask));
             if (hit.collider != null)
             {
+                //Blocco il movimento
+                this.movePos = Vector2.zero;
+                //Blocco anche la velocità del rigidBody
+                rb.velocity = Vector2.zero;
                 StopAllCoroutines();
                 StartCoroutine(IGetPosition());
             }
