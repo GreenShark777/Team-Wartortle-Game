@@ -31,12 +31,14 @@ public class CubicSlimeBehaviour : MonoBehaviour
 
     //indica se il cubo deve seguire il giocatore o meno
     private bool followPlayer = true;
+
+    private bool doIt = true;
     //indica lo stato d'animazione attuale del cubo
     private int actualAnimState = -1;
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //ottiene il riferimento al contenitore degli sprite
         Transform spritesContainer = transform.GetChild(0);
@@ -58,7 +60,7 @@ public class CubicSlimeBehaviour : MonoBehaviour
 
         //fa partire la coroutine per l'inseguimento del giocatore
         StartCoroutine(Follow());
-
+        //Debug.Log("STARTED COROUTINE");
     }
 
     // Update is called once per frame
@@ -71,7 +73,10 @@ public class CubicSlimeBehaviour : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, player.position, speed * Time.fixedDeltaTime);
 
         }
-        
+
+        //QUESTO VIENE FATTO PERCHE' PER QUALCHE MOTIVO LA COROUTINE NON CONTINUA DOPO WAITFORSECONDS QUANDO VIENE RICHIAMATA ALLO START
+        if (doIt) { StartCoroutine(Follow()); doIt = false; }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -87,10 +92,12 @@ public class CubicSlimeBehaviour : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Follow()
     {
+        //Debug.Log(1);
         //segue il giocatore per un po'
         yield return new WaitForSeconds(followTime);
         //smette di seguirlo
         followPlayer = false;
+        //Debug.Log(2);
         //aspetta un po'
         yield return new WaitForSeconds(attackCD / 2);
         //fa avanzare lo stato d'animazione del cubo
@@ -99,13 +106,14 @@ public class CubicSlimeBehaviour : MonoBehaviour
         StartCoroutine(Attack(1));
         //attiva il collider dello slime
         slimeColl.enabled = true;
+        //Debug.Log(3);
         //aspetta un po'
         yield return new WaitForSeconds(attackCD);
         //torna a seguire il giocatore
         followPlayer = true;
         //disabilita il collider dello slime
         slimeColl.enabled = false;
-
+        //Debug.Log(4);
         //riporta lo slime allo sprite iniziale
         //spriteSheet[actualAnimState - 1].SetActive(false);
         //spriteSheet[0].SetActive(true);
