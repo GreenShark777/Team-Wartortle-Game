@@ -187,7 +187,7 @@ public class RoomsManager : MonoBehaviour, IUpdateData
         //il giocatore non potrà muoversi
         playerMov.enabled = false;
         //aspetta che la dissolvenza finisca
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(0.35f);
         //il giocatore potrà nuovamente muoversi
         playerMov.enabled = true;
         //ottiene il riferimento alla stanza da cui il giocatore sta uscendo

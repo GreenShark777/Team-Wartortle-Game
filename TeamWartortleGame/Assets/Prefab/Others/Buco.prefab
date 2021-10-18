@@ -164,6 +164,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1701308111015814570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 76476111483636329}
+  m_Layer: 0
+  m_Name: HoleCenterPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &76476111483636329
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701308111015814570}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.43, y: -0.92, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6788021451360445500}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2365993579125757240
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,7 +580,7 @@ Transform:
   m_GameObject: {fileID: 3647663064916114283}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.2, y: 2.2, z: 1}
+  m_LocalScale: {x: 2.17668, y: 2.3154604, z: 1}
   m_Children:
   - {fileID: 438256894132348776}
   - {fileID: 8095999727929085581}
@@ -560,6 +590,7 @@ Transform:
   - {fileID: 5661385980794032075}
   - {fileID: 8797989159727188585}
   - {fileID: 585855129559839037}
+  - {fileID: 76476111483636329}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -576,6 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnPoint: {fileID: 585855129559839037}
+  centerOfHole: {fileID: 76476111483636329}
 --- !u!61 &1199696644289498654
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -600,7 +632,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.72, y: 2.5}
+  m_Size: {x: 4.1, y: 2.5}
   m_EdgeRadius: 0
 --- !u!210 &6392083577682912574
 SortingGroup:

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GroundCheck : MonoBehaviour
 {
     //indica se questo collider è per terra
+    [SerializeField]
     private bool noFloor = false;
     //riferimento all'altro GroundCheck
     [SerializeField]
@@ -24,6 +25,8 @@ public class GroundCheck : MonoBehaviour
     //riferimento all'Animator dell'immagine che funge da dissolvenza
     [SerializeField]
     private Animator blackScreenAnim = default;
+    //indica la direzione in cui il giocatore deve cadere
+    private Vector2 fallTo;
 
 
     private void Awake()
@@ -32,6 +35,13 @@ public class GroundCheck : MonoBehaviour
         playerAnim = player.GetComponent<Animator>();
         //ottiene il riferimento allo script di movimento del giocatore
         playerMovement = player.GetComponent<Movement>();
+
+    }
+
+    private void FixedUpdate()
+    {
+        //se si sta cadendo, il giocatore andrà verso il centro del buco
+        if (isFalling) { player.position = Vector2.MoveTowards(player.position, fallTo, Time.deltaTime); }
 
     }
 
@@ -59,6 +69,11 @@ public class GroundCheck : MonoBehaviour
     /// <returns></returns>
     public bool GetNoFloor() { return noFloor; }
     /// <summary>
+    /// Ritorna lo stato di caduta dell'altro GroundCheck
+    /// </summary>
+    /// <returns></returns>
+    public bool GetOtherNoFloor() { return otherGC.noFloor; }
+    /// <summary>
     /// Si occupa del tempismo di caduta
     /// </summary>
     /// <param name="hole"></param>
@@ -67,14 +82,22 @@ public class GroundCheck : MonoBehaviour
     {
         //fa partire l'animazione di dissolvenza dello schermo in nero
         blackScreenAnim.SetTrigger("Dissolve");
+        //ottiene la velocità iniziale dell'animazione di fadeIn
+        float startSpeedAnim = blackScreenAnim.speed;
+        //dimezza la velocità d'animazione del fadeIn
+        blackScreenAnim.speed /= 2;
         //impedisce al giocatore di muoversi
         playerMovement.enabled = false;
         //fa cominciare l'animazione di caduta
         playerAnim.SetBool("Falling", true);
+        //ottiene la posizione centrale del buco
+        fallTo = hole.GetHoleCenterPosition();
         //comunica che si sta cadendo
         isFalling = true;
         //aspetta del tempo
         yield return new WaitForSeconds(fallingTime);
+        //riporta la velocità d'animazione di fadeIn alla velocità normale
+        blackScreenAnim.speed = startSpeedAnim;
         //fa finire l'animazione di caduta
         playerAnim.SetBool("Falling", false);
         //permette al giocatore di camminare nuovamente
@@ -88,5 +111,10 @@ public class GroundCheck : MonoBehaviour
         otherGC.IsThereNoGround(false);
 
     }
+    /// <summary>
+    /// Ritorna il Transform del giocatore
+    /// </summary>
+    /// <returns></returns>
+    public Transform GetPlayer() { return player; }
 
 }

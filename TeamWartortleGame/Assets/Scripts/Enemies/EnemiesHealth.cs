@@ -116,4 +116,12 @@ public class EnemiesHealth : MonoBehaviour, IDamageable
 
         yield return null;
     }
+
+    private void OnDisable()
+    {
+        //se il nemico è stato sconfitto e viene disabilitato(giocatore che va in un'altra stanza) il nemico viene disabilitato per evitare errori
+        if (defeated && gameObject.activeSelf) { gameObject.SetActive(false); }
+        
+    }
+
 }

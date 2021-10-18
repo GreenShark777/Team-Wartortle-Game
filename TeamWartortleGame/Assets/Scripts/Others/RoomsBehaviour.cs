@@ -14,7 +14,7 @@ public class RoomsBehaviour : MonoBehaviour
     //riferimento al giocatore
     public static Transform player;
     //identificativo della stanza
-    [SerializeField]
+    //[SerializeField]
     private int roomID = 0;
     //riferimento allo sprite della stanza
     [SerializeField]
@@ -39,9 +39,17 @@ public class RoomsBehaviour : MonoBehaviour
     // 4 - boss
     //private int roomType;
 
+    //indice da dare ad ogni stanza ad Awake(in modo che sia sempre differente)
+    private static int newRoomID = -1;
+
 
     private void Awake()
     {
+        //viene incrementato il nuovo ID da dare alle stanze
+        newRoomID++;
+        //la stanza ottiene un nuovo ID unico
+        roomID = newRoomID;
+
         //ottiene il riferimento al contenitore dei collider delle stanze
         collidersContainer = transform.GetChild(1);
         //ottiene il riferimento al contenitore dei nemici
@@ -126,7 +134,7 @@ public class RoomsBehaviour : MonoBehaviour
         int indexToActivate;
         //se lo sprite della stanza è quello della stanza quadrata, bisogna attivare il collider ad indice 0
         if (roomSpriteName.Contains("quadrata")) { indexToActivate = 0; }
-        //altrimenti,se lo sprite della stanza è quello della stanza rettangolare, bisogna attivare il collider ad indice 1
+        //altrimenti,se lo sprite della stanza è quello della stanza rettangolare, bisogna attivare il collider ad indice 1(se la stanza è gigante sarà invece 5)
         else if (roomSpriteName.Contains("rettangolare")) { indexToActivate = (!roomSpriteName.Contains("gigante")) ? 1 : 5; }
         //altrimenti,se lo sprite della stanza è quello della stanza a T, bisogna attivare il collider ad indice 2
         else if (roomSpriteName.Contains("T")) { indexToActivate = 2; }

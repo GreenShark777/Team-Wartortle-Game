@@ -80,7 +80,7 @@ public class MiniMap : MonoBehaviour, IUpdateData
         //genera la mini mappa
         GenerateMiniMap();
         //disattiva le stanze non ancora esplorate dal giocatore
-        //ShowOnlySeenRooms();
+        ShowOnlySeenRooms();
         //disattiva le immagini iniziali di porta e stanza, in quanto non servono più
         roomImage.gameObject.SetActive(false);
         //posiziona il pallino del giocatore nella stanza attuale
@@ -106,15 +106,14 @@ public class MiniMap : MonoBehaviour, IUpdateData
 
             //...ottiene il nome dello sprite della stanza...
             string roomSpriteName = room.GetThisRoomSprite().name;
-            
+            //..crea un int che funge da indice per la sprite da dare alla nuova immagine stanza
             int imageRoomsSpriteIndex;
-
+            //in base al nome dello sprite, l'indice cambia
             if (roomSpriteName.Contains("quadrata")) { imageRoomsSpriteIndex = 0; }
             else if (roomSpriteName.Contains("rettangolare")) { imageRoomsSpriteIndex = (!roomSpriteName.Contains("gigante")) ? 1 : 5; }
             else if (roomSpriteName.Contains("T")) { imageRoomsSpriteIndex = 2; }
             else if (roomSpriteName.Contains("L")) { imageRoomsSpriteIndex = 3; }
             else { imageRoomsSpriteIndex = 4; }
-            
             //...alla nuova immagine viene dato lo sprite di questa stanza...
             newRoomImage.transform.GetChild(0).GetComponent<Image>().sprite = imageRoomsSprites[imageRoomsSpriteIndex]/*room.GetThisRoomSprite()*/;
             //...cambia la grandezza dell'immagine in base al nome dello sprite(bisogna farlo altrimenti alcune stanze vengono viste più grandi di come sono veramente)
@@ -240,7 +239,9 @@ public class MiniMap : MonoBehaviour, IUpdateData
         newRoomPivot.position = transform.position;
 
     }
-
+    /// <summary>
+    /// Mostra solo le stanze in cui il giocatore è già entrato
+    /// </summary>
     private void ShowOnlySeenRooms()
     {
         //cicla ogni immagine di stanza nella lista
