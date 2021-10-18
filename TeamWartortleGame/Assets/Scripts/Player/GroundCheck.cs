@@ -25,6 +25,8 @@ public class GroundCheck : MonoBehaviour
     //riferimento all'Animator dell'immagine che funge da dissolvenza
     [SerializeField]
     private Animator blackScreenAnim = default;
+    //indica la direzione in cui il giocatore deve cadere
+    private Vector2 fallTo;
 
 
     private void Awake()
@@ -33,6 +35,13 @@ public class GroundCheck : MonoBehaviour
         playerAnim = player.GetComponent<Animator>();
         //ottiene il riferimento allo script di movimento del giocatore
         playerMovement = player.GetComponent<Movement>();
+
+    }
+
+    private void FixedUpdate()
+    {
+        //se si sta cadendo, il giocatore andrà verso il centro del buco
+        if (isFalling) { player.position = Vector2.MoveTowards(player.position, fallTo, Time.deltaTime); }
 
     }
 
@@ -77,6 +86,8 @@ public class GroundCheck : MonoBehaviour
         playerMovement.enabled = false;
         //fa cominciare l'animazione di caduta
         playerAnim.SetBool("Falling", true);
+        //ottiene la posizione centrale del buco
+        fallTo = hole.GetHoleCenterPosition();
         //comunica che si sta cadendo
         isFalling = true;
         //aspetta del tempo

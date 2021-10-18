@@ -6,6 +6,9 @@ public class HoleBehaviour : MonoBehaviour
     //riferimento alla posizione in cui il giocatore deve respawnare dopo essere caduto
     [SerializeField]
     private Transform respawnPoint = default;
+    //riferimento al centro del buco
+    [SerializeField]
+    private Transform centerOfHole = default;
     //indica se il giocatore è sopra il buco o meno
     private bool playerIsOnPlatform = false;
     //indica se il giocatore è abbastanza vicino da poter cadere
@@ -60,6 +63,11 @@ public class HoleBehaviour : MonoBehaviour
     }
 
     public bool CouldPlayerFall() { return playerCouldFall; }
+    /// <summary>
+    /// Ritorna la posizione del centro di questo buco
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetHoleCenterPosition() { return centerOfHole.position; }
     /// <summary>
     /// Mette il giocatore nella posizione di respawn
     /// </summary>

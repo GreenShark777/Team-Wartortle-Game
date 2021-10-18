@@ -13,6 +13,7 @@ public class PiattaformaSemovente : MonoBehaviour
     private Transform[] route = default;
 
     //private Rigidbody2D platformRb;
+
     //array di float che indica quanto deve aspettare la piattaforma per andare da una posizione ad un'altra
     [SerializeField]
     private float[] timeToWait = default;
@@ -54,8 +55,9 @@ public class PiattaformaSemovente : MonoBehaviour
             Debug.Log(distance + " : " + acceptableDistance);
         }
         //altrimenti, continua a far avvicinare la piattaforma al punto d'arrivo
-        else { transform.position = Vector3.Lerp(transform.position, route[actualRoute].position, speed * Time.deltaTime); }
-        //{ platformRb.velocity = (transform.position + route[actualRoute].position) * speed; }
+        else { transform.position = Vector2.MoveTowards(transform.position, route[actualRoute].position, speed * Time.deltaTime); }
+        //{ transform.position = Vector3.Lerp(transform.position, route[actualRoute].position, speed * Time.deltaTime); } //DIVENTA LENTO DOPO UN PO'
+        //{ platformRb.velocity = (transform.position + route[actualRoute].position) * speed; } //CALCOLO ERRATO, PIATTAFORMA NON SI MUOVE
 
     }
 
@@ -159,6 +161,7 @@ public class PiattaformaSemovente : MonoBehaviour
         waiting = true;
 
         //platformRb.velocity = Vector2.zero;
+
         //aspetta un po'
         yield return new WaitForSeconds(timeToWait[actualRoute]);
         //incrementa l'indice del punto d'arrivo in cui la piattaforma dovrà andare
@@ -167,6 +170,7 @@ public class PiattaformaSemovente : MonoBehaviour
         if (actualRoute >= route.Length) { actualRoute = 0; }
 
         //platformRb.velocity = (transform.position + route[actualRoute].position) * speed;
+
         //comunica che non si sta più aspettando
         waiting = false;
 
