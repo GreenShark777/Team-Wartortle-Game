@@ -182,7 +182,7 @@ MonoBehaviour:
     size: 15
   - tag: Fiamma
     obj: {fileID: 3647862442906822361, guid: f9ddf32932d145e40892d599ecd7b102, type: 3}
-    size: 25
+    size: 50
   - tag: Scheggia
     obj: {fileID: 235225293432165153, guid: 0c8b541ba90eb6a4390c45b1b2ea60de, type: 3}
     size: 10
@@ -194,10 +194,28 @@ MonoBehaviour:
     size: 10
   - tag: Scheggia2
     obj: {fileID: 235225293432165153, guid: 4dc93dbe190d9574bb59f2a43e4c35f4, type: 3}
-    size: 30
+    size: 60
   - tag: Fendente
     obj: {fileID: 8937523132681359599, guid: b2c8cb223fdd06f44b0328b100d48846, type: 3}
     size: 15
+  - tag: Souls
+    obj: {fileID: 7339937732610544436, guid: 9beb2f56fc2ccdc49b5ef269942dec3a, type: 3}
+    size: 50
+  - tag: Keys
+    obj: {fileID: 2209378325033993886, guid: 81674d88de4bb144cac7e9b0a204ef98, type: 3}
+    size: 30
+  - tag: Frutta
+    obj: {fileID: 4153997398199151414, guid: 54e76d51df1a448498f81d871d4f0dcc, type: 3}
+    size: 10
+  - tag: YellowBullets
+    obj: {fileID: 1542929831313590191, guid: 77ae09b0a6fff82408d3da0b870bbf6d, type: 3}
+    size: 25
+  - tag: Shields
+    obj: {fileID: 7062706262673784258, guid: bd32156bbd66c83409ba4ba21f212dfb, type: 3}
+    size: 10
+  - tag: Scarpe
+    obj: {fileID: 7369399228890121554, guid: 19f4359421ad4d24a99af8589c16ab4d, type: 3}
+    size: 10
 --- !u!114 &4157706480522747523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +234,6 @@ MonoBehaviour:
   spada: {fileID: 4157706479693441306}
   croce: {fileID: 4157706478914541217}
   msgAn: {fileID: 0}
-  gunStats: {fileID: 8451767847516138033, guid: 5e9c1e1ba66682b478acfac6a1f40cb5, type: 3}
   swordStats: {fileID: 0}
   currentHeads:
   - {fileID: 0}
@@ -246,6 +263,13 @@ MonoBehaviour:
   angel: 0
   demon: 0
   playerUI: {fileID: 0}
+  soul: 0
+  key: 0
+  soulText: {fileID: 0}
+  keyText: {fileID: 0}
+  soulValue: 30
+  gunDmg: 1
+  scarpaSlider: {fileID: 0}
 --- !u!114 &4157706480522747522
 MonoBehaviour:
   m_ObjectHideFlags: 0
