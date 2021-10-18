@@ -85,7 +85,7 @@ public class GroundCheck : MonoBehaviour
         //ottiene la velocità iniziale dell'animazione di fadeIn
         float startSpeedAnim = blackScreenAnim.speed;
         //dimezza la velocità d'animazione del fadeIn
-        blackScreenAnim.speed /= 2;
+        blackScreenAnim.speed = 0.5f;
         //impedisce al giocatore di muoversi
         playerMovement.enabled = false;
         //fa cominciare l'animazione di caduta

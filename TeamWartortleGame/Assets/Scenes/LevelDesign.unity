@@ -389,17 +389,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &112838390 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8635608889283721676, guid: 3aa3e682c3aac1d48908870085db637d, type: 3}
-  m_PrefabInstance: {fileID: 8856169309855665918}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb6da5fbde4d9674a8dc4160a716ee94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &127422702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,9 +1047,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6da5fbde4d9674a8dc4160a716ee94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackStat: 1
   pushForceStat: 100
   stunTime: 0.2
+  attackStat: 1
+  resetDmg: 0
   thisWeapon: 0
 --- !u!114 &290403733
 MonoBehaviour:
@@ -8002,9 +7992,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6da5fbde4d9674a8dc4160a716ee94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackStat: 1
   pushForceStat: 100
   stunTime: 0.2
+  attackStat: 1
+  resetDmg: 0
   thisWeapon: 0
 --- !u!70 &825351824
 CapsuleCollider2D:
@@ -8999,6 +8990,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e3ed0e45e24faed4988bc67de2772980, type: 3}
   swordAttackCD: 1
   gunAttackCD: 1
+  startSwordAttackCD: 0
+  speedSwordAttackCD: 0
   slashPos: {fileID: 0}
   shootPos: {fileID: 0}
   slashSequenceResetCD: 0.2
@@ -9087,6 +9080,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 837495734, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 395108880596570416, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 395108880596570416, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2034019764761826687, guid: d1e76609a195c614dbd3d3679482eeea, type: 3}
@@ -9754,7 +9755,7 @@ PrefabInstance:
     - target: {fileID: 4844996045637074206, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
       propertyPath: chooseGB
       value: 
-      objectReference: {fileID: 221413096}
+      objectReference: {fileID: 0}
     - target: {fileID: 5184056275299455647, guid: a38062e6b685a654e9215a00e2b54656, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -10675,7 +10676,7 @@ PrefabInstance:
     - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
       propertyPath: swordStats
       value: 
-      objectReference: {fileID: 112838390}
+      objectReference: {fileID: 950461387797165874}
     - target: {fileID: 4157706480522747523, guid: 028033586d8c15e439bc7ef4e40ab3f5, type: 3}
       propertyPath: weaponContainer
       value: 
@@ -16912,6 +16913,10 @@ PrefabInstance:
       propertyPath: saveUI
       value: 
       objectReference: {fileID: 2020372135}
+    - target: {fileID: 451038701000078014, guid: d1daeef4fcdb18c4183415792320f569, type: 3}
+      propertyPath: IDCheckpoint
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 451038702801896215, guid: d1daeef4fcdb18c4183415792320f569, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -16962,6 +16967,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1daeef4fcdb18c4183415792320f569, type: 3}
+--- !u!114 &950461387797165874 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8635608889283721676, guid: 3aa3e682c3aac1d48908870085db637d, type: 3}
+  m_PrefabInstance: {fileID: 8856169309855665918}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6da5fbde4d9674a8dc4160a716ee94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3015699615591921899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17518,10 +17534,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: (Kevin)Player With GroundCheck
       objectReference: {fileID: 0}
+    - target: {fileID: 2291034929524209784, guid: 3aa3e682c3aac1d48908870085db637d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2940401238200504032, guid: 3aa3e682c3aac1d48908870085db637d, type: 3}
       propertyPath: playerUIManag
       value: 
       objectReference: {fileID: 572138462}
+    - target: {fileID: 3830825972892551137, guid: 3aa3e682c3aac1d48908870085db637d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8087564899293009812, guid: 3aa3e682c3aac1d48908870085db637d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8856169309192060651, guid: 3aa3e682c3aac1d48908870085db637d, type: 3}
       propertyPath: goodwillSlider
       value: 
