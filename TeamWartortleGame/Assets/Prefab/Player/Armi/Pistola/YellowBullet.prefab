@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3223029379622455378}
   - component: {fileID: 7289809786999007921}
   - component: {fileID: 7342835239351120510}
-  m_Layer: 0
+  - component: {fileID: 247908952311173093}
+  m_Layer: 10
   m_Name: YellowBullet
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -118,6 +119,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.983863, y: 2.6328769}
   m_EdgeRadius: 0
+--- !u!210 &247908952311173093
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542929831313590191}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &3538674504886640304
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +141,7 @@ GameObject:
   - component: {fileID: 8311812854549415302}
   - component: {fileID: 5858937235249889894}
   - component: {fileID: 4686002230598212319}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HitPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4990,7 +5002,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7749501438987423365}
   - component: {fileID: 1316209644960101401}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4122173054865516086}
   - component: {fileID: 6470199952570466759}
   - component: {fileID: 9180512832461811776}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BladeSlashCollider
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6da5fbde4d9674a8dc4160a716ee94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackStat: 2
   pushForceStat: 5
   stunTime: 0.2
+  attackStat: 2
+  resetDmg: 0
   thisWeapon: 0
 --- !u!70 &6470199952570466759
 CapsuleCollider2D:
@@ -95,7 +96,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2481282437474791662}
-  m_Layer: 0
+  - component: {fileID: 6079683307990588140}
+  m_Layer: 10
   m_Name: BladeSlash
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -118,6 +120,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &6079683307990588140
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850992310412058189}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &3087910107719009989
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4095565128810769273}
   - component: {fileID: 7508100649988839983}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SlashSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3223029379622455378}
   - component: {fileID: 7289809786999007921}
   - component: {fileID: 7342835239351120510}
-  m_Layer: 0
+  - component: {fileID: 2371463829582637585}
+  m_Layer: 10
   m_Name: PhBullet
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -48,9 +49,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6da5fbde4d9674a8dc4160a716ee94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackStat: 1
   pushForceStat: 0
   stunTime: 0.2
+  attackStat: 1
+  resetDmg: 0
   thisWeapon: 1
 --- !u!114 &3223029379622455378
 MonoBehaviour:
@@ -117,6 +119,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.983863, y: 2.6328769}
   m_EdgeRadius: 0
+--- !u!210 &2371463829582637585
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542929831313590191}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &3538674504886640304
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +141,7 @@ GameObject:
   - component: {fileID: 8311812854549415302}
   - component: {fileID: 5858937235249889894}
   - component: {fileID: 4686002230598212319}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HitPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4989,7 +5002,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7749501438987423365}
   - component: {fileID: 1316209644960101401}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

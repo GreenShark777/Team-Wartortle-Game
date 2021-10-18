@@ -55,14 +55,16 @@ public class BulletFollow : MonoBehaviour
         if (bulletName == "Scheggia2")
         {
             if (LayerMask.LayerToName(collision.transform.gameObject.layer) == "Obstacle") Disable();
+            Debug.Log("Ostacolo");
         }
     }
 
     private void Disable()
     {
+        Debug.Log("Disable");
 
         //Re inserisco il gameobject nell'object pooling passando il nome registrato
-        if(gameObject.activeSelf)
+        if (gameObject.activeSelf)
             ObjectPooling.inst.ReAddObjectToPool(bulletName, gameObject);
     }
 

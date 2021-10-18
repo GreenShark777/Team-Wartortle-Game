@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     public PlayerUIManager playerUI;
 
     //Riferimento alla couroitine della decisione del nemico per poterla interrompere quella precedente per richiamarla di nuovo così da evitare conflitti
-    private Coroutine enemyDecisionCor = default;
+    private Coroutine enemyDecisionCor = default, speedUpCor = default;
 
     //Collezionabili 
     [HideInInspector]
@@ -181,7 +181,9 @@ public class GameManager : MonoBehaviour
     //Metodo che aumenta la velocità del player per un limite di tempo
     public void SpeedPowerUp()
     {
-        StartCoroutine(ISpeedPowerUp());
+        //avvio la coroutine dello SpeedPowerUp, se non è null viene fermata quella corrente e ne viene chiamata una nuova
+        if (speedUpCor != null) StopCoroutine(speedUpCor);
+        speedUpCor = StartCoroutine(ISpeedPowerUp());
     }
 
     private IEnumerator ISpeedPowerUp()
@@ -212,7 +214,7 @@ public class GameManager : MonoBehaviour
         }
 
         //Imposto il valore al massimo dello slider
-        scarpaSlider.value = 1;
+        scarpaSlider.value = 0;
 
         //Ritorno alla velocità iniziale
         playerMovement.ResetSpeed();

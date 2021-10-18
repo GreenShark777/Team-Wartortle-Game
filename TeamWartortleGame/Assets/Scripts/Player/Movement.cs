@@ -51,7 +51,8 @@ public class Movement : MonoBehaviour
     private void FixedUpdate()
     {
         //Muovo il Personaggio sommando la posizione da raggiungere a quella corrente
-        rb.MovePosition(rb.position + (movePosRb * moveSpeed * Time.fixedDeltaTime));
+        //rb.MovePosition(rb.position + (movePosRb * moveSpeed * Time.fixedDeltaTime));
+        rb.velocity = movePosRb * moveSpeed;
     }
 
     //Metodo che imposta i valori float dell'animatore e decide la direzione, se in idle o in running
@@ -131,13 +132,23 @@ public class Movement : MonoBehaviour
     //Metodo che velocizza il movimento
     public void SpeedPowerUp()
     {
+        //Aumento la velocità di movimento
         moveSpeed = maxSpeed;
+        //Aumento la velocità dell'animatore
+        animator.speed = 1.5f;
+        //Diminuisco cooldown della spada
+        weaponContainer.swordAttackCD = weaponContainer.speedSwordAttackCD;
     }
 
     //Metodo che resetta la velocità a quella iniziale
     public void ResetSpeed()
     {
+        //Resetto velocità di movimento
         moveSpeed = startSpeed;
+        //Resetto la velocità dell'animatore
+        animator.speed = 1;
+        //Resetto cooldown della spada
+        weaponContainer.swordAttackCD = weaponContainer.startSwordAttackCD;
     }
 
     //Coroutine di knockback

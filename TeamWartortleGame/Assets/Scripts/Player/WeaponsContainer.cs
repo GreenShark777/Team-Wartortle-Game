@@ -26,9 +26,12 @@ public class WeaponsContainer : MonoBehaviour
     //indica quale arma è attualmente in uso
     private bool gunOut = false;
     //countdown per gli attacchi di ogni arma
-    [SerializeField]
-    private float swordAttackCD = default, //indica quanto deve passare tra un attacco con spada e l'altro
-        gunAttackCD = default; //indica quanto deve passare tra uno sparo e l'altro
+    public float swordAttackCD = 1, //indica quanto deve passare tra un attacco con spada e l'altro
+        gunAttackCD = .3f; //indica quanto deve passare tra uno sparo e l'altro
+
+    //Float di coolDown iniziale per poterlo poi riassegnare dopo aver finito l'effetto di un powerUp, e float del CoolDown diminuito per il power up della velocità
+    [HideInInspector]
+    public float startSwordAttackCD, speedSwordAttackCD;
 
     //Posizione in cui apparirà lo slash e il proiettile
     [SerializeField]
@@ -54,6 +57,11 @@ public class WeaponsContainer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Memorizzo il cooldown default della spada
+        startSwordAttackCD = swordAttackCD;
+
+        //Assegno come valore di cooldown diminuito(power up velocità) il valore del cooldown diviso per un valore vicino al due
+        speedSwordAttackCD = swordAttackCD / 1.8f;
         //ottiene i riferimenti alle armi e loro colpi
         //sword = transform.GetChild(0).gameObject;
         //slash = sword.transform.GetChild(0).gameObject;
@@ -157,7 +165,7 @@ public class WeaponsContainer : MonoBehaviour
         //disattiva il colpo con spada
         //slash.SetActive(false);
         //aspetta un po' di tempo
-        yield return new WaitForSeconds(slashSequenceResetCD);
+        yield return new WaitForSeconds(swordAttackCD);
         //il giocatore potrà attaccare di nuovo
         canAttack = true;
         //la sequenza d'attacco viene resettata

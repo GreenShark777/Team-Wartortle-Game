@@ -39,6 +39,8 @@ public class Bullet : MonoBehaviour
             //Lo riaggiungo all'object pooling
             ReAddToPool();
         }
+        else if (collision.CompareTag("Obstacle")) ReAddToPool();
+
     }
 
     //ma anche con collision

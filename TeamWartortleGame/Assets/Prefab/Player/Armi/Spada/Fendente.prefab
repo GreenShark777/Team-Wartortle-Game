@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5679397520381837615}
   - component: {fileID: 6177384907837283059}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 1062047191748244205}
   - component: {fileID: 1908232476205175750}
   - component: {fileID: 5366662729746540905}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -159,7 +159,8 @@ GameObject:
   - component: {fileID: 1134896468816578339}
   - component: {fileID: 2176590978860506855}
   - component: {fileID: 185884134}
-  m_Layer: 0
+  - component: {fileID: 4335728014610363235}
+  m_Layer: 10
   m_Name: Fendente
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,3 +241,14 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!210 &4335728014610363235
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8937523132681359599}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
